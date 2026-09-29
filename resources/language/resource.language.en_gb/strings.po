@@ -868,11 +868,16 @@ msgid "Forest"
 msgstr ""
 
 msgctxt "#32215"
-msgid "Only CoreELEC 22 or later is supported"
+msgid "Kodi 22 or later on CoreELEC or LibreELEC is required"
 msgstr ""
 
 msgctxt "#32216"
-msgid "The CoreELEC version could not be detected"
+msgid "The Kodi version could not be detected"
+msgstr ""
+
+# LibreELEC fork
+msgctxt "#33900"
+msgid "VS10 modes need a CoreELEC Amlogic box"
 msgstr ""
 
 msgctxt "#32217"

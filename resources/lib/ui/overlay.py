@@ -14,6 +14,7 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 import xbmcvfs
+from core import platform
 from core import settings
 from core.log import log
 from core.utils import (
@@ -126,17 +127,6 @@ def _settings() -> xbmcaddon.Addon:
     return settings.addon()
 
 
-def _is_coreelec() -> bool:
-    """Return whether this is a CoreELEC installation."""
-    if os.path.isdir("/etc/coreelec"):
-        return True
-    try:
-        with open("/etc/os-release") as f:
-            return any("coreelec" in line.lower() for line in f)
-    except OSError:
-        return False
-
-
 def _notify_error(message_id: int) -> None:
     """Show an error notification with localized string *message_id*."""
     xbmcgui.Dialog().notification(
@@ -170,7 +160,7 @@ def _preflight(home, player, toggle_log: str) -> bool:
     open view closed) and returns False.
     """
     if not _ALLOW_NON_COREELEC:
-        if not _is_coreelec():
+        if not platform.is_supported():
             _notify_error(32215)
             return False
 
@@ -562,9 +552,9 @@ def open_tinyppi() -> None:
     """Check the environment and show TinyPPI until the viewer closes it.
 
     Starts with the overlay; on a DV source OK switches to the metadata view
-    and Back returns.  Does nothing on non-CoreELEC (unless
-    ``_ALLOW_NON_COREELEC``), Kodi < 22, a 720p skin, without fullscreen
-    video or playback; toggles closed when already open.
+    and Back returns.  Does nothing where no output readings exist (unless
+    ``_ALLOW_NON_COREELEC``; see core.platform), Kodi < 22, a 720p skin,
+    without fullscreen video or playback; toggles closed when already open.
     """
     home   = home_window()
     player = xbmc.Player()
@@ -623,6 +613,11 @@ def open_dialog_mode() -> None:
         return
     try:
         if not _preflight(home, player, "Toggle close (dialog mode)"):
+            return
+
+        # VS10 is the Amlogic Dolby Vision engine; nothing else has one to drive.
+        if not platform.is_amlogic():
+            _notify_error(33900)
             return
 
         ensure_fonts()

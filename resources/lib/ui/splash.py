@@ -22,6 +22,7 @@ from typing import NamedTuple
 
 import xbmc
 import xbmcgui
+from core import platform
 from core import settings
 from core.constants import HOME_WINDOW_ID
 from core.log import channel
@@ -687,7 +688,7 @@ def open_splash() -> None:
     if home.getProperty(PROP_SPLASH_ACTIVE) == "true":
         return
 
-    gamut = info("Player.Process(amlogic.eoft_gamut)")
+    gamut = platform.eoft_gamut()
     logos = _current_logos(_amlogic_hdr_token(gamut))
     has_audio = _has_audio(player)
     enabled_modes = [
@@ -751,7 +752,7 @@ def open_splash() -> None:
                 started is None or now - started < duration)
 
             # Read once for badge, pill and logos.
-            gamut = info("Player.Process(amlogic.eoft_gamut)")
+            gamut = platform.eoft_gamut()
             hdr_token = _amlogic_hdr_token(gamut)
             # Reading the format parses side data, so it is re-read once a
             # second, when the output changes, or every poll until known.  The

@@ -10,6 +10,7 @@ before a window is shown.
 
 import re
 
+from core import platform
 from core import settings
 from core.constants import HOME_WINDOW_ID
 from core.helpers import format_fps, fps_display_texts, normalize_fps
@@ -97,7 +98,7 @@ def get_VideoDecoderLongVar() -> str:
 
 def get_VideoPixelFormatVar() -> str:
     """Format ``amlogic.pixformat``, e.g. ``10-bit (YUV 4:2:0)`` or ``8-bit, RGB``."""
-    val = info("Player.Process(amlogic.pixformat)").strip()
+    val = platform.pixformat().strip()
     if not val:
         return ""
 
@@ -125,7 +126,7 @@ def get_VideoPixelFormatVar() -> str:
 
 def get_DisplayModeVar() -> str:
     """Format ``amlogic.displaymode`` compactly, e.g. ``1080p 23.976Hz``."""
-    val = info("Player.Process(amlogic.displaymode)").strip()
+    val = platform.displaymode().strip()
     if not val:
         return ""
 
@@ -253,6 +254,11 @@ def get_VideoDecoderNameVar() -> str:
     low = raw.lower()
     if low.startswith("am-"):
         return "AML-"
+    # FFmpeg with a hardware back end (LibreELEC): name the back end.
+    if low.startswith("ff-") and low.endswith("-vaapi"):
+        return "VAAPI-"
+    if low.startswith("ff-") and low.endswith(("-drm_prime", "-v4l2m2m")):
+        return "V4L2-" if low.endswith("-v4l2m2m") else "DRM-"
     if low.startswith("ff-"):
         return "FF-"
     return raw.upper()
@@ -282,7 +288,10 @@ def get_DoviTunnelVar() -> str:
 
     Cached per Amlogic pixel format.
     """
-    pixformat = info("Player.Process(amlogic.pixformat)").strip()
+    if not platform.is_amlogic():
+        return "DV Tunnel" if platform.is_dv_tunnel() else ""
+
+    pixformat = platform.pixformat().strip()
     held = _dovi_tunnel.get(pixformat)
     if held is not None:
         return held
@@ -337,13 +346,13 @@ def _with_unit(value: str, unit: str) -> str:
 
 def get_ModeVar() -> str:
     """Return the first token of ``amlogic.eoft_gamut`` (the mode field)."""
-    parts = info("Player.Process(amlogic.eoft_gamut)").split()
+    parts = platform.eoft_gamut().split()
     return parts[0] if parts else ""
 
 
 def get_GamutVar() -> str:
     """Return the second token of ``amlogic.eoft_gamut`` (the gamut field)."""
-    parts = info("Player.Process(amlogic.eoft_gamut)").split()
+    parts = platform.eoft_gamut().split()
     return parts[1] if len(parts) > 1 else ""
 
 
@@ -906,6 +915,7 @@ def _publish_static_properties(window, published: dict) -> None:
             ("DoviElPresentVar", get_dv_el_present()),
             ("DoviElTypeVar", get_dv_el_type()),
             ("ModeVar", get_ModeVar()),
+            ("EoftGamutVar", platform.eoft_gamut()),
             ("GamutVar", get_GamutVar()),
             ("FpsInfoVar", fps_info_text),
             ("FpsDropVar", fps_out_text),

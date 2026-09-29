@@ -18,6 +18,7 @@ import time
 import zlib
 
 import xbmc
+from core import platform
 from core.log import channel
 from core.utils import (
     PROP_EFFECTIVE_HDR_TYPE,
@@ -1280,10 +1281,11 @@ def _options_for(source: str, playing: bool = True,
 def vs10_state(source: str, playing: bool = True,
                hdr10plus: bool = False) -> dict:
     """Return the VS10 buttons for the source and the current output."""
+    # VS10 is the Amlogic engine: elsewhere there is nothing to switch to.
+    options = _options_for(source, playing, hdr10plus) if platform.is_amlogic() else ()
     return {
-        "options": [{"mode": mode, "label": label}
-                    for mode, label in _options_for(source, playing, hdr10plus)],
-        "output":  info("Player.Process(amlogic.eoft_gamut)").split(",")[0].strip(),
+        "options": [{"mode": mode, "label": label} for mode, label in options],
+        "output":  platform.eoft_gamut().split(",")[0].strip(),
     }
 
 
@@ -1358,7 +1360,7 @@ _switcher = _ModeSwitcher()
 
 def apply_mode(mode: str) -> bool:
     """Start switching to VS10 *mode*; False for modes not offered."""
-    if mode not in _KNOWN_MODES:
+    if mode not in _KNOWN_MODES or not platform.is_amlogic():
         return False
     _switcher.request(mode)
     return True

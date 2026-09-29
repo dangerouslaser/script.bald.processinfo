@@ -422,6 +422,28 @@ def _colourise_el_tag(text: str) -> str:
 _PROFILE_RE = re.compile(r"^\d{1,2}(?:\.\d{1,2})?$")
 
 
+def _detail_parts(hdr_detail: str) -> tuple[str, str, str]:
+    """Split ``VideoPlayer.HdrDetail`` into ``(profile, el_type, cm_version)``.
+
+    Stock Kodi puts the bare profile there (``8.1``).  The Intel Dolby Vision
+    build of LibreELEC, which has no side-data label, extends it with what its
+    bridge is presenting -- ``7.6 FEL · CM4 · HDMI DV`` -- and on that build
+    those tokens are the only per-title Dolby Vision facts there are to show.
+    Anything not recognised yields ``''`` for its part.
+    """
+    segments = [s.strip() for s in (hdr_detail or "").split("\u00b7")]
+    words = segments[0].split() if segments else []
+    profile = words[0] if words and _PROFILE_RE.match(words[0]) else ""
+    el_type = next((w.upper() for w in words[1:] if w.upper() in _EL_COLOURS), "")
+    cm = ""
+    for segment in segments[1:]:
+        match = re.fullmatch(r"CM\s*v?(\d+(?:\.\d+)?)", segment, re.IGNORECASE)
+        if match:
+            version = match.group(1)
+            cm = f"CMv{version if '.' in version else version + '.0'}"
+    return profile, el_type, cm
+
+
 def _hdr_token(label: str, parsed: dict) -> str:
     """Return the source HDR token: '', hdr10, hdr10+, hlg or dolbyvision.
 
@@ -465,8 +487,8 @@ def _dv_profile(hdr_detail: str, config: dict | None, rpu: dict | None) -> str:
     if profile is not None and compat is not None:
         return f"{profile}.{compat}"
 
-    detail = (hdr_detail or "").strip()
-    if _PROFILE_RE.match(detail):
+    detail, _el, _cm = _detail_parts(hdr_detail)
+    if detail:
         return detail
 
     guess = (rpu or {}).get("profile")
@@ -578,6 +600,10 @@ def _build_info(parsed: dict, hdr_label: str, hdr_detail: str) -> dict[str, str]
     token   = _hdr_token(hdr_label, parsed)
     el_type = (header.get("el_type") or "").upper()
     profile = _dv_profile(hdr_detail, config, rpu) if token == "dolbyvision" else ""
+    # Without an RPU (a Kodi with no side-data label), what HdrDetail names.
+    _profile, detail_el, detail_cm = _detail_parts(hdr_detail)
+    if not rpu:
+        el_type = el_type or detail_el
 
     info["hdr_format"]  = token
     info["output_mode"] = _output_mode(token, profile, el_type, hdr10plus)
@@ -589,7 +615,7 @@ def _build_info(parsed: dict, hdr_label: str, hdr_detail: str) -> dict[str, str]
         info["hdr10plus_present"] = "1"
 
     if token == "dolbyvision":
-        info["cm_version"]     = _cm_version(rpu)
+        info["cm_version"]     = _cm_version(rpu) or ("" if rpu else detail_cm)
         info["structure"]      = _structure_abbr(parsed.get("structure"), config, el_type)
         info["dv_version"]     = _dv_record_version(config)
         info["dv_profile"]     = profile

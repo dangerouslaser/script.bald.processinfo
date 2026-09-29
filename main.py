@@ -110,8 +110,10 @@ def main() -> None:
         from ui.splash import open_splash
         open_splash()
     elif command == "run_mode" and len(args) > 1:
-        from ui.mode_select import set_mode
-        set_mode(args[1])
+        from core import platform
+        if platform.is_amlogic():
+            from ui.mode_select import set_mode
+            set_mode(args[1])
     elif command == "pick_color" and len(args) > 1:
         from ui.theme import pick_color
         pick_color(args[1], args[2] if len(args) > 2 else "")
