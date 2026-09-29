@@ -604,6 +604,14 @@ def open_tinyppi() -> None:
 
 def open_dialog_mode() -> None:
     """Open the VS10-mode selection dialog."""
+    # VS10 is the Amlogic Dolby Vision engine; nothing else has one to drive.
+    # A launch mode or keymap that asks for the dialog (a settings restore from
+    # a CoreELEC box, say) gets the overlay instead of an error.
+    if not platform.is_amlogic():
+        log("no VS10 here -- opening the overlay instead of the dialog", xbmc.LOGINFO)
+        open_tinyppi()
+        return
+
     home   = home_window()
     player = xbmc.Player()
 
@@ -613,11 +621,6 @@ def open_dialog_mode() -> None:
         return
     try:
         if not _preflight(home, player, "Toggle close (dialog mode)"):
-            return
-
-        # VS10 is the Amlogic Dolby Vision engine; nothing else has one to drive.
-        if not platform.is_amlogic():
-            _notify_error(33900)
             return
 
         ensure_fonts()
