@@ -24,11 +24,11 @@ from typing import NamedTuple
 import xbmc
 import xbmcaddon
 import xbmcgui
-from core import settings
+from core import platform, settings
 from core.constants import HOME_WINDOW_ID
 from core.log import channel
 from core.protocols import PropertyTarget
-from core.utils import PROP_ACTIVE, PROP_DIALOG_MODE, PROP_RUNNING, info
+from core.utils import PROP_ACTIVE, PROP_DIALOG_MODE, PROP_RUNNING
 from info.dvinfo import get_dv_el_type_raw, get_hdr_format
 from info.properties import output_hdr_token
 from ui.splash_logos import (
@@ -323,7 +323,7 @@ def _active_modes(config: Settings, in_start_window: bool = True) -> list[str]:
 
 def _anything_to_show(config: Settings, player: xbmc.Player) -> bool:
     """Return whether any enabled mode has logos for the current video."""
-    gamut = info("Player.Process(amlogic.eoft_gamut)")
+    gamut = platform.eoft_gamut()
     logos = current_logos(output_hdr_token(gamut))
     has_audio = video_has_audio(player)
     return any(_mode_logos(config.modes[mode], logos, has_audio)
@@ -387,7 +387,7 @@ class _Controller:
         in_start_window = self._in_start_window(now)
 
         # Read once for badge, pill and logos.
-        gamut = info("Player.Process(amlogic.eoft_gamut)")
+        gamut = platform.eoft_gamut()
         hdr_token = output_hdr_token(gamut)
         self._refresh_format(gamut, now)
         self._publish_converting(gamut)

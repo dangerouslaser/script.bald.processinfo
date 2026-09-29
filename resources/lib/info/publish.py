@@ -11,7 +11,7 @@ before a window is shown.  The readings themselves come from
 
 
 import xbmcgui
-from core import settings
+from core import platform, settings
 from core.constants import HOME_WINDOW_ID
 from core.helpers import fps_display_texts
 from core.protocols import PropertyTarget
@@ -378,6 +378,7 @@ def _publish_static_properties(window: PropertyTarget, published: dict[str, str]
             ("DoviElPresentVar", get_dv_el_present()),
             ("DoviElTypeVar", get_dv_el_type()),
             ("ModeVar", get_ModeVar()),
+            ("EoftGamutVar", platform.eoft_gamut()),
             ("GamutVar", get_GamutVar()),
             ("FpsInfoVar", fps_info_text),
             ("FpsDropVar", fps_out_text),

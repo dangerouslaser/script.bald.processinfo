@@ -95,8 +95,10 @@ def _splash(args: list[str]) -> None:
 
 
 def _run_mode(args: list[str]) -> None:
-    from core.vs10 import set_mode
-    set_mode(args[0])
+    from core import platform
+    if platform.is_amlogic():
+        from core.vs10 import set_mode
+        set_mode(args[0])
 
 
 def _pick_color(args: list[str]) -> None:
