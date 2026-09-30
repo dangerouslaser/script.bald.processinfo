@@ -2,7 +2,8 @@ name: Follow upstream
 
 # Keeps the libreelec branch on top of CE-Repo/script.tinyppi main: the fork's
 # commits are replayed onto upstream, tested, and topped with a regenerated
-# "Fork metadata (generated)" commit (tools/fork_metadata.py). Anything that
+# "Fork branding (generated)" commit (tools/fork_branding.py: the rename to
+# Bald Process Info and the fork's own artwork). Anything that
 # goes wrong -- a conflict, a failing test, a new Amlogic-only read upstream --
 # opens (or updates) an issue labelled upstream-sync, assigned to the owner.
 # A later clean run closes it.
@@ -29,7 +30,8 @@ concurrency:
 
 env:
   UPSTREAM: https://github.com/CE-Repo/script.tinyppi.git
-  METADATA_SUBJECT: Fork metadata (generated)
+  METADATA_SUBJECT: Fork branding (generated)
+  OLD_SUBJECT: Fork metadata (generated)
 
 jobs:
   follow:
@@ -56,17 +58,16 @@ jobs:
           base=$(git merge-base HEAD upstream/main)
           # The fork's own commits, oldest first, minus the generated metadata commit(s).
           mapfile -t commits < <(git log --reverse --format='%H %s' "$base..HEAD" \
-            | awk -v s="$METADATA_SUBJECT" '{h=$1; $1=""; sub(/^ /,""); if ($0 != s) print h}')
+            | awk -v s="$METADATA_SUBJECT" -v o="$OLD_SUBJECT" '{h=$1; $1=""; sub(/^ /,""); if ($0 != s && $0 != o) print h}')
           tip_subject=$(git log -1 --format=%s)
           if [ "$base" = "$upstream" ] && [ "$tip_subject" = "$METADATA_SUBJECT" ]; then
-            cp addon.xml /tmp/addon.before
-            python3 tools/fork_metadata.py
-            if cmp -s addon.xml /tmp/addon.before; then
+            python3 tools/fork_branding.py
+            if [ -z "$(git status --porcelain)" ]; then
               echo "Up to date with upstream $upstream; nothing to replay."
               echo "changed=false" >> "$GITHUB_OUTPUT"
               exit 0
             fi
-            git checkout addon.xml
+            git reset --hard -q HEAD && git clean -fdq
           fi
           echo "Replaying ${#commits[@]} fork commit(s) onto upstream $upstream"
           git reset --hard "$upstream"
@@ -86,8 +87,8 @@ jobs:
               exit 1
             fi
           done
-          python3 tools/fork_metadata.py
-          git add addon.xml
+          python3 tools/fork_branding.py
+          git add -A
           git commit -m "$METADATA_SUBJECT" -m "Upstream $(git log -1 --format='%h %s' "$upstream")"
           echo "changed=true" >> "$GITHUB_OUTPUT"
 
@@ -137,7 +138,7 @@ jobs:
             fi
             echo
             echo "The branch was not pushed. Fix locally: replay the fork commits onto upstream/main"
-            echo "(skip the \"$METADATA_SUBJECT\" commit), run \`python3 tools/fork_metadata.py\`,"
+            echo "(skip the \"$METADATA_SUBJECT\" commit), run \`python3 tools/fork_branding.py\`,"
             echo "commit it as \"$METADATA_SUBJECT\", test, and force-push libreelec."
           } > /tmp/issue.md
           api="repos/$GITHUB_REPOSITORY/issues"

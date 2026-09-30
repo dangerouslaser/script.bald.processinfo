@@ -15,7 +15,7 @@ sys.path[:0] = [str(Path(__file__).resolve().parent / "stubs"), str(ROOT / "reso
 import xbmc  # noqa: E402  (the stub)
 from core import platform  # noqa: E402
 from info import dvinfo  # noqa: E402
-import fork_metadata  # noqa: E402
+import fork_branding  # noqa: E402
 
 
 def _facts(**overrides):
@@ -141,32 +141,89 @@ class UpstreamDrift(unittest.TestCase):
         self.assertEqual(unreviewed, {}, "new Amlogic-only reads upstream; check them on LibreELEC")
 
 
-class ForkMetadata(unittest.TestCase):
+class ForkBranding(unittest.TestCase):
     upstream = (
         '<addon id="script.tinyppi" name="TinyPPI" version="2.13.0" provider-name="jamal2362">\n'
         '    <requires>\n'
         '        <import addon="script.module.sidedata" version="1.6.0"/>\n'
         '    </requires>\n'
         '        <source>https://github.com/CE-Repo/script.tinyppi</source>\n'
+        '        <summary lang="de">Deutsch.</summary>\n'
+        '        <summary lang="en">Displays info.</summary>\n'
         '        <description lang="de">Deutsch.</description>\n'
         '        <description lang="en">Opens a window.</description>\n'
     )
 
-    def test_apply(self):
-        text = fork_metadata.apply(self.upstream)
-        self.assertIn(f'version="2.13.0.{fork_metadata.FORK_REVISION}"', text)
-        self.assertIn('provider-name="jamal2362, dangerouslaser"', text)
+    def test_addon_xml(self):
+        text = fork_branding.addon_xml(self.upstream)
+        self.assertIn('id="script.bald.processinfo"', text)
+        self.assertIn('name="Bald Process Info"', text)
+        self.assertIn(f'version="2.13.0.{fork_branding.FORK_REVISION}"', text)
+        self.assertIn('provider-name="dangerouslaser"', text)
         self.assertIn('version="1.6.0" optional="true"/>', text)
-        self.assertIn("<source>https://github.com/dangerouslaser/script.tinyppi</source>", text)
-        self.assertIn("Opens a window. This build also runs on LibreELEC", text)
-        self.assertIn('<description lang="de">Deutsch.</description>', text)
+        self.assertIn("<source>https://github.com/dangerouslaser/script.bald.processinfo</source>", text)
+        self.assertNotIn('lang="de"', text)
+        self.assertIn("not affiliated with or supported by TinyPPI's author", text)
+        self.assertEqual(fork_branding.addon_xml(text), text)
 
-    def test_idempotent(self):
-        once = fork_metadata.apply(self.upstream)
-        self.assertEqual(fork_metadata.apply(once), once)
+    def test_rename_text(self):
+        code = ('xbmcaddon.Addon("script.tinyppi"); "script-tinyppi-main.xml"; '
+                'Window(10000).getProperty("TinyPPI.Running"); log("TinyPPI: x"); open_tinyppi()')
+        self.assertEqual(
+            fork_branding.rename_text(code),
+            'xbmcaddon.Addon("script.bald.processinfo"); "script-baldpi-main.xml"; '
+            'Window(10000).getProperty("BaldPI.Running"); log("BaldPI: x"); open_baldpi()',
+        )
+        self.assertEqual(fork_branding.rename_text('msgid "TinyPPI settings"', display=True),
+                         'msgid "Bald Process Info settings"')
+        upstream_link = "https://github.com/CE-Repo/script.tinyppi"
+        self.assertEqual(fork_branding.rename_text(upstream_link), upstream_link)
 
-    def test_real_addon_xml(self):
-        fork_metadata.apply((ROOT / "addon.xml").read_text(encoding="utf-8"))
+
+class GeneratedTree(unittest.TestCase):
+    """Checks on the tree as the generated branding commit leaves it."""
+
+    def setUp(self):
+        if 'id="script.bald.processinfo"' not in (ROOT / "addon.xml").read_text(encoding="utf-8"):
+            self.skipTest("branding not applied (run tools/fork_branding.py)")
+
+    def test_no_upstream_name_left(self):
+        allowed = ("CE-Repo/script.tinyppi", "ce-repo.github.io", "TinyPPI's author",
+                   "TinyPPI code by U3knOwn")
+        ours = {Path(p) for p in ("README.md", "NOTICE", "LICENSE-ASSETS")}
+        hits = []
+        for path in fork_branding._files(ROOT):
+            rel = path.relative_to(ROOT)
+            if rel in ours or path.suffix not in fork_branding.TEXT_SUFFIXES or path.name == "LICENSE":
+                continue
+            try:
+                text = path.read_text(encoding="utf-8")
+            except UnicodeDecodeError:
+                continue
+            for token in allowed:
+                text = text.replace(token, "")
+            if re.search("tinyppi", text, re.IGNORECASE) or "tinyppi" in path.name.lower():
+                hits.append(str(rel))
+        self.assertEqual(hits, [])
+
+    # Upstream's LICENSE-ASSETS covers these; every file in them must be ours.
+    COVERED = ("icon.png", "fanart.png", "resources/skins/Default/media", "resources/web/icons")
+    THIRD_PARTY = ("resources/skins/Default/media/codecs/",
+                   "resources/skins/Default/media/icons/dv-logo.png",
+                   "resources/skins/Default/media/icons/dv-name.png")
+
+    def test_artwork_is_ours(self):
+        foreign = []
+        for covered in self.COVERED:
+            base = ROOT / covered
+            for path in ([base] if base.is_file() else sorted(p for p in base.rglob("*") if p.is_file())):
+                rel = path.relative_to(ROOT).as_posix()
+                if rel.startswith(self.THIRD_PARTY):
+                    continue
+                ours = ROOT / "branding" / rel
+                if not ours.is_file() or ours.read_bytes() != path.read_bytes():
+                    foreign.append(rel)
+        self.assertEqual(foreign, [], "artwork not from branding/: draw it in tools/make_branding.py")
 
 
 if __name__ == "__main__":
