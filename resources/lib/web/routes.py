@@ -81,7 +81,7 @@ class Handler(BaseHTTPRequestHandler):
     """The request handler; ``server`` holds the producer, token and files."""
 
     protocol_version = "HTTP/1.1"
-    server_version   = "TinyPPI"
+    server_version   = "BaldPI"
     sys_version      = ""
     # Applied before the first request line, so a silent connection cannot
     # hold a thread forever.
@@ -140,7 +140,7 @@ class Handler(BaseHTTPRequestHandler):
     # --- Auth --------------------------------------------------------------
 
     def _presented_token(self) -> str:
-        header = self.headers.get("X-TinyPPI-Token", "")
+        header = self.headers.get("X-BaldPI-Token", "")
         if header:
             return header.strip()
         query = parse_qs(urlparse(self.path).query)
@@ -225,7 +225,7 @@ class Handler(BaseHTTPRequestHandler):
         """
         addon = settings.addon()
         self._send_json({
-            "name":        "TinyPPI",
+            "name":        "BaldPI",
             "version":     addon.getAddonInfo("version"),
             # Per request, so an untrusted host name asks for the token.
             "auth_read":   self._token_to_read(),

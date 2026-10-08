@@ -17,14 +17,14 @@
             <top>0</top>
             <width>1920</width>
             <height>1080</height>
-            <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.GlobalBackgroundColor)]">common/dot-1x1.png</texture>
+            <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.GlobalBackgroundColor)]">common/dot-1x1.png</texture>
         </control>
 
         <control type="group" id="5000">
             <!-- Overlay - SDR - w/o Channels -->
             <control type="group">
-            <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowChannelIcon),0) | String.IsEmpty(Window().Property(ChannelIconVar))</visible>
-            <visible>String.IsEmpty(Window(10000).Property(TinyPPI.EffectiveHdrType))</visible>
+            <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowChannelIcon),0) | String.IsEmpty(Window().Property(ChannelIconVar))</visible>
+            <visible>String.IsEmpty(Window(10000).Property(BaldPI.EffectiveHdrType))</visible>
 
                 <!-- Background - Start -->
                 <control type="group">
@@ -33,7 +33,7 @@
                     <width>23</width>
                     <height>705</height>
                     <control type="image">
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.BackgroundColor)]">background/overlay-bg-start.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.BackgroundColor)]">background/overlay-bg-start.png</texture>
                     </control>
                 </control>
 
@@ -44,7 +44,7 @@
                     <width>1211</width>
                     <height>705</height>
                     <control type="image">
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.BackgroundColor)]">common/dot-1x1.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.BackgroundColor)]">common/dot-1x1.png</texture>
                     </control>
                 </control>
 
@@ -55,69 +55,69 @@
                     <width>23</width>
                     <height>705</height>
                     <control type="image">
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.BackgroundColor)]">background/overlay-bg-end.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.BackgroundColor)]">background/overlay-bg-end.png</texture>
                     </control>
                 </control>
 
                 <!-- Label -->
                 <control type="group">
-                    <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowHeaderTitle),1)</visible>
+                    <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowHeaderTitle),1)</visible>
                     <left>70</left>
                     <top>371</top>
                     <control type="label">
                         <label>[B][CAPITALIZE]$LOCALIZE[10116][/CAPITALIZE][/B]</label>
                         <font>font32</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.HeaderColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.HeaderColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                 </control>
 
                 <!-- Chart icon -->
                 <control type="group">
-                    <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowHeaderIcon),1)</visible>
+                    <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowHeaderIcon),1)</visible>
                     <left>1219</left>
                     <top>375</top>
                     <control type="image">
                         <width>36</width>
                         <height>36</height>
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.HeaderIconColor)]">icons/chart.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.HeaderIconColor)]">icons/chart.png</texture>
                     </control>
                 </control>
 
                 <!-- Line / Top -->
                 <control type="group">
-                    <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowLine),1)</visible>
+                    <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowLine),1)</visible>
                     <left>70</left>
                     <top>445</top>
                     <control type="image">
                         <width>1186</width>
                         <height>1</height>
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.LineColor)]">common/dot-1x1.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.LineColor)]">common/dot-1x1.png</texture>
                     </control>
                 </control>
 
                 <!-- Line / Bottom -->
                 <control type="group">
-                    <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowLine),1)</visible>
+                    <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowLine),1)</visible>
                     <left>70</left>
                     <top>1008</top>
                     <control type="image">
                         <width>1186</width>
                         <height>1</height>
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.LineColor)]">common/dot-1x1.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.LineColor)]">common/dot-1x1.png</texture>
                     </control>
                 </control>
 
                 <!-- Filename -->
                 <control type="group">
-                    <visible>String.IsEqual(Window(Home).Property(TinyPPI.Filename),true)</visible>
+                    <visible>String.IsEqual(Window(Home).Property(BaldPI.Filename),true)</visible>
                     <top>1008</top>
                     <control type="label">
                         <left>70</left>
                         <width>1184</width>
                         <label>$INFO[Player.Filename]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.FilenameColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.FilenameColor)]</textcolor>
                         <align>center</align>
                         <scroll>true</scroll>
                         <scrollspeed>30</scrollspeed>
@@ -128,7 +128,7 @@
 
             <!-- Overlay - wide box: SDR with Channels, and HDR / HLG / DV -->
             <control type="group">
-            <visible>[String.IsEqual(Window(10000).Property(TinyPPI.ShowChannelIcon),1) + !String.IsEmpty(Window().Property(ChannelIconVar)) + String.IsEmpty(Window(10000).Property(TinyPPI.EffectiveHdrType))] | String.Contains(Window(10000).Property(TinyPPI.EffectiveHdrType),hdr) | String.Contains(Window(10000).Property(TinyPPI.EffectiveHdrType),hlg) | String.Contains(Window(10000).Property(TinyPPI.EffectiveHdrType),dolby)</visible>
+            <visible>[String.IsEqual(Window(10000).Property(BaldPI.ShowChannelIcon),1) + !String.IsEmpty(Window().Property(ChannelIconVar)) + String.IsEmpty(Window(10000).Property(BaldPI.EffectiveHdrType))] | String.Contains(Window(10000).Property(BaldPI.EffectiveHdrType),hdr) | String.Contains(Window(10000).Property(BaldPI.EffectiveHdrType),hlg) | String.Contains(Window(10000).Property(BaldPI.EffectiveHdrType),dolby)</visible>
 
                 <!-- Background - Start -->
                 <control type="group">
@@ -137,7 +137,7 @@
                     <width>23</width>
                     <height>705</height>
                     <control type="image">
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.BackgroundColor)]">background/overlay-bg-start.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.BackgroundColor)]">background/overlay-bg-start.png</texture>
                     </control>
                 </control>
 
@@ -148,7 +148,7 @@
                     <width>1804</width>
                     <height>705</height>
                     <control type="image">
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.BackgroundColor)]">common/dot-1x1.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.BackgroundColor)]">common/dot-1x1.png</texture>
                     </control>
                 </control>
 
@@ -159,69 +159,69 @@
                     <width>23</width>
                     <height>705</height>
                     <control type="image">
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.BackgroundColor)]">background/overlay-bg-end.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.BackgroundColor)]">background/overlay-bg-end.png</texture>
                     </control>
                 </control>
 
                 <!-- Label -->
                 <control type="group">
-                    <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowHeaderTitle),1)</visible>
+                    <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowHeaderTitle),1)</visible>
                     <left>70</left>
                     <top>371</top>
                     <control type="label">
                         <label>[B][CAPITALIZE]$LOCALIZE[10116][/CAPITALIZE][/B]</label>
                         <font>font32</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.HeaderColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.HeaderColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                 </control>
 
                 <!-- Chart icon -->
                 <control type="group">
-                    <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowHeaderIcon),1)</visible>
+                    <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowHeaderIcon),1)</visible>
                     <left>1812</left>
                     <top>375</top>
                     <control type="image">
                         <width>36</width>
                         <height>36</height>
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.HeaderIconColor)]">icons/chart.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.HeaderIconColor)]">icons/chart.png</texture>
                     </control>
                 </control>
 
                 <!-- Line / Top -->
                 <control type="group">
-                    <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowLine),1)</visible>
+                    <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowLine),1)</visible>
                     <left>70</left>
                     <top>445</top>
                     <control type="image">
                         <width>1779</width>
                         <height>1</height>
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.LineColor)]">common/dot-1x1.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.LineColor)]">common/dot-1x1.png</texture>
                     </control>
                 </control>
 
                 <!-- Line / Bottom -->
                 <control type="group">
-                    <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowLine),1)</visible>
+                    <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowLine),1)</visible>
                     <left>70</left>
                     <top>1008</top>
                     <control type="image">
                         <width>1779</width>
                         <height>1</height>
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.LineColor)]">common/dot-1x1.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.LineColor)]">common/dot-1x1.png</texture>
                     </control>
                 </control>
 
                 <!-- Filename -->
                 <control type="group">
-                    <visible>String.IsEqual(Window(Home).Property(TinyPPI.Filename),true)</visible>
+                    <visible>String.IsEqual(Window(Home).Property(BaldPI.Filename),true)</visible>
                     <top>1008</top>
                     <control type="label">
                         <left>70</left>
                         <width>1778</width>
                         <label>$INFO[Player.Filename]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.FilenameColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.FilenameColor)]</textcolor>
                         <align>center</align>
                         <scroll>true</scroll>
                         <scrollspeed>30</scrollspeed>
@@ -231,21 +231,21 @@
 
                 <!-- Channel layout - only the SDR variant; DV uses panel 5100 below -->
                 <control type="group">
-                <visible>String.IsEmpty(Window(10000).Property(TinyPPI.EffectiveHdrType))</visible>
+                <visible>String.IsEmpty(Window(10000).Property(BaldPI.EffectiveHdrType))</visible>
                 <top>580</top>
                 <left>1355</left>
                     <control type="image">
                         <width>495</width>
                         <height>298</height>
                         <aspectratio>keep</aspectratio>
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ChannelLayoutColor)]">$INFO[Window().Property(ChannelLayerVar)]</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.ChannelLayoutColor)]">$INFO[Window().Property(ChannelLayerVar)]</texture>
                         <aligny>top</aligny>
                     </control>
                     <control type="image">
                         <width>495</width>
                         <height>298</height>
                         <aspectratio>keep</aspectratio>
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ChannelIconColor)]">$INFO[Window().Property(ChannelIconVar)]</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.ChannelIconColor)]">$INFO[Window().Property(ChannelIconVar)]</texture>
                         <aligny>top</aligny>
                     </control>
                 </control>
@@ -253,8 +253,8 @@
 
             <!-- Channel layout - DV -->
             <control type="group" id="5100">
-            <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowChannelIcon),1) + !String.IsEmpty(Window().Property(ChannelIconVar))</visible>
-            <visible>String.Contains(Window(10000).Property(TinyPPI.EffectiveHdrType),dolby)</visible>
+            <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowChannelIcon),1) + !String.IsEmpty(Window().Property(ChannelIconVar))</visible>
+            <visible>String.Contains(Window(10000).Property(BaldPI.EffectiveHdrType),dolby)</visible>
 
                 <!-- Background - Start -->
                 <control type="group">
@@ -263,7 +263,7 @@
                     <width>23</width>
                     <height>265</height>
                     <control type="image">
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ChannelBackgroundColor)]">background/channels-bg-start.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.ChannelBackgroundColor)]">background/channels-bg-start.png</texture>
                     </control>
                 </control>
 
@@ -274,7 +274,7 @@
                     <width>354</width>
                     <height>265</height>
                     <control type="image">
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ChannelBackgroundColor)]">common/dot-1x1.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.ChannelBackgroundColor)]">common/dot-1x1.png</texture>
                     </control>
                 </control>
 
@@ -285,7 +285,7 @@
                     <width>23</width>
                     <height>265</height>
                     <control type="image">
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ChannelBackgroundColor)]">background/channels-bg-end.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.ChannelBackgroundColor)]">background/channels-bg-end.png</texture>
                     </control>
                 </control>
 
@@ -297,14 +297,14 @@
                         <width>400</width>
                         <height>241</height>
                         <aspectratio>keep</aspectratio>
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ChannelLayoutColor)]">$INFO[Window().Property(ChannelLayerVar)]</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.ChannelLayoutColor)]">$INFO[Window().Property(ChannelLayerVar)]</texture>
                         <aligny>top</aligny>
                     </control>
                     <control type="image">
                         <width>400</width>
                         <height>241</height>
                         <aspectratio>keep</aspectratio>
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ChannelIconColor)]">$INFO[Window().Property(ChannelIconVar)]</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.ChannelIconColor)]">$INFO[Window().Property(ChannelIconVar)]</texture>
                         <aligny>top</aligny>
                     </control>
                 </control>
@@ -327,25 +327,25 @@
                         <width>26</width>
                         <height>26</height>
                         <texture>icons/camcorder.png</texture>
-                        <colordiffuse>$INFO[Window(10000).Property(TinyPPI.IconColor)]</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(BaldPI.IconColor)]</colordiffuse>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Video -->
                     <control type="label">
-                        <label>[B][UPPERCASE]$ADDON[script.tinyppi 32218][/UPPERCASE][/B]</label>
+                        <label>[B][UPPERCASE]$ADDON[script.bald.processinfo 32218][/UPPERCASE][/B]</label>
                         <left>35</left>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.TitleColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.TitleColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Display output -->
                     <control type="label">
                         <top>30</top>
-                        <label>$ADDON[script.tinyppi 32219]:</label>
+                        <label>$ADDON[script.bald.processinfo 32219]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -354,16 +354,16 @@
                         <width>380</width>
                         <label>$INFO[Window().Property(DisplayModeVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Video stream -->
                     <control type="label">
                         <top>60</top>
-                        <label>$ADDON[script.tinyppi 32220]:</label>
+                        <label>$ADDON[script.bald.processinfo 32220]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -372,34 +372,34 @@
                         <width>380</width>
                         <label>$INFO[Window().Property(VideoResolutionVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Pixel format -->
                     <control type="label">
                         <top>90</top>
-                        <label>$ADDON[script.tinyppi 32221]:</label>
+                        <label>$ADDON[script.bald.processinfo 32221]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
                         <left>240</left>
                         <top>90</top>
                         <width>380</width>
-                        <label>$INFO[Window().Property(VideoPixelFormatVar)] [COLOR $INFO[Window(10000).Property(TinyPPI.AccentColor)]]$INFO[Window().Property(DoviTunnelVar),(,)][/COLOR]</label>
+                        <label>$INFO[Window().Property(VideoPixelFormatVar)] [COLOR $INFO[Window(10000).Property(BaldPI.AccentColor)]]$INFO[Window().Property(DoviTunnelVar),(,)][/COLOR]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Bit depth -->
                     <control type="label">
                         <top>120</top>
-                        <label>$ADDON[script.tinyppi 32222]:</label>
+                        <label>$ADDON[script.bald.processinfo 32222]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -408,52 +408,52 @@
                         <width>380</width>
                         <label>$INFO[Window().Property(VideoBitDepthVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Aspect ratio -->
                     <control type="label">
                         <top>150</top>
-                        <label>$ADDON[script.tinyppi 32223]:</label>
+                        <label>$ADDON[script.bald.processinfo 32223]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
                         <left>240</left>
                         <top>150</top>
                         <width>380</width>
-                        <label>$INFO[Window.Property(AspectRatioVar),,:1][COLOR $INFO[Window(10000).Property(TinyPPI.AccentColor)]]$INFO[Window.Property(ImaxVar), (,)][/COLOR]</label>
+                        <label>$INFO[Window.Property(AspectRatioVar),,:1][COLOR $INFO[Window(10000).Property(BaldPI.AccentColor)]]$INFO[Window.Property(ImaxVar), (,)][/COLOR]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Decoder -->
                     <control type="label">
                         <top>180</top>
-                        <label>$ADDON[script.tinyppi 32224]:</label>
+                        <label>$ADDON[script.bald.processinfo 32224]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
                         <left>240</left>
                         <top>180</top>
                         <width>380</width>
-                        <label>$INFO[Window().Property(VideoDecoderNameVar)]$INFO[Window().Property(VideoCodecVar)] [COLOR $INFO[Window(10000).Property(TinyPPI.AccentColor)]]($INFO[Window().Property(VideoDecoderVar)])[/COLOR]</label>
+                        <label>$INFO[Window().Property(VideoDecoderNameVar)]$INFO[Window().Property(VideoCodecVar)] [COLOR $INFO[Window(10000).Property(BaldPI.AccentColor)]]($INFO[Window().Property(VideoDecoderVar)])[/COLOR]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Decode method -->
                     <control type="label">
                         <top>210</top>
-                        <label>$ADDON[script.tinyppi 32225]:</label>
+                        <label>$ADDON[script.bald.processinfo 32225]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -461,7 +461,7 @@
                         <top>210</top>
                         <label>$INFO[Window().Property(VideoDecoderLongVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                 </control>
@@ -477,25 +477,25 @@
                         <width>26</width>
                         <height>26</height>
                         <texture>icons/arrow-progress.png</texture>
-                        <colordiffuse>$INFO[Window(10000).Property(TinyPPI.IconColor)]</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(BaldPI.IconColor)]</colordiffuse>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Processing -->
                     <control type="label">
-                        <label>[B][UPPERCASE]$ADDON[script.tinyppi 32226][/UPPERCASE][/B]</label>
+                        <label>[B][UPPERCASE]$ADDON[script.bald.processinfo 32226][/UPPERCASE][/B]</label>
                         <left>35</left>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.TitleColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.TitleColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Input -->
                     <control type="label">
                         <top>30</top>
-                        <label>$ADDON[script.tinyppi 32227]:</label>
+                        <label>$ADDON[script.bald.processinfo 32227]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -504,16 +504,16 @@
                         <width>380</width>
                         <label>$INFO[Window().Property(DoviProfileVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Converting -->
                     <control type="label">
                         <top>60</top>
-                        <label>$ADDON[script.tinyppi 32228]:</label>
+                        <label>$ADDON[script.bald.processinfo 32228]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="image">
@@ -522,9 +522,9 @@
                         <width>24</width>
                         <height>24</height>
                         <texture>icons/check-circle.png</texture>
-                        <colordiffuse>$INFO[Window(10000).Property(TinyPPI.ConvertYesColor)]</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(BaldPI.ConvertYesColor)]</colordiffuse>
                         <aligny>top</aligny>
-                        <visible>[[String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10) | String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hlg) | String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10plus) | String.IsEmpty(Window(10000).Property(TinyPPI.HdrType))] + String.Contains(Window().Property(EoftGamutVar),DV)] | [[String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10) | String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hlg) | String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10plus) | String.Contains(Window(10000).Property(TinyPPI.HdrType),dolby)] + String.Contains(Window().Property(EoftGamutVar),SDR)] | [[String.IsEmpty(Window(10000).Property(TinyPPI.HdrType)) | String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10plus) | String.Contains(Window(10000).Property(TinyPPI.HdrType),dolby)] + String.IsEqual(Window().Property(ModeVar),HDR10)]</visible>
+                        <visible>[[String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10) | String.IsEqual(Window(10000).Property(BaldPI.HdrType),hlg) | String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10plus) | String.IsEmpty(Window(10000).Property(BaldPI.HdrType))] + String.Contains(Window().Property(EoftGamutVar),DV)] | [[String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10) | String.IsEqual(Window(10000).Property(BaldPI.HdrType),hlg) | String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10plus) | String.Contains(Window(10000).Property(BaldPI.HdrType),dolby)] + String.Contains(Window().Property(EoftGamutVar),SDR)] | [[String.IsEmpty(Window(10000).Property(BaldPI.HdrType)) | String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10plus) | String.Contains(Window(10000).Property(BaldPI.HdrType),dolby)] + String.IsEqual(Window().Property(ModeVar),HDR10)]</visible>
                     </control>
                     <control type="image">
                         <left>240</left>
@@ -532,9 +532,9 @@
                         <width>24</width>
                         <height>24</height>
                         <texture>icons/circle-xmark.png</texture>
-                        <colordiffuse>$INFO[Window(10000).Property(TinyPPI.ConvertNoColor)]</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(BaldPI.ConvertNoColor)]</colordiffuse>
                         <aligny>top</aligny>
-                        <visible>![[[String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10) | String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hlg) | String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10plus) | String.IsEmpty(Window(10000).Property(TinyPPI.HdrType))] + String.Contains(Window().Property(EoftGamutVar),DV)] | [[String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10) | String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hlg) | String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10plus) | String.Contains(Window(10000).Property(TinyPPI.HdrType),dolby)] + String.Contains(Window().Property(EoftGamutVar),SDR)] | [[String.IsEmpty(Window(10000).Property(TinyPPI.HdrType)) | String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10plus) | String.Contains(Window(10000).Property(TinyPPI.HdrType),dolby)] + String.IsEqual(Window().Property(ModeVar),HDR10)]]</visible>
+                        <visible>![[[String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10) | String.IsEqual(Window(10000).Property(BaldPI.HdrType),hlg) | String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10plus) | String.IsEmpty(Window(10000).Property(BaldPI.HdrType))] + String.Contains(Window().Property(EoftGamutVar),DV)] | [[String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10) | String.IsEqual(Window(10000).Property(BaldPI.HdrType),hlg) | String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10plus) | String.Contains(Window(10000).Property(BaldPI.HdrType),dolby)] + String.Contains(Window().Property(EoftGamutVar),SDR)] | [[String.IsEmpty(Window(10000).Property(BaldPI.HdrType)) | String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10plus) | String.Contains(Window(10000).Property(BaldPI.HdrType),dolby)] + String.IsEqual(Window().Property(ModeVar),HDR10)]]</visible>
                     </control>
                     <control type="label">
                         <left>280</left>
@@ -542,9 +542,9 @@
                         <width>380</width>
                         <label>→  DV Profile 8.1</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
-                        <visible>[String.IsEmpty(Window(10000).Property(TinyPPI.HdrType)) | String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10) | String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10plus) | String.Contains(Window(10000).Property(TinyPPI.HdrType),hlg)] + String.Contains(Window().Property(EoftGamutVar),DV)</visible>
+                        <visible>[String.IsEmpty(Window(10000).Property(BaldPI.HdrType)) | String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10) | String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10plus) | String.Contains(Window(10000).Property(BaldPI.HdrType),hlg)] + String.Contains(Window().Property(EoftGamutVar),DV)</visible>
                     </control>
                     <control type="label">
                         <left>280</left>
@@ -552,9 +552,9 @@
                         <width>380</width>
                         <label>→  HDR10</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
-                        <visible>[String.IsEmpty(Window(10000).Property(TinyPPI.HdrType)) | String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10plus) | String.Contains(Window(10000).Property(TinyPPI.HdrType),dolby)] + String.IsEqual(Window().Property(ModeVar),HDR10)</visible>
+                        <visible>[String.IsEmpty(Window(10000).Property(BaldPI.HdrType)) | String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10plus) | String.Contains(Window(10000).Property(BaldPI.HdrType),dolby)] + String.IsEqual(Window().Property(ModeVar),HDR10)</visible>
                     </control>
                     <control type="label">
                         <left>280</left>
@@ -562,26 +562,26 @@
                         <width>380</width>
                         <label>→  SDR</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
-                        <visible>[String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10) | String.IsEqual(Window(10000).Property(TinyPPI.HdrType),hdr10plus) | String.Contains(Window(10000).Property(TinyPPI.HdrType),hlg) | String.Contains(Window(10000).Property(TinyPPI.HdrType),dolby)] + String.Contains(Window().Property(EoftGamutVar),SDR)</visible>
+                        <visible>[String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10) | String.IsEqual(Window(10000).Property(BaldPI.HdrType),hdr10plus) | String.Contains(Window(10000).Property(BaldPI.HdrType),hlg) | String.Contains(Window(10000).Property(BaldPI.HdrType),dolby)] + String.Contains(Window().Property(EoftGamutVar),SDR)</visible>
                     </control>
 
                     <!-- Bitrate -->
                     <control type="label">
                         <top>90</top>
-                        <label>$ADDON[script.tinyppi 32229]:</label>
+                        <label>$ADDON[script.bald.processinfo 32229]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
                         <left>240</left>
                         <top>90</top>
                         <width>380</width>
-                        <label>$INFO[Window().Property(VideoLiveBitrateVar)] - [COLOR $INFO[Window(10000).Property(TinyPPI.AccentColor)]]$INFO[Window().Property(VideoBitrateMBVar),(Ø ,)][/COLOR]</label>
+                        <label>$INFO[Window().Property(VideoLiveBitrateVar)] - [COLOR $INFO[Window(10000).Property(BaldPI.AccentColor)]]$INFO[Window().Property(VideoBitrateMBVar),(Ø ,)][/COLOR]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>!String.IsEmpty(Window().Property(VideoLiveBitrateVar)) + !String.IsEmpty(Window().Property(VideoBitrateMBVar))</visible>
                     </control>
@@ -591,7 +591,7 @@
                         <width>380</width>
                         <label>$INFO[Window().Property(VideoBitrateMBVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>String.IsEmpty(Window().Property(VideoLiveBitrateVar)) + !String.IsEmpty(Window().Property(VideoBitrateMBVar))</visible>
                     </control>
@@ -601,7 +601,7 @@
                         <width>380</width>
                         <label>$INFO[Window().Property(VideoLiveBitrateVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>!String.IsEmpty(Window().Property(VideoLiveBitrateVar)) + String.IsEmpty(Window().Property(VideoBitrateMBVar))</visible>
                     </control>
@@ -610,9 +610,9 @@
                         <left>240</left>
                         <top>90</top>
                         <width>380</width>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>String.IsEmpty(Window().Property(VideoLiveBitrateVar)) + String.IsEmpty(Window().Property(VideoBitrateMBVar))</visible>
                         <aligny>top</aligny>
                     </control>
@@ -620,9 +620,9 @@
                     <!-- Mode -->
                     <control type="label">
                         <top>120</top>
-                        <label>$ADDON[script.tinyppi 32231]:</label>
+                        <label>$ADDON[script.bald.processinfo 32231]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -631,16 +631,16 @@
                         <width>380</width>
                         <label>$INFO[Window().Property(ModeVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Color gamut -->
                     <control type="label">
                         <top>150</top>
-                        <label>$ADDON[script.tinyppi 32232]:</label>
+                        <label>$ADDON[script.bald.processinfo 32232]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -649,16 +649,16 @@
                         <width>380</width>
                         <label>$INFO[Window().Property(GamutVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Media source -->
                     <control type="label">
                         <top>180</top>
-                        <label>$ADDON[script.tinyppi 32233]:</label>
+                        <label>$ADDON[script.bald.processinfo 32233]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -667,25 +667,25 @@
                         <width>380</width>
                         <label>$INFO[Window().Property(MediaSourceVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Playback time -->
                     <control type="label">
                         <top>210</top>
-                        <label>$ADDON[script.tinyppi 32234]:</label>
+                        <label>$ADDON[script.bald.processinfo 32234]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
                         <left>240</left>
                         <top>210</top>
                         <width>380</width>
-                        <label>$INFO[Player.Time] $INFO[Player.Duration,/ ,] [COLOR $INFO[Window(10000).Property(TinyPPI.AccentColor)]]$INFO[Player.Progress,(,%)][/COLOR]</label>
+                        <label>$INFO[Player.Time] $INFO[Player.Duration,/ ,] [COLOR $INFO[Window(10000).Property(BaldPI.AccentColor)]]$INFO[Player.Progress,(,%)][/COLOR]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>!String.IsEmpty(Player.Duration)</visible>
                         <visible>![PVR.IsPlayingTV | PVR.IsPlayingRadio]</visible>
                         <aligny>top</aligny>
@@ -695,9 +695,9 @@
                         <left>240</left>
                         <top>210</top>
                         <width>380</width>
-                        <label>$INFO[PVR.EpgEventElapsedTime(hh:mm:ss)] $INFO[PVR.EpgEventDuration(hh:mm:ss),/ ,] [COLOR $INFO[Window(10000).Property(TinyPPI.AccentColor)]]$INFO[PVR.EpgEventProgress,(,%)][/COLOR]</label>
+                        <label>$INFO[PVR.EpgEventElapsedTime(hh:mm:ss)] $INFO[PVR.EpgEventDuration(hh:mm:ss),/ ,] [COLOR $INFO[Window(10000).Property(BaldPI.AccentColor)]]$INFO[PVR.EpgEventProgress,(,%)][/COLOR]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>[PVR.IsPlayingTV | PVR.IsPlayingRadio] + ![String.IsEmpty(PVR.EpgEventDuration) | String.IsEqual(PVR.EpgEventDuration,00:00) | String.IsEqual(PVR.EpgEventDuration,00:00:00)]</visible>
                         <aligny>top</aligny>
                     </control>
@@ -705,9 +705,9 @@
                         <left>240</left>
                         <top>210</top>
                         <width>380</width>
-                        <label>$ADDON[script.tinyppi 32235]</label>
+                        <label>$ADDON[script.bald.processinfo 32235]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>[PVR.IsPlayingTV | PVR.IsPlayingRadio] + [String.IsEmpty(PVR.EpgEventDuration) | String.IsEqual(PVR.EpgEventDuration,00:00) | String.IsEqual(PVR.EpgEventDuration,00:00:00)]</visible>
                         <aligny>top</aligny>
                     </control>
@@ -716,9 +716,9 @@
                         <left>240</left>
                         <top>210</top>
                         <width>380</width>
-                        <label>$ADDON[script.tinyppi 32236]</label>
+                        <label>$ADDON[script.bald.processinfo 32236]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>String.IsEmpty(Player.Duration) + Player.IsInternetStream + ![PVR.IsPlayingTV | PVR.IsPlayingRadio]</visible>
                         <aligny>top</aligny>
                     </control>
@@ -727,9 +727,9 @@
                         <left>240</left>
                         <top>210</top>
                         <width>380</width>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>String.IsEmpty(Player.Duration) + ![PVR.IsPlayingTV | PVR.IsPlayingRadio] + !Player.IsInternetStream</visible>
                         <aligny>top</aligny>
                     </control>
@@ -745,33 +745,33 @@
                         <width>26</width>
                         <height>26</height>
                         <texture>icons/volume.png</texture>
-                        <colordiffuse>$INFO[Window(10000).Property(TinyPPI.IconColor)]</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(BaldPI.IconColor)]</colordiffuse>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Audio -->
                     <control type="label">
-                        <label>[B][UPPERCASE]$ADDON[script.tinyppi 32237][/UPPERCASE][/B]</label>
+                        <label>[B][UPPERCASE]$ADDON[script.bald.processinfo 32237][/UPPERCASE][/B]</label>
                         <left>35</left>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.TitleColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.TitleColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Audio codec -->
                     <control type="label">
                         <top>30</top>
-                        <label>$ADDON[script.tinyppi 32238]:</label>
+                        <label>$ADDON[script.bald.processinfo 32238]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
                         <left>240</left>
                         <top>30</top>
                         <width>400</width>
-                        <label>$INFO[Window().Property(AudioCodecVar)] $INFO[Window().Property(AudioChannelsVar)] [COLOR $INFO[Window(10000).Property(TinyPPI.AccentColor)]]$INFO[Window().Property(AudioCodecSpatialVar)][/COLOR]</label>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <label>$INFO[Window().Property(AudioCodecVar)] $INFO[Window().Property(AudioChannelsVar)] [COLOR $INFO[Window(10000).Property(BaldPI.AccentColor)]]$INFO[Window().Property(AudioCodecSpatialVar)][/COLOR]</label>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <font>font23_narrow</font>
                         <aligny>top</aligny>
                     </control>
@@ -779,9 +779,9 @@
                     <!-- Audio resolution -->
                     <control type="label">
                         <top>60</top>
-                        <label>$ADDON[script.tinyppi 32239]:</label>
+                        <label>$ADDON[script.bald.processinfo 32239]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -790,7 +790,7 @@
                         <width>400</width>
                         <label>$INFO[Window().Property(AudioBitDepthVar),, / ]$INFO[Window().Property(AudioSampleRateVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>!String.IsEmpty(Window().Property(AudioBitDepthVar)) | !String.IsEmpty(Window().Property(AudioSampleRateVar))</visible>
                         <aligny>top</aligny>
                     </control>
@@ -799,9 +799,9 @@
                         <left>240</left>
                         <top>60</top>
                         <width>400</width>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>String.IsEmpty(Window().Property(AudioBitDepthVar)) + String.IsEmpty(Window().Property(AudioSampleRateVar))</visible>
                         <aligny>top</aligny>
                     </control>
@@ -809,9 +809,9 @@
                     <!-- Input -->
                     <control type="label">
                         <top>90</top>
-                        <label>$ADDON[script.tinyppi 32240]:</label>
+                        <label>$ADDON[script.bald.processinfo 32240]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -821,25 +821,25 @@
                         <label>$INFO[Window().Property(AudioChannelsInputVar)]</label>
                         <font>font23_narrow</font>
                         <scroll>true</scroll>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Output -->
                     <control type="label">
                         <top>120</top>
-                        <label>$ADDON[script.tinyppi 32241]:</label>
+                        <label>$ADDON[script.bald.processinfo 32241]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
                         <left>240</left>
                         <top>120</top>
                         <width>400</width>
-                        <label>$ADDON[script.tinyppi 32242]</label>
+                        <label>$ADDON[script.bald.processinfo 32242]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>Player.Passthrough + !String.IsEmpty(VideoPlayer.AudioCodec)</visible>
                         <aligny>top</aligny>
                     </control>
@@ -849,7 +849,7 @@
                         <width>400</width>
                         <label>$INFO[Player.Process(audiochannelssink)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>!Player.Passthrough + !String.IsEmpty(VideoPlayer.AudioCodec)</visible>
                         <aligny>top</aligny>
                     </control>
@@ -857,9 +857,9 @@
                         <left>240</left>
                         <top>120</top>
                         <width>400</width>
-                        <label>$ADDON[script.tinyppi 32243]</label>
+                        <label>$ADDON[script.bald.processinfo 32243]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>!Player.Passthrough + !String.IsEmpty(VideoPlayer.AudioCodec) + String.IsEmpty(Player.Process(audiochannelssink))</visible>
                         <aligny>top</aligny>
                     </control>
@@ -868,9 +868,9 @@
                         <left>240</left>
                         <top>120</top>
                         <width>400</width>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>String.IsEmpty(VideoPlayer.AudioCodec)</visible>
                         <aligny>top</aligny>
                     </control>
@@ -878,18 +878,18 @@
                     <!-- Bitrate -->
                     <control type="label">
                         <top>150</top>
-                        <label>$ADDON[script.tinyppi 32229]:</label>
+                        <label>$ADDON[script.bald.processinfo 32229]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
                         <left>240</left>
                         <top>150</top>
                         <width>400</width>
-                        <label>$INFO[Window().Property(AudioLiveBitrateVar)] - [COLOR $INFO[Window(10000).Property(TinyPPI.AccentColor)]]$INFO[Window().Property(AudioBitrateKBVar),(Ø ,)][/COLOR]</label>
+                        <label>$INFO[Window().Property(AudioLiveBitrateVar)] - [COLOR $INFO[Window(10000).Property(BaldPI.AccentColor)]]$INFO[Window().Property(AudioBitrateKBVar),(Ø ,)][/COLOR]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>!String.IsEmpty(Window().Property(AudioLiveBitrateVar)) + !String.IsEmpty(Window().Property(AudioBitrateKBVar))</visible>
                     </control>
@@ -899,7 +899,7 @@
                         <width>400</width>
                         <label>$INFO[Window().Property(AudioBitrateKBVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>String.IsEmpty(Window().Property(AudioLiveBitrateVar)) + !String.IsEmpty(Window().Property(AudioBitrateKBVar))</visible>
                     </control>
@@ -909,7 +909,7 @@
                         <width>400</width>
                         <label>$INFO[Window().Property(AudioLiveBitrateVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>!String.IsEmpty(Window().Property(AudioLiveBitrateVar)) + String.IsEmpty(Window().Property(AudioBitrateKBVar))</visible>
                     </control>
@@ -918,9 +918,9 @@
                         <left>240</left>
                         <top>150</top>
                         <width>400</width>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>String.IsEmpty(Window().Property(AudioLiveBitrateVar)) + String.IsEmpty(Window().Property(AudioBitrateKBVar))</visible>
                         <aligny>top</aligny>
                     </control>
@@ -928,9 +928,9 @@
                     <!-- Audio language -->
                     <control type="label">
                         <top>180</top>
-                        <label>$ADDON[script.tinyppi 32244]:</label>
+                        <label>$ADDON[script.bald.processinfo 32244]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -940,7 +940,7 @@
                         <label>$INFO[Window().Property(AudioNameShortVar)]$INFO[Window().Property(AudioNameVar), | ]</label>
                         <font>font23_narrow</font>
                         <scroll>true</scroll>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>!String.IsEmpty(Window().Property(AudioNameShortVar))</visible>
                         <aligny>top</aligny>
                     </control>
@@ -949,9 +949,9 @@
                         <left>240</left>
                         <top>180</top>
                         <width>400</width>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>String.IsEmpty(Window().Property(AudioNameShortVar))</visible>
                         <aligny>top</aligny>
                     </control>
@@ -959,19 +959,19 @@
                     <!-- Subtitle language -->
                     <control type="label">
                         <top>210</top>
-                        <label>$ADDON[script.tinyppi 32245]:</label>
+                        <label>$ADDON[script.bald.processinfo 32245]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
                         <left>240</left>
                         <top>210</top>
                         <width>400</width>
-                        <label>$INFO[Window().Property(SubtitleNameShortVar)]$INFO[Window().Property(SubtitleNameVar), | ] [COLOR $INFO[Window(10000).Property(TinyPPI.AccentColor)]]$INFO[Window().Property(SubtitleCodecVar),(,)][/COLOR]</label>
+                        <label>$INFO[Window().Property(SubtitleNameShortVar)]$INFO[Window().Property(SubtitleNameVar), | ] [COLOR $INFO[Window(10000).Property(BaldPI.AccentColor)]]$INFO[Window().Property(SubtitleCodecVar),(,)][/COLOR]</label>
                         <font>font23_narrow</font>
                         <scroll>true</scroll>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>VideoPlayer.SubtitlesEnabled</visible>
                         <visible>VideoPlayer.HasSubtitles</visible>
                         <aligny>top</aligny>
@@ -981,9 +981,9 @@
                         <left>240</left>
                         <top>210</top>
                         <width>400</width>
-                        <label>$ADDON[script.tinyppi 32246]</label>
+                        <label>$ADDON[script.bald.processinfo 32246]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>VideoPlayer.HasSubtitles + !VideoPlayer.SubtitlesEnabled</visible>
                         <aligny>top</aligny>
                     </control>
@@ -992,9 +992,9 @@
                         <left>240</left>
                         <top>210</top>
                         <width>400</width>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <visible>!VideoPlayer.HasSubtitles</visible>
                         <aligny>top</aligny>
                     </control>
@@ -1011,43 +1011,43 @@
                         <width>26</width>
                         <height>26</height>
                         <texture>icons/memory.png</texture>
-                        <colordiffuse>$INFO[Window(10000).Property(TinyPPI.IconColor)]</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(BaldPI.IconColor)]</colordiffuse>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- System -->
                     <control type="label">
-                        <label>[B][UPPERCASE]$ADDON[script.tinyppi 32247][/UPPERCASE][/B]</label>
+                        <label>[B][UPPERCASE]$ADDON[script.bald.processinfo 32247][/UPPERCASE][/B]</label>
                         <left>35</left>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.TitleColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.TitleColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- In / drop / out -->
                     <control type="label">
                         <top>30</top>
-                        <label>$ADDON[script.tinyppi 32248]:</label>
+                        <label>$ADDON[script.bald.processinfo 32248]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
                         <left>240</left>
                         <top>30</top>
                         <width>400</width>
-                        <label>$INFO[Window().Property(FpsInfoVar)] = [COLOR $INFO[Window(10000).Property(TinyPPI.FpsColor)]]$INFO[Window().Property(FpsDropVar),, FPS][/COLOR]</label>
+                        <label>$INFO[Window().Property(FpsInfoVar)] = [COLOR $INFO[Window(10000).Property(BaldPI.FpsColor)]]$INFO[Window().Property(FpsDropVar),, FPS][/COLOR]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Processor -->
                     <control type="label">
                         <top>60</top>
-                        <label>$ADDON[script.tinyppi 32249]:</label>
+                        <label>$ADDON[script.bald.processinfo 32249]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1056,16 +1056,16 @@
                         <width>400</width>
                         <label>$INFO[Window().Property(CpuTopUsageVar),, |] $INFO[Window().Property(CpuUsageVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Temperature -->
                     <control type="label">
                         <top>90</top>
-                        <label>$ADDON[script.tinyppi 32250]:</label>
+                        <label>$ADDON[script.bald.processinfo 32250]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1074,7 +1074,7 @@
                         <width>65</width>
                         <label>$INFO[System.CPUTemperature]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="group">
@@ -1089,7 +1089,7 @@
                             <centertop>50%</centertop>
                             <texturebg colordiffuse="1fededed" border="6">progress/bar.png</texturebg>
                             <lefttexture colordiffuse="00ffffff">common/dot-1x1.png</lefttexture>
-                            <midtexture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ProgressColor)]" border="6">progress/bar.png</midtexture>
+                            <midtexture colordiffuse="$INFO[Window(10000).Property(BaldPI.ProgressColor)]" border="6">progress/bar.png</midtexture>
                             <righttexture colordiffuse="00ffffff">common/dot-1x1.png</righttexture>
                         </control>
                     </control>
@@ -1097,9 +1097,9 @@
                     <!-- Memory usage -->
                     <control type="label">
                         <top>120</top>
-                        <label>$ADDON[script.tinyppi 32251]:</label>
+                        <label>$ADDON[script.bald.processinfo 32251]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1108,7 +1108,7 @@
                         <width>65</width>
                         <label>$INFO[system.memory(used.percent)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="group">
@@ -1124,7 +1124,7 @@
                             <info>system.memory(used)</info>
                             <texturebg colordiffuse="1fededed" border="6">progress/bar.png</texturebg>
                             <lefttexture colordiffuse="00ffffff">common/dot-1x1.png</lefttexture>
-                            <midtexture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ProgressColor)]" border="6">progress/bar.png</midtexture>
+                            <midtexture colordiffuse="$INFO[Window(10000).Property(BaldPI.ProgressColor)]" border="6">progress/bar.png</midtexture>
                             <righttexture colordiffuse="00ffffff">common/dot-1x1.png</righttexture>
                         </control>
                     </control>
@@ -1132,9 +1132,9 @@
                     <!-- Player cache -->
                     <control type="label">
                         <top>150</top>
-                        <label>$ADDON[script.tinyppi 32252]:</label>
+                        <label>$ADDON[script.bald.processinfo 32252]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1143,7 +1143,7 @@
                         <width>65</width>
                         <label>$INFO[Player.CacheLevel,,%]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="group">
@@ -1159,7 +1159,7 @@
                             <info>Player.CacheLevel</info>
                             <texturebg colordiffuse="1fededed" border="6">progress/bar.png</texturebg>
                             <lefttexture colordiffuse="00ffffff">common/dot-1x1.png</lefttexture>
-                            <midtexture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ProgressColor)]" border="6">progress/bar.png</midtexture>
+                            <midtexture colordiffuse="$INFO[Window(10000).Property(BaldPI.ProgressColor)]" border="6">progress/bar.png</midtexture>
                             <righttexture colordiffuse="00ffffff">common/dot-1x1.png</righttexture>
                         </control>
                     </control>
@@ -1167,9 +1167,9 @@
                     <!-- Video queue / data -->
                     <control type="label">
                         <top>180</top>
-                        <label>$ADDON[script.tinyppi 32253]:</label>
+                        <label>$ADDON[script.bald.processinfo 32253]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1179,7 +1179,7 @@
                         <width>65</width>
                         <label>$INFO[Player.Process(VideoQueueLevel)]%</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1189,7 +1189,7 @@
                         <width>65</width>
                         <label>100%</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="group">
@@ -1205,7 +1205,7 @@
                             <info>Player.Process(VideoQueueLevel)</info>
                             <texturebg colordiffuse="1fededed" border="6">progress/bar.png</texturebg>
                             <lefttexture colordiffuse="00ffffff">common/dot-1x1.png</lefttexture>
-                            <midtexture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ProgressColor)]" border="6">progress/bar.png</midtexture>
+                            <midtexture colordiffuse="$INFO[Window(10000).Property(BaldPI.ProgressColor)]" border="6">progress/bar.png</midtexture>
                             <righttexture colordiffuse="00ffffff">common/dot-1x1.png</righttexture>
                         </control>
                     </control>
@@ -1216,7 +1216,7 @@
                         <width>62</width>
                         <label>$INFO[Player.Process(VideoQueueDataLevel)]%</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <align>center</align>
                     </control>
@@ -1227,7 +1227,7 @@
                         <width>62</width>
                         <label>100%</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <align>center</align>
                     </control>
@@ -1244,7 +1244,7 @@
                             <info>Player.Process(VideoQueueDataLevel)</info>
                             <texturebg colordiffuse="1fededed" border="6">progress/bar.png</texturebg>
                             <lefttexture colordiffuse="00ffffff">common/dot-1x1.png</lefttexture>
-                            <midtexture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ProgressColor)]" border="6">progress/bar.png</midtexture>
+                            <midtexture colordiffuse="$INFO[Window(10000).Property(BaldPI.ProgressColor)]" border="6">progress/bar.png</midtexture>
                             <righttexture colordiffuse="00ffffff">common/dot-1x1.png</righttexture>
                         </control>
                     </control>
@@ -1252,9 +1252,9 @@
                     <!-- Audio queue / data -->
                     <control type="label">
                         <top>210</top>
-                        <label>$ADDON[script.tinyppi 32254]:</label>
+                        <label>$ADDON[script.bald.processinfo 32254]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1264,7 +1264,7 @@
                         <width>65</width>
                         <label>$INFO[Player.Process(AudioQueueLevel)]%</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1274,7 +1274,7 @@
                         <width>65</width>
                         <label>100%</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="group">
@@ -1290,7 +1290,7 @@
                             <info>Player.Process(AudioQueueLevel)</info>
                             <texturebg colordiffuse="1fededed" border="6">progress/bar.png</texturebg>
                             <lefttexture colordiffuse="00ffffff">common/dot-1x1.png</lefttexture>
-                            <midtexture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ProgressColor)]" border="6">progress/bar.png</midtexture>
+                            <midtexture colordiffuse="$INFO[Window(10000).Property(BaldPI.ProgressColor)]" border="6">progress/bar.png</midtexture>
                             <righttexture colordiffuse="00ffffff">common/dot-1x1.png</righttexture>
                         </control>
                     </control>
@@ -1301,7 +1301,7 @@
                         <width>62</width>
                         <label>$INFO[Player.Process(AudioQueueDataLevel)]%</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <align>center</align>
                     </control>
@@ -1312,7 +1312,7 @@
                         <width>62</width>
                         <label>100%</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <align>center</align>
                     </control>
@@ -1329,7 +1329,7 @@
                             <info>Player.Process(AudioQueueDataLevel)</info>
                             <texturebg colordiffuse="1fededed" border="6">progress/bar.png</texturebg>
                             <lefttexture colordiffuse="00ffffff">common/dot-1x1.png</lefttexture>
-                            <midtexture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ProgressColor)]" border="6">progress/bar.png</midtexture>
+                            <midtexture colordiffuse="$INFO[Window(10000).Property(BaldPI.ProgressColor)]" border="6">progress/bar.png</midtexture>
                             <righttexture colordiffuse="00ffffff">common/dot-1x1.png</righttexture>
                         </control>
                     </control>
@@ -1337,11 +1337,11 @@
 
                 <!-- Group: HDR Static Metadata -->
                 <control type="group">
-                <visible>String.Contains(Window(10000).Property(TinyPPI.EffectiveHdrType),hdr) | String.Contains(Window(10000).Property(TinyPPI.EffectiveHdrType),hlg)</visible>
+                <visible>String.Contains(Window(10000).Property(BaldPI.EffectiveHdrType),hdr) | String.Contains(Window(10000).Property(BaldPI.EffectiveHdrType),hlg)</visible>
                     <left>1315</left>
 
                     <control type="group">
-                        <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowChannelIcon),1) + !String.IsEmpty(Window().Property(ChannelIconVar))</visible>
+                        <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowChannelIcon),1) + !String.IsEmpty(Window().Property(ChannelIconVar))</visible>
                         <top>30</top>
 
                         <!-- HDR Static Metadata Icon -->
@@ -1350,25 +1350,25 @@
                             <width>26</width>
                             <height>26</height>
                             <texture>icons/layer-group.png</texture>
-                            <colordiffuse>$INFO[Window(10000).Property(TinyPPI.IconColor)]</colordiffuse>
+                            <colordiffuse>$INFO[Window(10000).Property(BaldPI.IconColor)]</colordiffuse>
                             <aligny>top</aligny>
                         </control>
 
                         <!-- HDR Static Metadata -->
                         <control type="label">
-                            <label>[B][UPPERCASE]$ADDON[script.tinyppi 32255][/UPPERCASE][/B]</label>
+                            <label>[B][UPPERCASE]$ADDON[script.bald.processinfo 32255][/UPPERCASE][/B]</label>
                             <left>35</left>
                             <font>font23_narrow</font>
-                            <textcolor>$INFO[Window(10000).Property(TinyPPI.TitleColor)]</textcolor>
+                            <textcolor>$INFO[Window(10000).Property(BaldPI.TitleColor)]</textcolor>
                             <aligny>top</aligny>
                         </control>
 
                         <!-- HDR10 MDL -->
                         <control type="label">
                             <top>30</top>
-                            <label>$ADDON[script.tinyppi 32256]:</label>
+                            <label>$ADDON[script.bald.processinfo 32256]:</label>
                             <font>font23_narrow</font>
-                            <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                            <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                             <aligny>top</aligny>
                         </control>
                         <control type="label">
@@ -1378,16 +1378,16 @@
                             <align>right</align>
                             <label>$INFO[Window().Property(Hdr10MdlVar)]</label>
                             <font>font23_narrow</font>
-                            <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                            <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                             <aligny>top</aligny>
                         </control>
 
                         <!-- HDR10 MaxCLL/FALL -->
                         <control type="label">
                             <top>60</top>
-                            <label>$ADDON[script.tinyppi 32257]:</label>
+                            <label>$ADDON[script.bald.processinfo 32257]:</label>
                             <font>font23_narrow</font>
-                            <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                            <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                             <aligny>top</aligny>
                         </control>
                         <control type="label">
@@ -1397,7 +1397,7 @@
                             <align>right</align>
                             <label>$INFO[Window().Property(Hdr10MaxCllFallVar)]</label>
                             <font>font23_narrow</font>
-                            <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                            <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                             <aligny>top</aligny>
                         </control>
 
@@ -1408,21 +1408,21 @@
                                 <width>495</width>
                                 <height>298</height>
                                 <aspectratio>keep</aspectratio>
-                                <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ChannelLayoutColor)]">$INFO[Window().Property(ChannelLayerVar)]</texture>
+                                <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.ChannelLayoutColor)]">$INFO[Window().Property(ChannelLayerVar)]</texture>
                                 <aligny>top</aligny>
                             </control>
                             <control type="image">
                                 <width>495</width>
                                 <height>298</height>
                                 <aspectratio>keep</aspectratio>
-                                <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.ChannelIconColor)]">$INFO[Window().Property(ChannelIconVar)]</texture>
+                                <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.ChannelIconColor)]">$INFO[Window().Property(ChannelIconVar)]</texture>
                                 <aligny>top</aligny>
                             </control>
                         </control>
                     </control>
 
                     <control type="group">
-                        <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowChannelIcon),0) | String.IsEmpty(Window().Property(ChannelIconVar))</visible>
+                        <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowChannelIcon),0) | String.IsEmpty(Window().Property(ChannelIconVar))</visible>
                         <top>207</top>
 
                         <!-- HDR Static Metadata Icon -->
@@ -1431,25 +1431,25 @@
                             <width>26</width>
                             <height>26</height>
                             <texture>icons/layer-group.png</texture>
-                            <colordiffuse>$INFO[Window(10000).Property(TinyPPI.IconColor)]</colordiffuse>
+                            <colordiffuse>$INFO[Window(10000).Property(BaldPI.IconColor)]</colordiffuse>
                             <aligny>top</aligny>
                         </control>
 
                         <!-- HDR Static Metadata -->
                         <control type="label">
-                            <label>[B][UPPERCASE]$ADDON[script.tinyppi 32255][/UPPERCASE][/B]</label>
+                            <label>[B][UPPERCASE]$ADDON[script.bald.processinfo 32255][/UPPERCASE][/B]</label>
                             <left>35</left>
                             <font>font23_narrow</font>
-                            <textcolor>$INFO[Window(10000).Property(TinyPPI.TitleColor)]</textcolor>
+                            <textcolor>$INFO[Window(10000).Property(BaldPI.TitleColor)]</textcolor>
                             <aligny>top</aligny>
                         </control>
 
                         <!-- HDR10 MDL -->
                         <control type="label">
                             <top>30</top>
-                            <label>$ADDON[script.tinyppi 32256]:</label>
+                            <label>$ADDON[script.bald.processinfo 32256]:</label>
                             <font>font23_narrow</font>
-                            <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                            <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                             <aligny>top</aligny>
                         </control>
                         <control type="label">
@@ -1459,16 +1459,16 @@
                             <align>right</align>
                             <label>$INFO[Window().Property(Hdr10MdlVar)]</label>
                             <font>font23_narrow</font>
-                            <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                            <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                             <aligny>top</aligny>
                         </control>
 
                         <!-- HDR10 MaxCLL/FALL -->
                         <control type="label">
                             <top>60</top>
-                            <label>$ADDON[script.tinyppi 32257]:</label>
+                            <label>$ADDON[script.bald.processinfo 32257]:</label>
                             <font>font23_narrow</font>
-                            <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                            <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                             <aligny>top</aligny>
                         </control>
                         <control type="label">
@@ -1478,7 +1478,7 @@
                             <align>right</align>
                             <label>$INFO[Window().Property(Hdr10MaxCllFallVar)]</label>
                             <font>font23_narrow</font>
-                            <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                            <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                             <aligny>top</aligny>
                         </control>
                     </control>
@@ -1486,12 +1486,12 @@
 
                 <!-- Group: Dolby Vision -->
                 <control type="group">
-                <visible>String.Contains(Window(10000).Property(TinyPPI.EffectiveHdrType),dolby)</visible>
+                <visible>String.Contains(Window(10000).Property(BaldPI.EffectiveHdrType),dolby)</visible>
                     <left>1315</left>
 
                     <!-- Dolby Vision Logo Icon -->
                     <control type="image">
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.IconColor)]">icons/dv-logo.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.IconColor)]">icons/dv-logo.png</texture>
                         <aspectratio align="left">keep</aspectratio>
                         <height>23</height>
                         <top>7</top>
@@ -1500,7 +1500,7 @@
 
                     <!-- Dolby Vision Name Icon -->
                     <control type="image">
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.TitleColor)]">icons/dv-name.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.TitleColor)]">icons/dv-name.png</texture>
                         <aspectratio align="left">keep</aspectratio>
                         <height>23</height>
                         <left>35</left>
@@ -1511,9 +1511,9 @@
                     <!-- CM Version -->
                     <control type="label">
                         <top>30</top>
-                        <label>$ADDON[script.tinyppi 32258]:</label>
+                        <label>$ADDON[script.bald.processinfo 32258]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1523,7 +1523,7 @@
                         <top>30</top>
                         <label>$INFO[Window().Property(DoviCmVersionVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>!String.IsEmpty(Window().Property(DoviCmVersionVar))</visible>
                     </control>
@@ -1533,9 +1533,9 @@
                         <align>right</align>
                         <left>177</left>
                         <top>30</top>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>String.IsEmpty(Window().Property(DoviCmVersionVar))</visible>
                     </control>
@@ -1543,9 +1543,9 @@
                     <!-- Structure -->
                     <control type="label">
                         <top>60</top>
-                        <label>$ADDON[script.tinyppi 32259]:</label>
+                        <label>$ADDON[script.bald.processinfo 32259]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1555,7 +1555,7 @@
                         <top>60</top>
                         <label>$INFO[Window().Property(DoviStructureVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>!String.IsEmpty(Window().Property(DoviStructureVar))</visible>
                     </control>
@@ -1565,9 +1565,9 @@
                         <align>right</align>
                         <left>177</left>
                         <top>60</top>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>String.IsEmpty(Window().Property(DoviStructureVar))</visible>
                     </control>
@@ -1575,9 +1575,9 @@
                     <!-- Version -->
                     <control type="label">
                         <top>90</top>
-                        <label>$ADDON[script.tinyppi 32260]:</label>
+                        <label>$ADDON[script.bald.processinfo 32260]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1587,7 +1587,7 @@
                         <top>90</top>
                         <label>$INFO[Window().Property(DoviVersionVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>!String.IsEmpty(Window().Property(DoviVersionVar))</visible>
                     </control>
@@ -1597,9 +1597,9 @@
                         <align>right</align>
                         <left>177</left>
                         <top>90</top>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>String.IsEmpty(Window().Property(DoviVersionVar))</visible>
                     </control>
@@ -1607,9 +1607,9 @@
                     <!-- Profile -->
                     <control type="label">
                         <top>120</top>
-                        <label>$ADDON[script.tinyppi 32261]:</label>
+                        <label>$ADDON[script.bald.processinfo 32261]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1619,7 +1619,7 @@
                         <top>120</top>
                         <label>$INFO[Window().Property(DoviProfileNumberVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>!String.IsEmpty(Window().Property(DoviProfileNumberVar))</visible>
                     </control>
@@ -1629,9 +1629,9 @@
                         <align>right</align>
                         <left>177</left>
                         <top>120</top>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>String.IsEmpty(Window().Property(DoviProfileNumberVar))</visible>
                     </control>
@@ -1639,9 +1639,9 @@
                     <!-- RPU / BL -->
                     <control type="label">
                         <top>150</top>
-                        <label>$ADDON[script.tinyppi 32262] :</label>
+                        <label>$ADDON[script.bald.processinfo 32262] :</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="image">
@@ -1650,7 +1650,7 @@
                         <width>24</width>
                         <height>24</height>
                         <texture>icons/check-circle.png</texture>
-                        <colordiffuse>$INFO[Window(10000).Property(TinyPPI.ConvertYesColor)]</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(BaldPI.ConvertYesColor)]</colordiffuse>
                         <aspectratio>keep</aspectratio>
                         <visible>String.IsEqual(Window.Property(DoviRpuPresentVar),true)</visible>
                     </control>
@@ -1660,7 +1660,7 @@
                         <width>24</width>
                         <height>24</height>
                         <texture>icons/circle-xmark.png</texture>
-                        <colordiffuse>$INFO[Window(10000).Property(TinyPPI.ConvertNoColor)]</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(BaldPI.ConvertNoColor)]</colordiffuse>
                         <aspectratio>keep</aspectratio>
                         <visible>String.IsEqual(Window.Property(DoviRpuPresentVar),false)</visible>
                     </control>
@@ -1670,9 +1670,9 @@
                         <top>150</top>
                         <width>270</width>
                         <align>right</align>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>String.IsEmpty(Window.Property(DoviRpuPresentVar))</visible>
                     </control>
@@ -1685,7 +1685,7 @@
                         <align>center</align>
                         <label>|</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
@@ -1695,7 +1695,7 @@
                         <width>24</width>
                         <height>24</height>
                         <texture>icons/check-circle.png</texture>
-                        <colordiffuse>$INFO[Window(10000).Property(TinyPPI.ConvertYesColor)]</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(BaldPI.ConvertYesColor)]</colordiffuse>
                         <aspectratio>keep</aspectratio>
                         <visible>String.IsEqual(Window.Property(DoviBlPresentVar),true)</visible>
                     </control>
@@ -1705,7 +1705,7 @@
                         <width>24</width>
                         <height>24</height>
                         <texture>icons/circle-xmark.png</texture>
-                        <colordiffuse>$INFO[Window(10000).Property(TinyPPI.ConvertNoColor)]</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(BaldPI.ConvertNoColor)]</colordiffuse>
                         <aspectratio>keep</aspectratio>
                         <visible>String.IsEqual(Window.Property(DoviBlPresentVar),false)</visible>
                     </control>
@@ -1715,9 +1715,9 @@
                         <top>150</top>
                         <width>270</width>
                         <align>right</align>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>String.IsEmpty(Window.Property(DoviBlPresentVar))</visible>
                     </control>
@@ -1725,9 +1725,9 @@
                     <!-- EL / Type -->
                     <control type="label">
                         <top>180</top>
-                        <label>$ADDON[script.tinyppi 32263]:</label>
+                        <label>$ADDON[script.bald.processinfo 32263]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="image">
@@ -1736,7 +1736,7 @@
                         <width>24</width>
                         <height>24</height>
                         <texture>icons/check-circle.png</texture>
-                        <colordiffuse>$INFO[Window(10000).Property(TinyPPI.ConvertYesColor)]</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(BaldPI.ConvertYesColor)]</colordiffuse>
                         <aspectratio>keep</aspectratio>
                         <visible>String.IsEqual(Window.Property(DoviElPresentVar),true)</visible>
                     </control>
@@ -1746,7 +1746,7 @@
                         <width>24</width>
                         <height>24</height>
                         <texture>icons/circle-xmark.png</texture>
-                        <colordiffuse>$INFO[Window(10000).Property(TinyPPI.ConvertNoColor)]</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(BaldPI.ConvertNoColor)]</colordiffuse>
                         <aspectratio>keep</aspectratio>
                         <visible>String.IsEqual(Window.Property(DoviElPresentVar),false)</visible>
                     </control>
@@ -1756,9 +1756,9 @@
                         <top>180</top>
                         <width>270</width>
                         <align>right</align>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>String.IsEmpty(Window.Property(DoviElPresentVar))</visible>
                     </control>
@@ -1771,7 +1771,7 @@
                         <align>center</align>
                         <label>|</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
@@ -1782,7 +1782,7 @@
                         <align>right</align>
                         <label>$INFO[Window.Property(DoviElTypeVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>String.Contains(Window.Property(DoviElTypeVar),FEL) | String.Contains(Window.Property(DoviElTypeVar),MEL)</visible>
                     </control>
@@ -1792,7 +1792,7 @@
                         <width>24</width>
                         <height>24</height>
                         <texture>icons/circle-xmark.png</texture>
-                        <colordiffuse>$INFO[Window(10000).Property(TinyPPI.ConvertNoColor)]</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(BaldPI.ConvertNoColor)]</colordiffuse>
                         <aspectratio>keep</aspectratio>
                         <visible>![String.Contains(Window.Property(DoviElTypeVar),FEL) | String.Contains(Window.Property(DoviElTypeVar),MEL) | String.IsEmpty(Window.Property(DoviElTypeVar))]</visible>
                     </control>
@@ -1802,9 +1802,9 @@
                         <top>180</top>
                         <width>270</width>
                         <align>right</align>
-                        <label>$ADDON[script.tinyppi 32230]</label>
+                        <label>$ADDON[script.bald.processinfo 32230]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>String.IsEmpty(Window.Property(DoviElTypeVar))</visible>
                     </control>
@@ -1812,7 +1812,7 @@
 
                 <!-- Group: Metadata -->
                 <control type="group">
-                <visible>String.Contains(Window(10000).Property(TinyPPI.EffectiveHdrType),dolby)</visible>
+                <visible>String.Contains(Window(10000).Property(BaldPI.EffectiveHdrType),dolby)</visible>
                     <top>230</top>
                     <left>1315</left>
 
@@ -1822,25 +1822,25 @@
                         <width>26</width>
                         <height>26</height>
                         <texture>icons/layer-group.png</texture>
-                        <colordiffuse>$INFO[Window(10000).Property(TinyPPI.IconColor)]</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(BaldPI.IconColor)]</colordiffuse>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- Metadata -->
                     <control type="label">
-                        <label>[B][UPPERCASE]$ADDON[script.tinyppi 32264][/UPPERCASE][/B]</label>
+                        <label>[B][UPPERCASE]$ADDON[script.bald.processinfo 32264][/UPPERCASE][/B]</label>
                         <left>35</left>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.TitleColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.TitleColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- HDR10 MDL -->
                     <control type="label">
                         <top>30</top>
-                        <label>$ADDON[script.tinyppi 32256]:</label>
+                        <label>$ADDON[script.bald.processinfo 32256]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1850,16 +1850,16 @@
                         <align>right</align>
                         <label>$INFO[Window().Property(Hdr10MdlVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- HDR10 CLL/FALL -->
                     <control type="label">
                         <top>57</top>
-                        <label>$ADDON[script.tinyppi 32257]:</label>
+                        <label>$ADDON[script.bald.processinfo 32257]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1869,25 +1869,25 @@
                         <align>right</align>
                         <label>$INFO[Window().Property(Hdr10MaxCllFallVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- RPU MDL: the source range when the RPU carries it, else L6 -->
                     <control type="label">
                         <top>100</top>
-                        <label>$ADDON[script.tinyppi 32265]:</label>
+                        <label>$ADDON[script.bald.processinfo 32265]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>!String.IsEmpty(Window().Property(DoviRpuMdlFromSourceVar))</visible>
                     </control>
                     <!-- L6 MDL -->
                     <control type="label">
                         <top>100</top>
-                        <label>$ADDON[script.tinyppi 32266]:</label>
+                        <label>$ADDON[script.bald.processinfo 32266]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>String.IsEmpty(Window().Property(DoviRpuMdlFromSourceVar))</visible>
                     </control>
@@ -1898,25 +1898,25 @@
                         <align>right</align>
                         <label>$INFO[Window().Property(DoviRpuMdlVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- RPU MaxCLL/FALL -->
                     <control type="label">
                         <top>127</top>
-                        <label>$ADDON[script.tinyppi 32267]:</label>
+                        <label>$ADDON[script.bald.processinfo 32267]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>!String.IsEmpty(Window().Property(DoviRpuMdlFromSourceVar))</visible>
                     </control>
                     <!-- L6 MaxCLL/FALL -->
                     <control type="label">
                         <top>127</top>
-                        <label>$ADDON[script.tinyppi 32268]:</label>
+                        <label>$ADDON[script.bald.processinfo 32268]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                         <visible>String.IsEmpty(Window().Property(DoviRpuMdlFromSourceVar))</visible>
                     </control>
@@ -1927,16 +1927,16 @@
                         <align>right</align>
                         <label>$INFO[Window().Property(DoviLevel6RpuMaxCllFallVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- L1 Lum Min/Max/Ø -->
                     <control type="label">
                         <top>170</top>
-                        <label>$ADDON[script.tinyppi 32269]:</label>
+                        <label>$ADDON[script.bald.processinfo 32269]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1946,16 +1946,16 @@
                         <align>right</align>
                         <label>$INFO[Window().Property(DoviLevel1FllVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- L1 PQ Min/Max/Ø -->
                     <control type="label">
                         <top>197</top>
-                        <label>$ADDON[script.tinyppi 32270]:</label>
+                        <label>$ADDON[script.bald.processinfo 32270]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -1965,16 +1965,16 @@
                         <align>right</align>
                         <label>$INFO[Window().Property(DoviLevel1PqVar)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
 
                     <!-- L5 Active Area -->
                     <control type="label">
                         <top>240</top>
-                        <label>$ADDON[script.tinyppi 32271]:</label>
+                        <label>$ADDON[script.bald.processinfo 32271]:</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.DescriptionColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.DescriptionColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="grouplist">
@@ -1990,11 +1990,11 @@
                             <height>31</height>
                             <label>$INFO[Window.Property(DoviLevel5OffsetsVar)]</label>
                             <font>font23_narrow</font>
-                            <textcolor>$INFO[Window(10000).Property(TinyPPI.OutputColor)]</textcolor>
+                            <textcolor>$INFO[Window(10000).Property(BaldPI.OutputColor)]</textcolor>
                             <aligny>top</aligny>
                         </control>
                         <control type="group">
-                            <visible>String.IsEqual(Window.Property(DoviLevel5OffsetsIconVisible),true) + String.IsEqual(Window(10000).Property(TinyPPI.ShowL5Icon),1)</visible>
+                            <visible>String.IsEqual(Window.Property(DoviLevel5OffsetsIconVisible),true) + String.IsEqual(Window(10000).Property(BaldPI.ShowL5Icon),1)</visible>
                             <width>57</width>
                             <height>27</height>
                             <control type="image">
@@ -2002,7 +2002,7 @@
                                 <width>57</width>
                                 <height>27</height>
                                 <texture>icons/lrtb.png</texture>
-                                <colordiffuse>$INFO[Window(10000).Property(TinyPPI.IconColor)]</colordiffuse>
+                                <colordiffuse>$INFO[Window(10000).Property(BaldPI.IconColor)]</colordiffuse>
                                 <aspectratio>keep</aspectratio>
                             </control>
                         </control>

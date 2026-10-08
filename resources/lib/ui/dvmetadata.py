@@ -7,7 +7,7 @@ OK on the overlay of a DV source opens a live list of every block
 ``script.module.sidedata`` parsed (configuration record, RPU header to L255,
 static SEIs).  OK on a section opens it alone; Back goes up one level each
 time.  Windows never nest: each closes before the next opens, driven by
-``open_dv_metadata`` (and ``ui.overlay.open_tinyppi`` above it).
+``open_dv_metadata`` (and ``ui.overlay.open_baldpi`` above it).
 
 The rows come from info.dvmetadata.  This module fills and refreshes the
 list, highlights changed readings for the highlight duration, and marks
@@ -34,7 +34,7 @@ from info import dvmetadata
 # The add-on folder (via the shared settings handle, see core.settings).
 _ADDON_PATH = settings.addon().getAddonInfo("path")
 
-# The metadata list control (see script-tinyppi-dv-metadata.xml).
+# The metadata list control (see script-baldpi-dv-metadata.xml).
 _LIST = 6000
 
 # Controls resized to fit the rows.  A skin cannot size a panel by its row
@@ -56,10 +56,10 @@ _PANEL_GAP = 100
 _MAX_ROWS = 25
 
 # Set while a single section is shown; the skin uses it for the key hint.
-_SECTION_VIEW = "TinyPPI.MetadataSectionView"
+_SECTION_VIEW = "BaldPI.MetadataSectionView"
 
 # Highlight color for changed readings (published by ui.theme).
-_CHANGED_COLOR = "TinyPPI.MetadataChangedColor"
+_CHANGED_COLOR = "BaldPI.MetadataChangedColor"
 
 # Setting for the highlight duration in ms (independent of _REFRESH).
 _CHANGED_HOLD = "metadata_changed_duration"
@@ -573,7 +573,7 @@ class DVSectionDialog(DVMetadataDialog):
 def _dialog(dialog_class):
     """Create a *dialog_class* window from the metadata skin file."""
     return dialog_class(
-        "script-tinyppi-dv-metadata.xml",
+        "script-baldpi-dv-metadata.xml",
         _ADDON_PATH,
         "Default",
         "1080i",

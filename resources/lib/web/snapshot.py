@@ -7,7 +7,7 @@
 collector instead of an ``xbmcgui.Window`` yields exactly the overlay's
 values (formatting, units, N/A labels) without duplicating the logic.
 
-The row layout mirrors ``script-tinyppi-main.xml`` and reuses its string
+The row layout mirrors ``script-baldpi-main.xml`` and reuses its string
 ids, so translations and label changes apply to both.
 """
 
@@ -45,7 +45,7 @@ from info.properties import (
 )
 
 # Home property with the source HDR type (from publish_hdr_type).
-_PROP_HDR_TYPE = "TinyPPI.HdrType"
+_PROP_HDR_TYPE = "BaldPI.HdrType"
 
 
 class PropertySink:
@@ -436,7 +436,7 @@ def _output_token(mode: str) -> str:
 def _output_hdr_type(mode: str, source: str) -> str:
     """Return the output as a source-style token, to detect conversions.
 
-    Unlike ``TinyPPI.EffectiveHdrType`` (a layout choice) this is the real
+    Unlike ``BaldPI.EffectiveHdrType`` (a layout choice) this is the real
     output.  An unreadable mode returns *source*, so passthrough is never
     reported as a conversion.
     """
@@ -1254,7 +1254,7 @@ def _has_no_modes(key: str, hdr10plus: bool = False) -> bool:
     """Return whether the source has no VS10 modes.
 
     HDR10+ and HLG are no VS10 inputs; *hdr10plus* covers DV + HDR10+
-    hybrids (from ``TinyPPI.Hdr10PlusPresent``), which read as DV.
+    hybrids (from ``BaldPI.Hdr10PlusPresent``), which read as DV.
     """
     return hdr10plus or _is_hdr10_plus(key) or "hlg" in key
 
@@ -1325,7 +1325,7 @@ class _ModeSwitcher:
                 return
             self._running = True
         try:
-            threading.Thread(target=self._work, name="TinyPPI-vs10",
+            threading.Thread(target=self._work, name="BaldPI-vs10",
                              daemon=True).start()
         except RuntimeError as exc:
             with self._lock:

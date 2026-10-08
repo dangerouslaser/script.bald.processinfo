@@ -34,7 +34,7 @@ from web import library
 from web.server import WebDashboard
 
 # Notification methods that open a view.  A keymap can send one directly
-# (NotifyAll(script.tinyppi,open_overlay)), the fastest way in: no script
+# (NotifyAll(script.bald.processinfo,open_overlay)), the fastest way in: no script
 # is started.
 _OPEN_METHODS = {f"Other.{message}": view
                  for view, message in OPEN_MESSAGES.items()}
@@ -177,11 +177,11 @@ class KodiMonitor(xbmc.Monitor):
         as with main.py.  Failures are logged, not raised.
         """
         try:
-            from ui.overlay import open_dialog_mode, open_tinyppi
+            from ui.overlay import open_dialog_mode, open_baldpi
             if view == "dialog":
                 open_dialog_mode()
             else:
-                open_tinyppi()
+                open_baldpi()
         except Exception as exc:
             _log(f"Exception opening the {view} view: {exc}", xbmc.LOGERROR)
 
@@ -196,7 +196,7 @@ class KodiMonitor(xbmc.Monitor):
             addon = settings.addon()
             if not (addon.getSettingBool("splash_enabled")
                     or addon.getSettingBool("splash_show_on_osd")
-                    or addon.getSettingBool("splash_show_on_tinyppi")):
+                    or addon.getSettingBool("splash_show_on_baldpi")):
                 return
             if not xbmc.getCondVisibility("Player.HasVideo"):
                 return
@@ -209,7 +209,7 @@ class KodiMonitor(xbmc.Monitor):
         if not self._splash_lock.acquire(blocking=False):
             return
         threading.Thread(
-            target=self._run_splash, name="TinyPPI-splash", daemon=True,
+            target=self._run_splash, name="BaldPI-splash", daemon=True,
         ).start()
 
     def _run_splash(self) -> None:

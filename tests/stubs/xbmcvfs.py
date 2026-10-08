@@ -3,13 +3,13 @@
 
 """Stand-in for Kodi's ``xbmcvfs`` module, on the local filesystem.
 
-``special://`` paths map into a scratch folder (``TINYPPI_TEST_HOME``).
+``special://`` paths map into a scratch folder (``BALDPI_TEST_HOME``).
 """
 
 import os
 import tempfile
 
-HOME = os.environ.get("TINYPPI_TEST_HOME") or os.path.join(tempfile.gettempdir(), "tinyppi-test-home")
+HOME = os.environ.get("BALDPI_TEST_HOME") or os.path.join(tempfile.gettempdir(), "baldpi-test-home")
 
 
 def translatePath(path):

@@ -21,7 +21,7 @@ VERSION = ET.parse(os.path.join(ROOT, "addon.xml")).getroot().get("version")
 
 
 class Addon:
-    def __init__(self, addon_id="script.tinyppi"):
+    def __init__(self, addon_id="script.bald.processinfo"):
         self._id = addon_id
 
     def getSetting(self, key):
@@ -48,5 +48,5 @@ class Addon:
             "path": ROOT,
             "profile": f"special://profile/addon_data/{self._id}/",
             "version": VERSION,
-            "name": "TinyPPI",
+            "name": "BaldPI",
         }.get(key, "")

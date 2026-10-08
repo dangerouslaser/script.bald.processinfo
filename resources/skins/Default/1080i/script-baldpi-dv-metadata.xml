@@ -16,7 +16,7 @@
             <top>0</top>
             <width>1920</width>
             <height>1080</height>
-            <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.MetadataGlobalBackgroundColor)]">common/dot-1x1.png</texture>
+            <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.MetadataGlobalBackgroundColor)]">common/dot-1x1.png</texture>
         </control>
 
         <control type="group">
@@ -40,58 +40,58 @@
                 <top>0</top>
                 <width>23</width>
                 <height>1000</height>
-                <texture border="0,20,0,20" colordiffuse="$INFO[Window(10000).Property(TinyPPI.MetadataBackgroundColor)]">background/dv-overlay-bg-start.png</texture>
+                <texture border="0,20,0,20" colordiffuse="$INFO[Window(10000).Property(BaldPI.MetadataBackgroundColor)]">background/dv-overlay-bg-start.png</texture>
             </control>
             <control type="image" id="6101">
                 <left>23</left>
                 <top>0</top>
                 <width>1244</width>
                 <height>1000</height>
-                <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.MetadataBackgroundColor)]">common/dot-1x1.png</texture>
+                <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.MetadataBackgroundColor)]">common/dot-1x1.png</texture>
             </control>
             <control type="image" id="6102">
                 <left>1267</left>
                 <top>0</top>
                 <width>23</width>
                 <height>1000</height>
-                <texture border="0,20,0,20" colordiffuse="$INFO[Window(10000).Property(TinyPPI.MetadataBackgroundColor)]">background/dv-overlay-bg-end.png</texture>
+                <texture border="0,20,0,20" colordiffuse="$INFO[Window(10000).Property(BaldPI.MetadataBackgroundColor)]">background/dv-overlay-bg-end.png</texture>
             </control>
 
             <!-- Label -->
             <control type="group">
-                <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowHeaderTitle),1)</visible>
+                <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowHeaderTitle),1)</visible>
                 <left>35</left>
                 <top>35</top>
                 <control type="label">
-                    <label>[B]$ADDON[script.tinyppi 32079][/B]</label>
+                    <label>[B]$ADDON[script.bald.processinfo 32079][/B]</label>
                     <font>font32</font>
-                    <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataHeaderColor)]</textcolor>
+                    <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataHeaderColor)]</textcolor>
                     <aligny>top</aligny>
                 </control>
             </control>
 
             <!-- Dolby Vision logo icon -->
             <control type="group">
-                <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowHeaderIcon),1)</visible>
+                <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowHeaderIcon),1)</visible>
                 <left>1150</left>
                 <top>48</top>
                 <control type="image">
                     <width>105</width>
                     <height>32</height>
                     <aspectratio align="right" aligny="top">keep</aspectratio>
-                    <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.MetadataHeaderIconColor)]">icons/dv-logo.png</texture>
+                    <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.MetadataHeaderIconColor)]">icons/dv-logo.png</texture>
                 </control>
             </control>
 
             <!-- Line / Top -->
             <control type="group">
-                <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowLine),1)</visible>
+                <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowLine),1)</visible>
                 <left>35</left>
                 <top>120</top>
                 <control type="image">
                     <width>1220</width>
                     <height>1</height>
-                    <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.MetadataLineColor)]">common/dot-1x1.png</texture>
+                    <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.MetadataLineColor)]">common/dot-1x1.png</texture>
                 </control>
             </control>
 
@@ -117,7 +117,7 @@
                         <height>30</height>
                         <label>[B][UPPERCASE]$INFO[ListItem.Property(head)][/UPPERCASE][/B]$INFO[ListItem.Property(state), (,)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataTitleColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataTitleColor)]</textcolor>
                         <aligny>center</aligny>
                     </control>
                     <control type="image">
@@ -125,7 +125,7 @@
                         <top>28</top>
                         <width>1195</width>
                         <height>1</height>
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.MetadataLineColor)]">$INFO[ListItem.Property(rule)]</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.MetadataLineColor)]">$INFO[ListItem.Property(rule)]</texture>
                     </control>
                     <control type="label">
                         <left>0</left>
@@ -134,7 +134,7 @@
                         <height>30</height>
                         <label>$INFO[ListItem.Label]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataNameColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataNameColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -145,7 +145,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Label2]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <!-- Table cells: a fixed 160 px slot per column, so a
@@ -162,7 +162,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(h0)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -173,7 +173,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(h1)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -184,7 +184,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(h2)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -195,7 +195,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(h3)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -206,7 +206,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(h4)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -217,7 +217,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(h5)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -228,7 +228,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(c0)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -239,7 +239,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(c1)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -250,7 +250,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(c2)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -261,7 +261,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(c3)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -272,7 +272,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(c4)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -283,7 +283,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(c5)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <!-- Compact table cells: HDR10+ Distribution keeps all
@@ -299,7 +299,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch0)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -310,7 +310,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch1)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -321,7 +321,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch2)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -332,7 +332,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch3)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -343,7 +343,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch4)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -354,7 +354,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch5)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -365,7 +365,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch6)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -376,7 +376,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch7)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -387,7 +387,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch8)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -398,7 +398,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc0)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -409,7 +409,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc1)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -420,7 +420,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc2)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -431,7 +431,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc3)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -442,7 +442,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc4)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -453,7 +453,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc5)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -464,7 +464,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc6)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -475,7 +475,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc7)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -486,7 +486,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc8)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                 </itemlayout>
@@ -496,7 +496,7 @@
                         <top>-2</top>
                         <width>1215</width>
                         <height>32</height>
-                        <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.MetadataFocusColor)]">common/dot-1x1.png</texture>
+                        <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.MetadataFocusColor)]">common/dot-1x1.png</texture>
                     </control>
                     <control type="label">
                         <left>0</left>
@@ -505,7 +505,7 @@
                         <height>30</height>
                         <label>[B][UPPERCASE]$INFO[ListItem.Property(head)][/UPPERCASE][/B]$INFO[ListItem.Property(state), (,)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataTitleColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataTitleColor)]</textcolor>
                         <aligny>center</aligny>
                     </control>
                     <control type="label">
@@ -515,7 +515,7 @@
                         <height>30</height>
                         <label>$INFO[ListItem.Label]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataNameColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataNameColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -526,7 +526,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Label2]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <!-- Table cells: a fixed 160 px slot per column, so a
@@ -543,7 +543,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(h0)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -554,7 +554,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(h1)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -565,7 +565,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(h2)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -576,7 +576,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(h3)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -587,7 +587,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(h4)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -598,7 +598,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(h5)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -609,7 +609,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(c0)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -620,7 +620,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(c1)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -631,7 +631,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(c2)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -642,7 +642,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(c3)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -653,7 +653,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(c4)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -664,7 +664,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(c5)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <!-- Compact table cells: HDR10+ Distribution keeps all
@@ -680,7 +680,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch0)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -691,7 +691,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch1)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -702,7 +702,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch2)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -713,7 +713,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch3)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -724,7 +724,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch4)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -735,7 +735,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch5)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -746,7 +746,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch6)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -757,7 +757,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch7)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -768,7 +768,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(ch8)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataColumnColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataColumnColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -779,7 +779,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc0)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -790,7 +790,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc1)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -801,7 +801,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc2)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -812,7 +812,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc3)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -823,7 +823,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc4)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -834,7 +834,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc5)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -845,7 +845,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc6)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -856,7 +856,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc7)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                     <control type="label">
@@ -867,7 +867,7 @@
                         <align>right</align>
                         <label>$INFO[ListItem.Property(cc8)]</label>
                         <font>font23_narrow</font>
-                        <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataValueColor)]</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataValueColor)]</textcolor>
                         <aligny>top</aligny>
                     </control>
                 </focusedlayout>
@@ -881,23 +881,23 @@
                 <height>750</height>
                 <orientation>vertical</orientation>
                 <showonepage>false</showonepage>
-                <texturesliderbackground colordiffuse="$INFO[Window(10000).Property(TinyPPI.MetadataLineColor)]">common/dot-1x1.png</texturesliderbackground>
-                <texturesliderbar colordiffuse="$INFO[Window(10000).Property(TinyPPI.MetadataScrollbarColor)]">common/dot-1x1.png</texturesliderbar>
-                <texturesliderbarfocus colordiffuse="$INFO[Window(10000).Property(TinyPPI.MetadataScrollbarColor)]">common/dot-1x1.png</texturesliderbarfocus>
-                <textureslidernib colordiffuse="$INFO[Window(10000).Property(TinyPPI.MetadataScrollbarColor)]">common/dot-1x1.png</textureslidernib>
-                <textureslidernibfocus colordiffuse="$INFO[Window(10000).Property(TinyPPI.MetadataScrollbarColor)]">common/dot-1x1.png</textureslidernibfocus>
+                <texturesliderbackground colordiffuse="$INFO[Window(10000).Property(BaldPI.MetadataLineColor)]">common/dot-1x1.png</texturesliderbackground>
+                <texturesliderbar colordiffuse="$INFO[Window(10000).Property(BaldPI.MetadataScrollbarColor)]">common/dot-1x1.png</texturesliderbar>
+                <texturesliderbarfocus colordiffuse="$INFO[Window(10000).Property(BaldPI.MetadataScrollbarColor)]">common/dot-1x1.png</texturesliderbarfocus>
+                <textureslidernib colordiffuse="$INFO[Window(10000).Property(BaldPI.MetadataScrollbarColor)]">common/dot-1x1.png</textureslidernib>
+                <textureslidernibfocus colordiffuse="$INFO[Window(10000).Property(BaldPI.MetadataScrollbarColor)]">common/dot-1x1.png</textureslidernibfocus>
             </control>
 
             <!-- Line / Bottom.  Follows the foot of the list, so it carries
                  an id and its own visibility rather than a group's: a control
                  ui.dvmetadata moves has to be one it can ask for. -->
             <control type="image" id="6110">
-                <visible>String.IsEqual(Window(10000).Property(TinyPPI.ShowLine),1)</visible>
+                <visible>String.IsEqual(Window(10000).Property(BaldPI.ShowLine),1)</visible>
                 <left>35</left>
                 <top>925</top>
                 <width>1220</width>
                 <height>1</height>
-                <texture colordiffuse="$INFO[Window(10000).Property(TinyPPI.MetadataLineColor)]">common/dot-1x1.png</texture>
+                <texture colordiffuse="$INFO[Window(10000).Property(BaldPI.MetadataLineColor)]">common/dot-1x1.png</texture>
             </control>
 
             <!-- Key hint.  The same window shows the whole list and a single
@@ -906,27 +906,27 @@
                  way back.  ui.dvmetadata sets the property while a section is
                  the one on screen. -->
             <control type="label" id="6120">
-                <visible>!String.IsEqual(Window(10000).Property(TinyPPI.MetadataSectionView),1)</visible>
+                <visible>!String.IsEqual(Window(10000).Property(BaldPI.MetadataSectionView),1)</visible>
                 <left>35</left>
                 <top>945</top>
                 <width>1220</width>
                 <height>30</height>
                 <align>center</align>
-                <label>$ADDON[script.tinyppi 32272]</label>
+                <label>$ADDON[script.bald.processinfo 32272]</label>
                 <font>font23_narrow</font>
-                <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataHintColor)]</textcolor>
+                <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataHintColor)]</textcolor>
                 <aligny>top</aligny>
             </control>
             <control type="label" id="6121">
-                <visible>String.IsEqual(Window(10000).Property(TinyPPI.MetadataSectionView),1)</visible>
+                <visible>String.IsEqual(Window(10000).Property(BaldPI.MetadataSectionView),1)</visible>
                 <left>35</left>
                 <top>945</top>
                 <width>1220</width>
                 <height>30</height>
                 <align>center</align>
-                <label>$ADDON[script.tinyppi 32273]</label>
+                <label>$ADDON[script.bald.processinfo 32273]</label>
                 <font>font23_narrow</font>
-                <textcolor>$INFO[Window(10000).Property(TinyPPI.MetadataHintColor)]</textcolor>
+                <textcolor>$INFO[Window(10000).Property(BaldPI.MetadataHintColor)]</textcolor>
                 <aligny>top</aligny>
             </control>
         </control>

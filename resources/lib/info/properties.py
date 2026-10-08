@@ -69,7 +69,7 @@ from info.dvinfo import (
 
 # Channel graphics ship pre-scaled to the skin's boxes, so Kodi never
 # resamples them: SDR and HDR10/HDR10+/HLG use 495x298, DV the smaller
-# 400x241 panel (see script-tinyppi-main.xml).
+# 400x241 panel (see script-baldpi-main.xml).
 _CHANNEL_DIR_DEFAULT = "channels/495x298"
 _CHANNEL_DIR_DV      = "channels/400x241"
 
@@ -81,7 +81,7 @@ def _channel_dir() -> str:
 
 def _channels_shown() -> bool:
     """Return whether the channel graphics are switched on."""
-    return home_window().getProperty("TinyPPI.ShowChannelIcon") == "1"
+    return home_window().getProperty("BaldPI.ShowChannelIcon") == "1"
 
 
 # --- Video properties ------------------------------------------------------
@@ -642,8 +642,8 @@ def _metadata_units() -> tuple[str, str]:
     Hiding the unit (``unit_type``) hides both, so either all metadata rows
     show a unit or none do.
     """
-    unit_color = info(f"Window({HOME_WINDOW_ID}).Property(TinyPPI.UnitColor)")
-    unit_label = info(f"Window({HOME_WINDOW_ID}).Property(TinyPPI.UnitLabel)")
+    unit_color = info(f"Window({HOME_WINDOW_ID}).Property(BaldPI.UnitColor)")
+    unit_label = info(f"Window({HOME_WINDOW_ID}).Property(BaldPI.UnitLabel)")
 
     if not unit_label:
         return "", ""
@@ -670,7 +670,7 @@ def _channel_setting_for(hdr_type: str) -> str:
 
 
 def publish_channel_visibility(home=None, published=None) -> None:
-    """Publish ``TinyPPI.ShowChannelIcon`` for the current output type.
+    """Publish ``BaldPI.ShowChannelIcon`` for the current output type.
 
     Re-read on every poll: the HDR type is detected asynchronously, and a
     settings change should apply without reopening.
@@ -678,7 +678,7 @@ def publish_channel_visibility(home=None, published=None) -> None:
     *published* is the polling loop's record; without it every call writes.
     """
     home = home or home_window()
-    setting = _channel_setting_for(home.getProperty("TinyPPI.EffectiveHdrType"))
+    setting = _channel_setting_for(home.getProperty("BaldPI.EffectiveHdrType"))
     enabled = settings.addon().getSetting(setting) == "true"
     if published is None:
         published = {}
@@ -686,7 +686,7 @@ def publish_channel_visibility(home=None, published=None) -> None:
         home,
         published,
         (
-            ("TinyPPI.ShowChannelIcon", "1" if enabled else "0"),
+            ("BaldPI.ShowChannelIcon", "1" if enabled else "0"),
         ),
     )
 
@@ -725,21 +725,21 @@ def _hdr10_panel_stands_in_for_dv() -> bool:
     """
     home = home_window()
     return (
-        "dolby" in home.getProperty("TinyPPI.HdrType").lower()
-        and home.getProperty("TinyPPI.EffectiveHdrType") == "hdr10"
+        "dolby" in home.getProperty("BaldPI.HdrType").lower()
+        and home.getProperty("BaldPI.EffectiveHdrType") == "hdr10"
     )
 
 
 def publish_hdr_type(home=None, published=None) -> None:
     """Publish the source HDR type and the type the layout follows.
 
-    ``TinyPPI.HdrType`` is the source, ``TinyPPI.EffectiveHdrType`` the
+    ``BaldPI.HdrType`` is the source, ``BaldPI.EffectiveHdrType`` the
     layout type (they differ during VS10 conversion, see
     ``_effective_hdr_type``).  HDR10+ is published as ``hdr10plus`` because
     Kodi's condition parser reads ``+`` as AND; it still contains ``hdr10``
     for ``String.Contains``.
 
-    ``TinyPPI.Hdr10PlusPresent`` marks a Dolby Vision source with an
+    ``BaldPI.Hdr10PlusPresent`` marks a Dolby Vision source with an
     ST 2094-40 payload next to its RPU: a hybrid grade VS10 cannot convert,
     so the dialog and dashboard offer no modes for it.
 
@@ -755,8 +755,8 @@ def publish_hdr_type(home=None, published=None) -> None:
         home,
         published,
         (
-            ("TinyPPI.HdrType", hdr_type),
-            ("TinyPPI.EffectiveHdrType", _effective_hdr_type(hdr_type)),
+            ("BaldPI.HdrType", hdr_type),
+            ("BaldPI.EffectiveHdrType", _effective_hdr_type(hdr_type)),
             (PROP_HDR10PLUS_PRESENT, get_hdr10plus_present()),
         ),
     )

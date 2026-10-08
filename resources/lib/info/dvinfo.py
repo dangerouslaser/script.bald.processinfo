@@ -388,8 +388,8 @@ def _present_flag(value) -> str:
 # when read, so a colour change applies immediately.
 _EL_COLOURS = ("FEL", "MEL")
 _EL_COLOUR_PROPERTIES = {
-    "FEL": "TinyPPI.FelColor",
-    "MEL": "TinyPPI.MelColor",
+    "FEL": "BaldPI.FelColor",
+    "MEL": "BaldPI.MelColor",
 }
 _EL_COLOUR_DEFAULTS = {
     "FEL": "FF81C784",  # palette Forest

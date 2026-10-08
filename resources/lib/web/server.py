@@ -369,7 +369,7 @@ class WebDashboard:
             target=server.serve_forever,
             # Short poll, so shutdown() returns quickly.
             kwargs={"poll_interval": 0.1},
-            name="TinyPPI-web-server",
+            name="BaldPI-web-server",
             daemon=True,
         )
         self._thread.start()

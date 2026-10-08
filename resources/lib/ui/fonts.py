@@ -47,12 +47,12 @@ _REQUIRED_FONTS = (
 # Checking against it costs one stat per file instead of a skin walk and a
 # parse.  Home properties do not survive a restart, so every session checks
 # at least once.
-PROP_FONTS_READY = "TinyPPI.FontsReady"
+PROP_FONTS_READY = "BaldPI.FontsReady"
 
 # The same mark for Font.xml files that could not be updated (read-only
 # system skins on CoreELEC, no fontset, no Font.xml).  Retrying cannot help
 # until the skin or a file changes, so failures are remembered too.
-PROP_FONTS_FAILED = "TinyPPI.FontsFailed"
+PROP_FONTS_FAILED = "BaldPI.FontsFailed"
 
 # Separator that appears in no path or version.
 _MARK_SEPARATOR = "\n"

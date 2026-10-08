@@ -60,7 +60,7 @@ _build_gate = threading.Lock()
 
 # Scaling is CPU-bound pure Python and would starve Kodi's UI and polling
 # threads of the interpreter lock for seconds.  A short pause every few rows
-# hands the lock over and keeps TinyPPI responsive.
+# hands the lock over and keeps BaldPI responsive.
 _YIELD_ROWS    = 16
 _YIELD_SECONDS = 0.002
 

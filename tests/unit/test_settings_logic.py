@@ -45,9 +45,9 @@ def test_layout_follows_the_output(monkeypatch, mode, setting, value, source, ex
 def test_channel_graphic_per_output(setting, output, on):
     use(**{setting: on})
     home = xbmcgui.Window(10000)
-    home.setProperty("TinyPPI.EffectiveHdrType", output)
+    home.setProperty("BaldPI.EffectiveHdrType", output)
     properties.publish_channel_visibility(home)
-    assert home.getProperty("TinyPPI.ShowChannelIcon") == ("1" if on else "0")
+    assert home.getProperty("BaldPI.ShowChannelIcon") == ("1" if on else "0")
 
 
 def test_highlight_durations():
@@ -72,7 +72,7 @@ def test_dv_channel_panel_slides_with_offset_x_dv():
         def setPosition(self, x, y):
             self.position = (x, y)
 
-    dialog = overlay.TinyPPIDialog.__new__(overlay.TinyPPIDialog)
+    dialog = overlay.BaldPIDialog.__new__(overlay.BaldPIDialog)
     panel = Panel()
     dialog.getControl = lambda control_id: panel
     placed = {}
@@ -97,7 +97,7 @@ def test_pill_position(monkeypatch):
         return [y for tex, y in made if tex == splash._PILL_TEXTURE][0]
 
     assert pill_y(True) < pill_y(False)
-    for mode in ("start", "osd", "tinyppi"):
+    for mode in ("start", "osd", "baldpi"):
         for value, top in ((0, False), (1, True)):
             use(**{f"splash_{mode}_pill_position": value})
             assert splash._read_settings(xbmcaddon.Addon()).modes[mode].pill_at_top is top
@@ -168,12 +168,12 @@ def test_picking_a_new_colour_stores_and_publishes_it(monkeypatch):
     stored = xbmcaddon.SETTINGS["title_color"]
     assert stored == f"[COLOR={spec.swatches[200]}]●[/COLOR] {spec.names[200]}"
     assert theme._decode(spec, stored) == (200, "")
-    assert xbmcgui.Window(10000).getProperty("TinyPPI.TitleColor") == spec.palette[200]
+    assert xbmcgui.Window(10000).getProperty("BaldPI.TitleColor") == spec.palette[200]
 
 
 @pytest.mark.parametrize("stored", [
     "12",                                                           # palette index
-    "[COLOR=FFFFD54F]●[/COLOR] $ADDON[script.tinyppi 32152]",        # name whose string is gone
+    "[COLOR=FFFFD54F]●[/COLOR] $ADDON[script.bald.processinfo 32152]",        # name whose string is gone
     "[COLOR=FFFFD54F]●[/COLOR] Amber 9",                            # a name since moved on
 ])
 def test_older_stored_colours_keep_their_colour(stored):
@@ -188,7 +188,7 @@ def test_older_stored_colours_keep_their_colour(stored):
 
 def test_translated_default_names_stay_as_stored_before():
     spec = theme._COLOR_SETTINGS["convert_yes_color"]
-    stored = "[COLOR=FF81C784]●[/COLOR] $ADDON[script.tinyppi 32214] $ADDON[script.tinyppi 32203]"
+    stored = "[COLOR=FF81C784]●[/COLOR] $ADDON[script.bald.processinfo 32214] $ADDON[script.bald.processinfo 32203]"
     assert theme._encode(spec, spec.default) == stored
     use(convert_yes_color=stored)
     assert theme.migrate_legacy_colors() == 0
@@ -277,6 +277,6 @@ def test_former_background_swatches_still_read_as_their_shade():
     spec = theme._COLOR_SETTINGS["background_color"]
     assert len(set(spec.palette)) == len(spec.palette)     # no two tiles give one shade
     for number, (swatch, shade) in enumerate(theme._LEGACY_BACKGROUND):
-        index, _rgb = theme._decode(spec, f"[COLOR={swatch}]●[/COLOR] $ADDON[script.tinyppi 32132]")
+        index, _rgb = theme._decode(spec, f"[COLOR={swatch}]●[/COLOR] $ADDON[script.bald.processinfo 32132]")
         assert spec.palette[index] == shade
         assert spec.palette[theme._decode(spec, str(number))[0]] == shade

@@ -13,7 +13,7 @@
 <!-- Loaded here, ahead of everything it could flash against: it puts
      the chosen theme on <html> before the page is first painted. -->
 <script src="/js/theme.js"></script>
-<title>TinyPPI</title>
+<title>Bald Process Info</title>
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon.png">
 <link rel="icon" href="/icon.png">
@@ -29,7 +29,7 @@
 <header class="topbar">
   <div class="brand">
     <img class="brandmark" src="/icon.png" alt="">
-    <b>TinyPPI</b><span class="ver" id="version"></span>
+    <b>Bald Process Info</b><span class="ver" id="version"></span>
   </div>
   <div class="status" id="status" data-state="wait" role="status" aria-live="polite">
     <span class="dot"></span><span id="statusText">…</span>
@@ -38,7 +38,7 @@
 
 <main>
 
-  <!-- One page in six tabs: the five the TinyPPI app puts in its floating
+  <!-- One page in six tabs: the five the Bald Process Info app puts in its floating
        bar -- what is playing, the Dolby Vision metadata, the two shelves and
        the history -- and the settings.  Each tab is a panel of its own and only the chosen one is
        laid out (see the tabs in js/dashboard.js); the connection underneath
@@ -274,7 +274,7 @@
      what it is to a screen reader and under a pointer (see applyStrings in
      js/dashboard.js).  Over the page rather than under it: the panels
      leave room at their foot for it (see .tabbar in css/base.css). -->
-<nav class="tabbar" id="tabBar" role="tablist" aria-label="TinyPPI">
+<nav class="tabbar" id="tabBar" role="tablist" aria-label="Bald Process Info">
   <button class="tab" id="tabbtn-live" type="button" role="tab" data-tab="live"
           aria-controls="tab-live">
     <span class="tabicon"><span class="ui-icon painted icon-tab-live"></span></span>

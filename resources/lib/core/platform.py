@@ -408,7 +408,7 @@ def log_summary() -> None:
     if is_amlogic():
         return
     xbmc.log(
-        f"TinyPPI: output readings from DRM: eotf/gamut='{eoft_gamut()}' "
+        f"BaldPI: output readings from DRM: eotf/gamut='{eoft_gamut()}' "
         f"pixformat='{pixformat()}' mode='{displaymode()}'",
         xbmc.LOGINFO,
     )

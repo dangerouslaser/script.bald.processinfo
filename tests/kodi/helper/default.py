@@ -3,7 +3,7 @@
 
 """Runs inside Kodi for the test suite (via Addons.ExecuteAddon).
 
-Commands: ``set key=value ...`` writes TinyPPI settings, ``get key ...``
+Commands: ``set key=value ...`` writes BaldPI settings, ``get key ...``
 reads them, ``props name ...`` reads Home-window properties, ``labels``
 InfoLabels, ``builtin`` runs a builtin.  The answer is written as JSON to
 ``$KODI_TEST_ROOT/helper-out.json``.
@@ -24,12 +24,12 @@ def main():
     command, args = (sys.argv[1], sys.argv[2:]) if len(sys.argv) > 1 else ("", [])
     result = {"command": command}
     if command == "set":
-        addon = xbmcaddon.Addon("script.tinyppi")
+        addon = xbmcaddon.Addon("script.bald.processinfo")
         for pair in args:
             key, _, value = pair.partition("=")
             addon.setSetting(key, value)
     elif command == "get":
-        addon = xbmcaddon.Addon("script.tinyppi")
+        addon = xbmcaddon.Addon("script.bald.processinfo")
         result["settings"] = {key: addon.getSetting(key) for key in args}
     elif command == "props":
         home = xbmcgui.Window(10000)

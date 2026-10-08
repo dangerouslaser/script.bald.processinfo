@@ -1,6 +1,6 @@
 {
-  "name": "TinyPPI",
-  "short_name": "TinyPPI",
+  "name": "Bald Process Info",
+  "short_name": "Bald Process Info",
   "description": "Live playback metadata from CoreELEC.",
   "start_url": "/",
   "scope": "/",

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # Copyright (c) 2026 U3knOwn
 
-"""Every TinyPPI setting with an effect on a desktop Kodi 22, set live and
+"""Every BaldPI setting with an effect on a desktop Kodi 22, set live and
 measured: properties, behaviour, and the panels on screen.
 
 The picture is plain gray and the panels are painted in signal colours, so
@@ -40,13 +40,13 @@ ONLY = sys.argv[1:]
 
 
 def running():
-    return props("TinyPPI.Running")["TinyPPI.Running"] == "true"
+    return props("BaldPI.Running")["BaldPI.Running"] == "true"
 
 
 def open_overlay(settle=2.0):
     if running():
         close_overlay()
-    kodi.rpc("JSONRPC.NotifyAll", {"sender": "script.tinyppi", "message": "open_overlay"})
+    kodi.rpc("JSONRPC.NotifyAll", {"sender": "script.bald.processinfo", "message": "open_overlay"})
     ok = wait(running, 10)
     time.sleep(settle)
     return bool(ok)
@@ -69,21 +69,21 @@ def capture(name, rgb, tol=45):
 
 
 def dialog_open(settle=2.5):
-    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.tinyppi", "params": ["dialog"]})
+    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.bald.processinfo", "params": ["dialog"]})
     wait(lambda: "dialog" in os.path.basename(kodi.xmlfile()), 10)
     time.sleep(settle)
     return os.path.basename(kodi.xmlfile())
 
 
 def dialog_close():
-    if "tinyppi-dialog" in kodi.xmlfile():
+    if "baldpi-dialog" in kodi.xmlfile():
         kodi.rpc("Input.Back")
-        wait(lambda: "tinyppi-dialog" not in kodi.xmlfile(), 6)
+        wait(lambda: "baldpi-dialog" not in kodi.xmlfile(), 6)
         time.sleep(0.8)
 
 
 def jget(path, token=None, port=config.DASHBOARD_PORT):
-    headers = {"X-TinyPPI-Token": token} if token else {}
+    headers = {"X-BaldPI-Token": token} if token else {}
     status, _, body = kodi.http(path, headers=headers, port=port)
     try:
         return status, json.loads(body)
@@ -92,7 +92,7 @@ def jget(path, token=None, port=config.DASHBOARD_PORT):
 
 
 def post(path, body, token=TOKEN, port=config.DASHBOARD_PORT):
-    status, _, raw = kodi.http(path, method="POST", body=body, headers={"X-TinyPPI-Token": token}, port=port)
+    status, _, raw = kodi.http(path, method="POST", body=body, headers={"X-BaldPI-Token": token}, port=port)
     return status
 
 
@@ -116,7 +116,7 @@ BASE = {  # colours that make the panels measurable on a gray picture
     "dialog_global_background_opacity": 0,
     "splash_start_bg_color": hexcolor(BLUE), "splash_start_bg_opacity": 100,
     "splash_osd_bg_color": hexcolor(BLUE), "splash_osd_bg_opacity": 100,
-    "splash_tinyppi_bg_color": hexcolor(BLUE), "splash_tinyppi_bg_opacity": 100,
+    "splash_baldpi_bg_color": hexcolor(BLUE), "splash_baldpi_bg_opacity": 100,
 }
 
 
@@ -172,7 +172,7 @@ def theme_tests():
     for value in (0, 1, 2):
         set_settings(unit_type=value)
         open_overlay(0.8)
-        labels[value] = props("TinyPPI.UnitLabel")["TinyPPI.UnitLabel"]
+        labels[value] = props("BaldPI.UnitLabel")["BaldPI.UnitLabel"]
         close_overlay()
     want = {v: theme._pick(theme._UNIT_LABELS, str(v)) for v in labels}
     check("unit_type: each choice publishes its unit label", labels == want and len(set(labels.values())) == 3,
@@ -207,14 +207,14 @@ def general_tests():
     for value, want in ((False, "0"), (True, "1")):
         set_settings(show_l5_icon=value)
         open_overlay(0.8)
-        got = props("TinyPPI.ShowL5Icon")["TinyPPI.ShowL5Icon"]
+        got = props("BaldPI.ShowL5Icon")["BaldPI.ShowL5Icon"]
         check(f"show_l5_icon={value} -> ShowL5Icon {want}", got == want, got, settings=["show_l5_icon"])
         close_overlay()
 
     for value in (True, False):
         set_settings(filename=value)
         open_overlay(1.0)
-        got = props("TinyPPI.Filename")["TinyPPI.Filename"]
+        got = props("BaldPI.Filename")["BaldPI.Filename"]
         state = jget("/api/state")[1] or {}
         sent = state.get("filename", "")
         check(f"filename={value}: overlay row {'on' if value else 'off'}, dashboard {'sends' if value else 'withholds'} the path",
@@ -223,7 +223,7 @@ def general_tests():
 
     set_settings(background_opacity=0)
     open_overlay(1.5)
-    got = props("TinyPPI.ShowLine", "TinyPPI.ShowHeaderTitle", "TinyPPI.ShowHeaderIcon")
+    got = props("BaldPI.ShowLine", "BaldPI.ShowHeaderTitle", "BaldPI.ShowHeaderIcon")
     path, box = capture("overlay-transparent", RED)
     check("background_opacity 0: transparent panel, no header or lines", set(got.values()) == {"0"} and box is None,
           (got, box), settings=["background_opacity"])
@@ -242,12 +242,12 @@ def general_tests():
     close_overlay()
 
     set_settings(launch_mode=1)
-    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.tinyppi"})
-    xml = wait(lambda: (lambda x: x if "tinyppi-dialog" in x else None)(kodi.xmlfile()), 10)
+    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.bald.processinfo"})
+    xml = wait(lambda: (lambda x: x if "baldpi-dialog" in x else None)(kodi.xmlfile()), 10)
     check("launch_mode 1: the launch opens the VS10 dialog", xml, xml, settings=["launch_mode"])
     dialog_close()
     set_settings(launch_mode=0)
-    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.tinyppi"})
+    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.bald.processinfo"})
     check("launch_mode 0: the launch opens the overlay", wait(running, 10), settings=["launch_mode"])
     close_overlay()
 
@@ -310,7 +310,7 @@ def channels(kind):
         set_settings(**{setting: value, "channel_icon_color": hexcolor(MAGENTA), "channel_icon_opacity": 100,
                         "channel_layout_color": hexcolor(CYAN), "channel_layout_opacity": 100})
         open_overlay(2.0)
-        shown = props("TinyPPI.ShowChannelIcon")["TinyPPI.ShowChannelIcon"]
+        shown = props("BaldPI.ShowChannelIcon")["BaldPI.ShowChannelIcon"]
         path = kodi.shot(f"channels-{kind}-{value}")
         counts[value] = (shown, screen.pixels(path, MAGENTA, 60), screen.pixels(path, CYAN, 60))
         close_overlay()
@@ -330,8 +330,8 @@ def dialog_tests():
         box = capture(f"dialog-mode{mode}", GREEN)[1]
         seen[mode] = (xml, size(box))
         dialog_close()
-    want = {0: ("script-tinyppi-dialog.xml", (471, 546)), 1: ("script-tinyppi-dialog-bar.xml", (1702, 206)),
-            2: ("script-tinyppi-dialog-single.xml", (700, 216))}
+    want = {0: ("script-baldpi-dialog.xml", (471, 546)), 1: ("script-baldpi-dialog-bar.xml", (1702, 206)),
+            2: ("script-baldpi-dialog-single.xml", (700, 216))}
     ok = all(seen[m][0] == want[m][0] and seen[m][1] and abs(seen[m][1][0] - want[m][1][0]) <= 6
              and abs(seen[m][1][1] - want[m][1][1]) <= 6 for m in want)
     check("dialog_mode: single / bar / dialog layouts at their sizes", ok, seen, settings=["dialog_mode"])
@@ -425,28 +425,28 @@ def splash_variants(mode, show, restart=None):
 
 def splash_tests():
     section("codec logos: on playback start")
-    set_settings(splash_enabled=True, splash_duration=30, splash_show_on_osd=False, splash_show_on_tinyppi=False)
+    set_settings(splash_enabled=True, splash_duration=30, splash_show_on_osd=False, splash_show_on_baldpi=False)
     kodi.stop()
     kodi.play(SDR)
-    visible = wait(lambda: props("TinyPPI.SplashStartVisible")["TinyPPI.SplashStartVisible"] == "true", 15, 0.3)
+    visible = wait(lambda: props("BaldPI.SplashStartVisible")["BaldPI.SplashStartVisible"] == "true", 15, 0.3)
     check("splash_enabled shows the logos when a video starts", visible, settings=["splash_enabled"])
     def restart():
         kodi.stop()
         kodi.play(SDR)
-        wait(lambda: props("TinyPPI.SplashStartVisible")["TinyPPI.SplashStartVisible"] == "true", 15, 0.3)
+        wait(lambda: props("BaldPI.SplashStartVisible")["BaldPI.SplashStartVisible"] == "true", 15, 0.3)
     splash_variants("start", lambda: None, restart)
     set_settings(splash_duration=90)
     held = kodi.get_settings("splash_duration")["splash_duration"]
     check("splash_duration keeps to its 1-30 s range (90 is refused, 30 stays)", held == "30", held,
           settings=["splash_duration"])
     set_settings(splash_duration=4)
-    gone = wait(lambda: props("TinyPPI.SplashStartVisible")["TinyPPI.SplashStartVisible"] != "true", 8, 0.3)
+    gone = wait(lambda: props("BaldPI.SplashStartVisible")["BaldPI.SplashStartVisible"] != "true", 8, 0.3)
     check("splash_duration: a shorter duration ends a running start window", gone, settings=["splash_duration"])
     kodi.stop()
     kodi.play(SDR)
-    shown = wait(lambda: props("TinyPPI.SplashStartVisible")["TinyPPI.SplashStartVisible"] == "true", 15, 0.2)
+    shown = wait(lambda: props("BaldPI.SplashStartVisible")["BaldPI.SplashStartVisible"] == "true", 15, 0.2)
     t0 = time.time()
-    hidden = wait(lambda: props("TinyPPI.SplashStartVisible")["TinyPPI.SplashStartVisible"] != "true", 15, 0.2)
+    hidden = wait(lambda: props("BaldPI.SplashStartVisible")["BaldPI.SplashStartVisible"] != "true", 15, 0.2)
     span = time.time() - t0
     check("splash_duration 4 s: the logos stand about 4 s", shown and hidden and 3.0 <= span <= 6.0, f"{span:.1f} s",
           settings=["splash_duration"])
@@ -455,7 +455,7 @@ def splash_tests():
     kodi.play(SDR)
     time.sleep(5)
     check("splash_enabled off: no logos at playback start",
-          props("TinyPPI.SplashStartVisible")["TinyPPI.SplashStartVisible"] != "true", settings=["splash_enabled"])
+          props("BaldPI.SplashStartVisible")["BaldPI.SplashStartVisible"] != "true", settings=["splash_enabled"])
 
     section("codec logos: with the video OSD")
     set_settings(splash_show_on_osd=True)
@@ -465,7 +465,7 @@ def splash_tests():
             kodi.rpc("Input.ShowOSD")
             time.sleep(0.8)
     show_osd()
-    visible = wait(lambda: props("TinyPPI.SplashOsdVisible")["TinyPPI.SplashOsdVisible"] == "true", 10, 0.3)
+    visible = wait(lambda: props("BaldPI.SplashOsdVisible")["BaldPI.SplashOsdVisible"] == "true", 10, 0.3)
     check("splash_show_on_osd shows the logos with the OSD", visible, settings=["splash_show_on_osd"])
     splash_variants("osd", show_osd)
     if "VideoOSD" in kodi.xmlfile():
@@ -477,14 +477,14 @@ def splash_tests():
           screen.bluish_bbox(path), settings=["splash_show_on_osd"])
     set_settings(splash_show_on_osd=False)
 
-    section("codec logos: with the TinyPPI overlay")
-    set_settings(splash_show_on_tinyppi=True)
+    section("codec logos: with the BaldPI overlay")
+    set_settings(splash_show_on_baldpi=True)
     open_overlay(1.0)
-    visible = wait(lambda: props("TinyPPI.SplashTinyPPIVisible")["TinyPPI.SplashTinyPPIVisible"] == "true", 10, 0.3)
-    check("splash_show_on_tinyppi shows the logos with the overlay", visible, settings=["splash_show_on_tinyppi"])
-    splash_variants("tinyppi", lambda: None)
+    visible = wait(lambda: props("BaldPI.SplashBaldPIVisible")["BaldPI.SplashBaldPIVisible"] == "true", 10, 0.3)
+    check("splash_show_on_baldpi shows the logos with the overlay", visible, settings=["splash_show_on_baldpi"])
+    splash_variants("baldpi", lambda: None)
     close_overlay()
-    set_settings(splash_show_on_tinyppi=False)
+    set_settings(splash_show_on_baldpi=False)
 
 
 def dashboard_tests():
@@ -523,7 +523,7 @@ def dashboard_tests():
     check("web_token: a typed token replaces the old one", ok and post("/api/command", {"action": "mute"}, token=TOKEN) == 401,
           settings=["web_token"])
     before = kodi.get_settings("web_token")["web_token"]
-    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.tinyppi", "params": ["web_token"]})
+    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.bald.processinfo", "params": ["web_token"]})
     new = wait(lambda: (lambda t: t if t != before else None)(kodi.get_settings("web_token")["web_token"]), 10)
     time.sleep(1.5)
     label = kodi.rpc("XBMC.GetInfoLabels", {"labels": ["Control.GetLabel(9)", "System.CurrentWindow"]})["result"]
@@ -535,7 +535,7 @@ def dashboard_tests():
     post("/api/command", {"action": "mute"}, token=new)
     check("web_token_new: generates a fresh 8-character token the server takes", good and accepted
           and post("/api/command", {"action": "mute"}, token="NEWTOKEN") == 401, (before, new, label), settings=["web_token_new"])
-    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.tinyppi", "params": ["web_info"]})
+    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.bald.processinfo", "params": ["web_info"]})
     time.sleep(2.5)
     text = kodi.rpc("XBMC.GetInfoLabels", {"labels": ["Control.GetLabel(5)"]})["result"]["Control.GetLabel(5)"]
     kodi.shot("web-info")
@@ -566,8 +566,8 @@ def main():
     k = kodi.Kodi(kodi.make_home("settings"))
     print(f"Kodi answered after {k.start():.1f} s", flush=True)
     try:
-        if not kodi.start_tinyppi(k):
-            raise RuntimeError("TinyPPI did not start")
+        if not kodi.start_baldpi(k):
+            raise RuntimeError("BaldPI did not start")
         set_settings(**BASE)
         if ONLY == ["splash"]:
             splash_tests()

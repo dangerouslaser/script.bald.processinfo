@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tinyppi" name="TinyPPI" version="2.15.0" provider-name="jamal2362">
+<addon id="script.bald.processinfo" name="Bald Process Info" version="2.15.0.3" provider-name="dangerouslaser">
     <requires>
         <import addon="xbmc.python" version="3.1.0"/>
-        <import addon="script.module.sidedata" version="1.6.0"/>
+        <import addon="script.module.sidedata" version="1.6.0" optional="true"/>
     </requires>
     <extension point="xbmc.service" library="resources/lib/service/monitor.py" />
     <extension point="xbmc.python.script" library="main.py">
@@ -11,17 +11,9 @@
     <extension point="xbmc.addon.metadata">
         <platform>linux</platform>
         <license>AGPL-3.0-or-later</license>
-        <source>https://github.com/CE-Repo/script.tinyppi</source>
-        <summary lang="ar">يعرض معلومات مخصصة عن عملية المشغل</summary>
-        <summary lang="de">Zeigt benutzerdefinierte Prozessinformationen an</summary>
-        <summary lang="en">Displays custom player process information</summary>
-        <summary lang="hu">Egyéni lejátszó-folyamatinformációkat jelenít meg</summary>
-        <summary lang="zh">显示自定义播放器进程信息</summary>
-        <description lang="ar">يفتح نافذة مستقلة لمعلومات العملية. تعرض هذه النافذة تفاصيل برنامج الترميز (Codec) والفيديو والصوت الخاصة بالوسائط التي يتم تشغيلها حاليًا.</description>
-        <description lang="de">Öffnet ein eigenes Prozessinformationen-Fenster. Dieses enthält Codec-, Video- und Audio-Details zum aktuell abgespielten Medium.</description>
-        <description lang="en">Opens a separate process information window. This window displays codec, video, and audio details for the currently playing media.</description>
-        <description lang="hu">Megnyit egy külön folyamatinformációs ablakot. Ez az ablak az aktuálisan lejátszott média kodek-, videó- és hangadatait jeleníti meg.</description>
-        <description lang="zh">打开一个独立的进程信息窗口。此窗口显示当前播放媒体的编解码器、视频和音频详细信息。</description>
+        <source>https://github.com/dangerouslaser/script.bald.processinfo</source>
+        <summary lang="en">Shows what the player is doing: video, audio, HDR and Dolby Vision output</summary>
+        <description lang="en">An overlay with the codec, video, audio, HDR and Dolby Vision details of what is playing, and what the box is sending to the display. Runs on LibreELEC, including the Intel Dolby Vision build, and on CoreELEC. Based on the TinyPPI code by U3knOwn (AGPL-3.0-or-later); not affiliated with or supported by TinyPPI's author. Report problems at https://github.com/dangerouslaser/script.bald.processinfo/issues.</description>
         <!-- The latest version only: replace this entry on every version bump. -->
         <news>v2.15.0
 - The colour palettes grow from 50 to 250 colours: grays and every hue from red to rose, each in a vivid and a soft family, light to dark.

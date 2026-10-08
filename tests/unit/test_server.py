@@ -53,7 +53,7 @@ def request(srv, path, method="GET", body=None, token=None, host=None):
     if data is not None:
         req.add_header("Content-Type", "application/json")
     if token:
-        req.add_header("X-TinyPPI-Token", token)
+        req.add_header("X-BaldPI-Token", token)
     if host:
         req.add_header("Host", host)
     try:

@@ -3,7 +3,7 @@
 
 """VS10 output modes and the mode-selection dialog.
 
-Open via ``RunScript(script.tinyppi,dialog)`` or ``open_dialog()``; modes
+Open via ``RunScript(script.bald.processinfo,dialog)`` or ``open_dialog()``; modes
 are applied by ``set_mode``.
 """
 
@@ -471,7 +471,7 @@ def _vs10_actions_available() -> bool:
     else:
         log(
             "native VS10 Actions not available -> using the "
-            "built-in TinyPPI VS10 (sysfs) path",
+            "built-in BaldPI VS10 (sysfs) path",
             xbmc.LOGINFO,
         )
     return available
@@ -539,7 +539,7 @@ def _hybrid_dv_hdr10plus() -> bool:
     home = home_window()
     return (
         home.getProperty(PROP_HDR10PLUS_PRESENT) == "1"
-        and "dolby" in home.getProperty("TinyPPI.HdrType").lower()
+        and "dolby" in home.getProperty("BaldPI.HdrType").lower()
     )
 
 
@@ -611,7 +611,7 @@ def _switch_through_sdr(name: str) -> None:
     worker = threading.Thread(
         target=_staged_switch,
         args=(name,),
-        name="TinyPPI-vs10-stage",
+        name="BaldPI-vs10-stage",
         daemon=True,
     )
     worker.start()
@@ -646,20 +646,20 @@ def _apply_mode(name: str) -> bool:
                 return False
             log(
                 f"VS10 Action({action}) had no effect on the DV "
-                "driver -> falling back to built-in TinyPPI VS10 (sysfs)",
+                "driver -> falling back to built-in BaldPI VS10 (sysfs)",
                 xbmc.LOGWARNING,
             )
         else:
             log(
                 f"no video playing -> VS10 Action({action}) cannot "
-                f"apply; using built-in TinyPPI VS10 (sysfs) for '{name}'",
+                f"apply; using built-in BaldPI VS10 (sysfs) for '{name}'",
                 xbmc.LOGINFO,
             )
     elif _vs10_actions_available():
         # No native action for this mode (e.g. 'sdr8'); sysfs keeps SDR8.
         log(
             f"'{name}' has no native VS10 action -> using built-in "
-            "TinyPPI VS10 (sysfs) to keep the exact output",
+            "BaldPI VS10 (sysfs) to keep the exact output",
             xbmc.LOGINFO,
         )
 
@@ -669,13 +669,13 @@ def _apply_mode(name: str) -> bool:
     if failed:
         # Never log "set" for a sequence that did not reach the driver.
         log(
-            f"mode '{name}' NOT set via built-in TinyPPI VS10 (sysfs): "
+            f"mode '{name}' NOT set via built-in BaldPI VS10 (sysfs): "
             f"{failed} write(s) failed, see the lines above",
             xbmc.LOGERROR,
         )
     else:
         log(
-            f"mode '{name}' set via built-in TinyPPI VS10 (sysfs)",
+            f"mode '{name}' set via built-in BaldPI VS10 (sysfs)",
             xbmc.LOGINFO,
         )
     return True
@@ -695,7 +695,7 @@ _ACTIONS = {
 
 
 class SettingsDialog(xbmcgui.WindowXMLDialog):
-    """Menu dialog to pick a VS10 output mode or launch the TinyPPI overlay."""
+    """Menu dialog to pick a VS10 output mode or launch the BaldPI overlay."""
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -709,7 +709,7 @@ class SettingsDialog(xbmcgui.WindowXMLDialog):
         self._monitor = None
 
     def onInit(self) -> None:
-        # Refresh TinyPPI.HdrType before placing the panel: the branch
+        # Refresh BaldPI.HdrType before placing the panel: the branch
         # decides which button gets focus.
         self._running = True
         self._pending_mode = None
@@ -737,7 +737,7 @@ class SettingsDialog(xbmcgui.WindowXMLDialog):
     def _branch(self) -> dict:
         home = home_window()
         return dialog_layout.branch_for(
-            home.getProperty("TinyPPI.HdrType"),
+            home.getProperty("BaldPI.HdrType"),
             home.getProperty(PROP_HDR10PLUS_PRESENT),
         )
 
@@ -818,8 +818,8 @@ class SettingsDialog(xbmcgui.WindowXMLDialog):
         if control_id in dialog_layout.PPI_BUTTONS:
             self.close()
             clear_overlay_state(home_window())
-            from ui.overlay import open_tinyppi
-            open_tinyppi()
+            from ui.overlay import open_baldpi
+            open_baldpi()
             return
 
         mode = _ACTIONS.get(control_id)

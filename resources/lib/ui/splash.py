@@ -4,11 +4,11 @@
 """Codec-logo splash for playback start, the video OSD and the overlay.
 
 The service runs this on its own thread on ``Player.OnAVStart`` (or via
-``RunScript(script.tinyppi,splash)``).  It stacks the video and audio format
+``RunScript(script.bald.processinfo,splash)``).  It stacks the video and audio format
 logos in a panel; per mode, ``splash_<mode>_order`` swaps them and
 ``splash_<mode>_show_video`` / ``_show_audio`` hide either.  Modes:
 ``splash_enabled`` (first ``splash_duration`` seconds), ``splash_show_on_osd``
-and ``splash_show_on_tinyppi``.
+and ``splash_show_on_baldpi``.
 
 The logos are ``ControlImage`` controls added to the fullscreen video window
 (12005), shown and hidden by visibility conditions (see ``_fade_in`` /
@@ -44,7 +44,7 @@ WINDOW_FULLSCREEN_VIDEO = 12005
 
 # Re-entry guard against stacked controllers; a Home property because a
 # RunScript call runs in another interpreter than the service's thread.
-PROP_SPLASH_ACTIVE = "TinyPPI.SplashActive"
+PROP_SPLASH_ACTIVE = "BaldPI.SplashActive"
 
 # ControlImage aspect-ratio modes: keep for the logos, stretch for the panel.
 _ASPECT_KEEP    = 2
@@ -71,11 +71,11 @@ _BG_COLOR   = "FA15181A"  # Charcoal panel (matches the overlay background)
 _LOGO_COLOR = "FFEDEDED"  # near-white (leaves white logos unchanged)
 
 # Home properties of the splash colours (from theme.apply_theme), separate
-# per context (start / osd / tinyppi).
+# per context (start / osd / baldpi).
 _MODE_PROP_PREFIX = {
-    "start":   "TinyPPI.SplashStart",
-    "osd":     "TinyPPI.SplashOsd",
-    "tinyppi": "TinyPPI.SplashTinyppi",
+    "start":   "BaldPI.SplashStart",
+    "osd":     "BaldPI.SplashOsd",
+    "baldpi": "BaldPI.Splashbaldpi",
 }
 _COLOR_PROP_SUFFIX = {
     "bg":          "BgColor",
@@ -140,7 +140,7 @@ class _Settings(NamedTuple):
 
     show_on_start: bool
     show_on_osd: bool
-    show_on_tinyppi: bool
+    show_on_baldpi: bool
     duration: int
     modes: dict
 
@@ -149,17 +149,17 @@ class _Settings(NamedTuple):
 # visibility condition changes (not on setVisible()), so the controls watch a
 # global and a per-mode Home property.  OSD and overlay conditions can then
 # start the fades at once.
-PROP_SPLASH_VISIBLE = "TinyPPI.SplashVisible"
+PROP_SPLASH_VISIBLE = "BaldPI.SplashVisible"
 _VISIBLE_CONDITION  = (
     f"String.IsEqual(Window({HOME_WINDOW_ID}).Property({PROP_SPLASH_VISIBLE}),true)"
 )
 # Token of the current controller run, part of every control's condition, so
 # controls a run had to leave behind stay hidden (see open_splash's cleanup).
-PROP_SPLASH_RUN = "TinyPPI.SplashRun"
+PROP_SPLASH_RUN = "BaldPI.SplashRun"
 _MODE_VISIBLE_PROPS = {
-    "start":   "TinyPPI.SplashStartVisible",
-    "osd":     "TinyPPI.SplashOsdVisible",
-    "tinyppi": "TinyPPI.SplashTinyPPIVisible",
+    "start":   "BaldPI.SplashStartVisible",
+    "osd":     "BaldPI.SplashOsdVisible",
+    "baldpi": "BaldPI.SplashBaldPIVisible",
 }
 _FADE_IN_MS       = 350
 _FADE_OUT_MS      = 150
@@ -172,13 +172,13 @@ _ANIM_OUT = ("Hidden",
 
 # "true" while a conversion is active (see _is_converting); part of the
 # badge's condition, so it toggles without a rebuild.
-PROP_CONVERTING = "TinyPPI.SplashConverting"
+PROP_CONVERTING = "BaldPI.SplashConverting"
 
 
 def _is_converting(hdr_type: str, gamut: str) -> bool:
     """Return whether the output *gamut* shows a conversion.
 
-    Mirrors the check-circle condition in script-tinyppi-main.xml: non-DV
+    Mirrors the check-circle condition in script-baldpi-main.xml: non-DV
     source output as DV, HDR/DV output as SDR, or SDR/DV output as HDR10.
     *hdr_type* comes from the side data, so this works without the overlay.
     """
@@ -228,31 +228,31 @@ def _dv_layer_token(hdr_token: str, hdr_type: str, el_type: str) -> str:
 _OFFSET_SETTINGS = {
     "start":   ("splash_start_offset_x",   "splash_start_offset_y"),
     "osd":     ("splash_osd_offset_x",     "splash_osd_offset_y"),
-    "tinyppi": ("splash_tinyppi_offset_x", "splash_tinyppi_offset_y"),
+    "baldpi": ("splash_baldpi_offset_x", "splash_baldpi_offset_y"),
 }
 
 # Per-mode size setting (80-130 %, default 100 %), times _BASE_SCALE.
 _SCALE_SETTINGS = {
     "start":   "splash_start_scale",
     "osd":     "splash_osd_scale",
-    "tinyppi": "splash_tinyppi_scale",
+    "baldpi": "splash_baldpi_scale",
 }
 
 # Per-mode logo selection and order (default: both, video on top).
 _SHOW_VIDEO_SETTINGS = {
     "start":   "splash_start_show_video",
     "osd":     "splash_osd_show_video",
-    "tinyppi": "splash_tinyppi_show_video",
+    "baldpi": "splash_baldpi_show_video",
 }
 _SHOW_AUDIO_SETTINGS = {
     "start":   "splash_start_show_audio",
     "osd":     "splash_osd_show_audio",
-    "tinyppi": "splash_tinyppi_show_audio",
+    "baldpi": "splash_baldpi_show_audio",
 }
 _ORDER_SETTINGS = {
     "start":   "splash_start_order",
     "osd":     "splash_osd_order",
-    "tinyppi": "splash_tinyppi_order",
+    "baldpi": "splash_baldpi_order",
 }
 # splash_<mode>_order: 0 keeps video on top, 1 puts audio on top.
 _ORDER_AUDIO_FIRST = 1
@@ -261,7 +261,7 @@ _ORDER_AUDIO_FIRST = 1
 _PILL_POSITION_SETTINGS = {
     "start":   "splash_start_pill_position",
     "osd":     "splash_osd_pill_position",
-    "tinyppi": "splash_tinyppi_pill_position",
+    "baldpi": "splash_baldpi_pill_position",
 }
 # splash_<mode>_pill_position: 0 bottom edge, 1 top edge.
 _PILL_TOP = 1
@@ -517,7 +517,7 @@ def _read_settings(addon) -> _Settings:
     return _Settings(
         show_on_start=addon.getSettingBool("splash_enabled"),
         show_on_osd=addon.getSettingBool("splash_show_on_osd"),
-        show_on_tinyppi=addon.getSettingBool("splash_show_on_tinyppi"),
+        show_on_baldpi=addon.getSettingBool("splash_show_on_baldpi"),
         duration=addon.getSettingInt("splash_duration"),
         modes=modes,
     )
@@ -585,7 +585,7 @@ def _visible_condition(mode: str, suppress_start_for_osd: bool = False,
             _home_prop_condition(PROP_RUNNING, False),
             _home_prop_condition(PROP_DIALOG_MODE, False),
         ))
-    elif mode == "tinyppi":
+    elif mode == "baldpi":
         parts.extend((
             _home_prop_condition(PROP_ACTIVE),
             _home_prop_condition(PROP_DIALOG_MODE, False),
@@ -677,7 +677,7 @@ def open_splash() -> None:
     if addon is None:
         return
     config = _read_settings(addon)
-    if not (config.show_on_start or config.show_on_osd or config.show_on_tinyppi):
+    if not (config.show_on_start or config.show_on_osd or config.show_on_baldpi):
         return
 
     player = xbmc.Player()
@@ -694,7 +694,7 @@ def open_splash() -> None:
     enabled_modes = [
         mode for mode, on in (
             ("start", config.show_on_start), ("osd", config.show_on_osd),
-            ("tinyppi", config.show_on_tinyppi),
+            ("baldpi", config.show_on_baldpi),
         ) if on
     ]
     if not any(_mode_logos(config.modes[mode], logos, has_audio)
@@ -743,7 +743,7 @@ def open_splash() -> None:
                 themed = False
             show_on_start = config.show_on_start
             show_on_osd = config.show_on_osd
-            show_on_tinyppi = config.show_on_tinyppi
+            show_on_baldpi = config.show_on_baldpi
             duration = config.duration
 
             now = time.monotonic()
@@ -792,8 +792,8 @@ def open_splash() -> None:
                     modes.append("start")
                 if show_on_osd:
                     modes.append("osd")
-                if show_on_tinyppi:
-                    modes.append("tinyppi")
+                if show_on_baldpi:
+                    modes.append("baldpi")
 
                 if modes:
                     # Publish the theme once per settings change, then read
@@ -864,7 +864,7 @@ def open_splash() -> None:
                     desired.condition, dot,
                 )
 
-            if not show_on_osd and not show_on_tinyppi and not in_start_window and not states:
+            if not show_on_osd and not show_on_baldpi and not in_start_window and not states:
                 break
 
             wait_time = _POLL_INTERVAL

@@ -4,7 +4,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
-"Project-Id-Version: TinyPPI\n"
+"Project-Id-Version: Bald Process Info\n"
 "Language: en\n"
 
 msgctxt "#32000"
@@ -12,7 +12,7 @@ msgid "General"
 msgstr ""
 
 msgctxt "#32001"
-msgid "TinyPPI settings"
+msgid "Bald Process Info settings"
 msgstr ""
 
 msgctxt "#32002"
@@ -28,7 +28,7 @@ msgid "Choose what opens when the add-on is launched."
 msgstr ""
 
 msgctxt "#32005"
-msgid "TinyPPI"
+msgid "Bald Process Info"
 msgstr ""
 
 msgctxt "#32006"
@@ -40,7 +40,7 @@ msgid "Auto-hide"
 msgstr ""
 
 msgctxt "#32008"
-msgid "Automatically hides the TinyPPI overlay after the selected time (in seconds). 0 = off. Does not apply to the VS10 dialog."
+msgid "Automatically hides the Bald Process Info overlay after the selected time (in seconds). 0 = off. Does not apply to the VS10 dialog."
 msgstr ""
 
 msgctxt "#32009"
@@ -52,7 +52,7 @@ msgid "Show file name"
 msgstr ""
 
 msgctxt "#32011"
-msgid "Show the currently playing file name in TinyPPI."
+msgid "Show the currently playing file name in Bald Process Info."
 msgstr ""
 
 msgctxt "#32012"
@@ -108,7 +108,7 @@ msgid "Move with the arrow keys"
 msgstr ""
 
 msgctxt "#32025"
-msgid "Lets the arrow keys on the remote move the TinyPPI overlay around the screen while it is open. The move is not saved: the next launch starts from the position configured above."
+msgid "Lets the arrow keys on the remote move the Bald Process Info overlay around the screen while it is open. The move is not saved: the next launch starts from the position configured above."
 msgstr ""
 
 msgctxt "#32026"
@@ -132,11 +132,11 @@ msgid "Keeps the Dolby Vision panels on screen while VS10 converts a Dolby Visio
 msgstr ""
 
 msgctxt "#32031"
-msgid "TinyPPI overlay"
+msgid "Bald Process Info overlay"
 msgstr ""
 
 msgctxt "#32032"
-msgid "Customise the TinyPPI overlay colors."
+msgid "Customise the Bald Process Info overlay colors."
 msgstr ""
 
 msgctxt "#32033"
@@ -332,7 +332,7 @@ msgid "Dolby Vision metadata view"
 msgstr ""
 
 msgctxt "#32081"
-msgid "Lets OK open the Dolby Vision metadata view while the TinyPPI overlay is up and a Dolby Vision source is playing. It lists every block the stream's side data carries — the configuration record, the RPU from its header through L11, the trim passes and the static SEIs. OK opens the section under the cursor in a window of its own, Back returns to the TinyPPI overlay. On any other source OK does nothing."
+msgid "Lets OK open the Dolby Vision metadata view while the Bald Process Info overlay is up and a Dolby Vision source is playing. It lists every block the stream's side data carries — the configuration record, the RPU from its header through L11, the trim passes and the static SEIs. OK opens the section under the cursor in a window of its own, Back returns to the Bald Process Info overlay. On any other source OK does nothing."
 msgstr ""
 
 msgctxt "#32082"
@@ -576,11 +576,11 @@ msgid "Also shows the format logos whenever the on-screen playback controls (vid
 msgstr ""
 
 msgctxt "#32142"
-msgid "Show codec logos in the TinyPPI overlay"
+msgid "Show codec logos in the Bald Process Info overlay"
 msgstr ""
 
 msgctxt "#32143"
-msgid "Also shows the format logos while the TinyPPI info overlay is open."
+msgid "Also shows the format logos while the Bald Process Info info overlay is open."
 msgstr ""
 
 msgctxt "#32144"
@@ -1096,7 +1096,7 @@ msgid "L5 Active Area"
 msgstr ""
 
 msgctxt "#32272"
-msgid "OK: open section — Back: TinyPPI overlay"
+msgid "OK: open section — Back: Bald Process Info overlay"
 msgstr ""
 
 msgctxt "#32273"

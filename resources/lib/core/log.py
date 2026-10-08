@@ -6,15 +6,15 @@
 Every line starts with the add-on's tag, optionally followed by an area in
 brackets, so the add-on's output is easy to filter:
 
-    TinyPPI: mode 'dv' set via VS10 Actions -> Action(vs10.dv)
-    TinyPPI [web]: dashboard listening on http://192.168.1.20:8099/
+    BaldPI: mode 'dv' set via VS10 Actions -> Action(vs10.dv)
+    BaldPI [web]: dashboard listening on http://192.168.1.20:8099/
 
 ``log`` writes lines without an area; ``channel`` builds a module's ``_log``.
 """
 
 import xbmc
 
-_TAG = "TinyPPI"
+_TAG = "BaldPI"
 
 # Set True locally to log debug messages at INFO in a non-debug Kodi log.
 FORCE_DEBUG = False

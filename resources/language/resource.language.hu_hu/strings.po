@@ -4,7 +4,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
-"Project-Id-Version: TinyPPI\n"
+"Project-Id-Version: Bald Process Info\n"
 "Language: hu\n"
 
 msgctxt "#32000"
@@ -12,7 +12,7 @@ msgid "General"
 msgstr "Általános"
 
 msgctxt "#32001"
-msgid "TinyPPI settings"
+msgid "Bald Process Info settings"
 msgstr "Beállítások"
 
 msgctxt "#32002"
@@ -28,8 +28,8 @@ msgid "Choose what opens when the add-on is launched."
 msgstr "Válaszd ki, hogy mi nyíljon meg a kiegészítő indításakor."
 
 msgctxt "#32005"
-msgid "TinyPPI"
-msgstr "TinyPPI"
+msgid "Bald Process Info"
+msgstr "Bald Process Info"
 
 msgctxt "#32006"
 msgid "VS10 dialog"
@@ -40,8 +40,8 @@ msgid "Auto-hide"
 msgstr "Automatikus elrejtés"
 
 msgctxt "#32008"
-msgid "Automatically hides the TinyPPI overlay after the selected time (in seconds). 0 = off. Does not apply to the VS10 dialog."
-msgstr "Automatikusan elrejti a TinyPPI panelt a kiválasztott idő (másodpercben) elteltével. 0 = ki. Nem vonatkozik a VS10 panelre."
+msgid "Automatically hides the Bald Process Info overlay after the selected time (in seconds). 0 = off. Does not apply to the VS10 dialog."
+msgstr "Automatikusan elrejti a Bald Process Info panelt a kiválasztott idő (másodpercben) elteltével. 0 = ki. Nem vonatkozik a VS10 panelre."
 
 msgctxt "#32009"
 msgid "Overlay content"
@@ -52,7 +52,7 @@ msgid "Show file name"
 msgstr "Fájlnév mutatása"
 
 msgctxt "#32011"
-msgid "Show the currently playing file name in TinyPPI."
+msgid "Show the currently playing file name in Bald Process Info."
 msgstr "Mutasd az aktuálisan lejátszott fájl nevét."
 
 msgctxt "#32012"
@@ -108,8 +108,8 @@ msgid "Move with the arrow keys"
 msgstr "Mozgatás az iránygombokkal"
 
 msgctxt "#32025"
-msgid "Lets the arrow keys on the remote move the TinyPPI overlay around the screen while it is open. The move is not saved: the next launch starts from the position configured above."
-msgstr "Lehetővé teszi, hogy a távirányító iránygombjaival mozgasd a TinyPPI réteget a képernyőn, amíg nyitva van. A mozgatás nem kerül mentésre: a következő indításkor újra a fent beállított pozíció érvényes."
+msgid "Lets the arrow keys on the remote move the Bald Process Info overlay around the screen while it is open. The move is not saved: the next launch starts from the position configured above."
+msgstr "Lehetővé teszi, hogy a távirányító iránygombjaival mozgasd a Bald Process Info réteget a képernyőn, amíg nyitva van. A mozgatás nem kerül mentésre: a következő indításkor újra a fent beállított pozíció érvényes."
 
 msgctxt "#32026"
 msgid "Converted output"
@@ -132,12 +132,12 @@ msgid "Keeps the Dolby Vision panels on screen while VS10 converts a Dolby Visio
 msgstr "A képernyőn tartja a Dolby Vision paneljeit, miközben a VS10 HDR10-re alakít egy Dolby Vision forrást. Kikapcsolva helyette a statikus HDR-metaadatok panelje jelenik meg."
 
 msgctxt "#32031"
-msgid "TinyPPI overlay"
-msgstr "TinyPPI panel"
+msgid "Bald Process Info overlay"
+msgstr "Bald Process Info panel"
 
 msgctxt "#32032"
-msgid "Customise the TinyPPI overlay colors."
-msgstr "Testreszabhatod a TinyPPI színeit."
+msgid "Customise the Bald Process Info overlay colors."
+msgstr "Testreszabhatod a Bald Process Info színeit."
 
 msgctxt "#32033"
 msgid "Global background"
@@ -332,8 +332,8 @@ msgid "Dolby Vision metadata view"
 msgstr "Dolby Vision metaadat-nézet"
 
 msgctxt "#32081"
-msgid "Lets OK open the Dolby Vision metadata view while the TinyPPI overlay is up and a Dolby Vision source is playing. It lists every block the stream's side data carries — the configuration record, the RPU from its header through L11, the trim passes and the static SEIs. OK opens the section under the cursor in a window of its own, Back returns to the TinyPPI overlay. On any other source OK does nothing."
-msgstr "Az OK gomb megnyitja a Dolby Vision metaadat-nézetet, amíg a TinyPPI-átfedés látható és Dolby Vision forrás játszik. Felsorolja az adatfolyam oldalsó adatainak minden blokkját – a konfigurációs rekordot, az RPU-t a fejlécétől L11-ig, a trimmeléseket és a statikus SEI-ket. Az OK a kijelölt szakaszt saját ablakban nyitja meg, a Vissza visszatér a TinyPPI-átfedéshez. Más forrásoknál az OK nem csinál semmit."
+msgid "Lets OK open the Dolby Vision metadata view while the Bald Process Info overlay is up and a Dolby Vision source is playing. It lists every block the stream's side data carries — the configuration record, the RPU from its header through L11, the trim passes and the static SEIs. OK opens the section under the cursor in a window of its own, Back returns to the Bald Process Info overlay. On any other source OK does nothing."
+msgstr "Az OK gomb megnyitja a Dolby Vision metaadat-nézetet, amíg a Bald Process Info-átfedés látható és Dolby Vision forrás játszik. Felsorolja az adatfolyam oldalsó adatainak minden blokkját – a konfigurációs rekordot, az RPU-t a fejlécétől L11-ig, a trimmeléseket és a statikus SEI-ket. Az OK a kijelölt szakaszt saját ablakban nyitja meg, a Vissza visszatér a Bald Process Info-átfedéshez. Más forrásoknál az OK nem csinál semmit."
 
 msgctxt "#32082"
 msgid "Color laid over the whole screen behind the Dolby Vision metadata view. Raise its opacity to dim the picture behind it."
@@ -576,12 +576,12 @@ msgid "Also shows the format logos whenever the on-screen playback controls (vid
 msgstr "A logókat megjeleníti, amikor a képernyőn megjelenő lejátszó-vezérlők (video OSD) láthatók."
 
 msgctxt "#32142"
-msgid "Show codec logos in the TinyPPI overlay"
-msgstr "Kodek logók megjelenítése a TinyPPI panellel"
+msgid "Show codec logos in the Bald Process Info overlay"
+msgstr "Kodek logók megjelenítése a Bald Process Info panellel"
 
 msgctxt "#32143"
-msgid "Also shows the format logos while the TinyPPI info overlay is open."
-msgstr "A formátumlogókat is megjeleníti, miközben a TinyPPI panel meg van nyitva."
+msgid "Also shows the format logos while the Bald Process Info info overlay is open."
+msgstr "A formátumlogókat is megjeleníti, miközben a Bald Process Info panel meg van nyitva."
 
 msgctxt "#32144"
 msgid "Layout"
@@ -1096,8 +1096,8 @@ msgid "L5 Active Area"
 msgstr "L5 aktív képterület"
 
 msgctxt "#32272"
-msgid "OK: open section — Back: TinyPPI overlay"
-msgstr "OK: szakasz megnyitása — Vissza: TinyPPI-átfedés"
+msgid "OK: open section — Back: Bald Process Info overlay"
+msgstr "OK: szakasz megnyitása — Vissza: Bald Process Info-átfedés"
 
 msgctxt "#32273"
 msgid "Back: metadata list"

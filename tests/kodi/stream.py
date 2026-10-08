@@ -29,7 +29,7 @@ class Page(threading.Thread):
 
     def _get(self, path):
         conn = http.client.HTTPConnection("127.0.0.1", config.DASHBOARD_PORT, timeout=30)
-        conn.request("GET", path, headers={"X-TinyPPI-Token": self.token} if self.token else {})
+        conn.request("GET", path, headers={"X-BaldPI-Token": self.token} if self.token else {})
         response = conn.getresponse()
         response.read()
         conn.close()

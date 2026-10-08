@@ -1,6 +1,6 @@
 # Web Dashboard
 
-TinyPPI can serve everything the overlay shows to a browser on your phone or
+BaldPI can serve everything the overlay shows to a browser on your phone or
 laptop, so the readings can be followed **while the picture stays untouched**.
 The dashboard is off out of the box; switch it on under **Settings →
 Dashboard**, then open the address it names on any device on the same network:
@@ -16,7 +16,7 @@ a phone in your hand.
 ## What it shows
 
 The page is split into six tabs, switched from a floating bar of icons at the
-foot of the screen — the five of the TinyPPI app, in the same order, and the
+foot of the screen — the five of the BaldPI app, in the same order, and the
 settings:
 
 | Tab | What is on it |
@@ -45,7 +45,7 @@ connection light.
 - **Format badges** — a row for the picture (resolution, HDR format with the
   Dolby Vision profile and layer, a conversion as `DV → HDR10`, IMAX) and a
   row for the sound (codec, Atmos or DTS:X, channel layout), the same badges
-  the TinyPPI app draws under its title.
+  the BaldPI app draws under its title.
 - **Metrics** — the player cache, current frame rate, warning count and how
   often the output or a playback track was switched.
 - **A live luminance chart** — the Dolby Vision L1 peak and frame average on a

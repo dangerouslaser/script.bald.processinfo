@@ -89,7 +89,7 @@ def test_action_buttons_run_known_commands():
     commands = set(re.findall(r'command == "(\w+)"', read("main.py"))) | {"overlay", "dialog"}
     wrong = []
     for setting_id, data in ACTIONS:
-        match = re.match(r"RunScript\(script\.tinyppi,(\w+)(?:,([^,)]*))?", data)
+        match = re.match(r"RunScript\(script\.bald\.processinfo,(\w+)(?:,([^,)]*))?", data)
         if not match or match.group(1) not in commands:
             wrong.append(setting_id)
         elif match.group(1) == "pick_color" and match.group(2) != setting_id:
@@ -140,7 +140,7 @@ def test_every_colour_property_is_used():
     # its per-mode prefix and suffix.
     unused = [prop for prop, _palette, _sid in theme._THEME_PROPERTIES
               if prop not in SKINS and prop not in CODE
-              and not (prop.startswith("TinyPPI.Splash") and prop.endswith(suffixes))]
+              and not (prop.startswith("BaldPI.Splash") and prop.endswith(suffixes))]
     assert not unused
 
 

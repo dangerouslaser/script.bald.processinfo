@@ -4,7 +4,7 @@
 """Drive a Kodi 22 instance under Xvfb: profiles, JSON-RPC, HTTP, screenshots.
 
 ``make_home`` gives each test run a fresh profile copied from the template
-(see setup_profiles.py), with TinyPPI installed from the checkout or from a
+(see setup_profiles.py), with BaldPI installed from the checkout or from a
 git ref.
 """
 
@@ -29,7 +29,7 @@ _DIRECT = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 # Paths of the add-on folder that are no part of the installed add-on.
 _NOT_INSTALLED = ("docs/", "tools/", "tests/", ".git")
 
-TINYPPI_SETTINGS = f"""<settings version="2">
+BALDPI_SETTINGS = f"""<settings version="2">
     <setting id="web_enabled">true</setting>
     <setting id="web_token">{config.TOKEN}</setting>
 </settings>
@@ -72,7 +72,7 @@ def helper(*args, wait=8.0):
         os.remove(config.HELPER_OUT)
     except FileNotFoundError:
         pass
-    rpc("Addons.ExecuteAddon", {"addonid": "script.tinyppi.testhelper", "params": list(args), "wait": False})
+    rpc("Addons.ExecuteAddon", {"addonid": "script.bald.processinfo.testhelper", "params": list(args), "wait": False})
     deadline = time.time() + wait
     while time.time() < deadline:
         if os.path.exists(config.HELPER_OUT):
@@ -92,7 +92,7 @@ def props(*names):
 
 
 def set_settings(**values):
-    """Write TinyPPI settings as the settings dialog would."""
+    """Write BaldPI settings as the settings dialog would."""
     pairs = [f"{key}={'true' if v is True else 'false' if v is False else v}" for key, v in values.items()]
     for start in range(0, len(pairs), 20):
         helper("set", *pairs[start:start + 20])
@@ -183,9 +183,9 @@ def _addon_files(src):
     return [rel for rel in listed if rel and not rel.startswith(_NOT_INSTALLED)]
 
 
-def install_tinyppi(home, ref=None):
-    """Install TinyPPI into *home* from the checkout, or from git *ref*."""
-    dest = os.path.join(home, ".kodi", "addons", "script.tinyppi")
+def install_baldpi(home, ref=None):
+    """Install BaldPI into *home* from the checkout, or from git *ref*."""
+    dest = os.path.join(home, ".kodi", "addons", "script.bald.processinfo")
     shutil.rmtree(dest, ignore_errors=True)
     if ref:
         archive = subprocess.run(["git", "archive", "--format=tar", ref], cwd=config.REPO,
@@ -201,20 +201,20 @@ def install_tinyppi(home, ref=None):
 
 
 def install_helper(home):
-    dest = os.path.join(home, ".kodi", "addons", "script.tinyppi.testhelper")
+    dest = os.path.join(home, ".kodi", "addons", "script.bald.processinfo.testhelper")
     shutil.rmtree(dest, ignore_errors=True)
     shutil.copytree(os.path.join(os.path.dirname(os.path.abspath(__file__)), "helper"), dest)
 
 
-def make_home(name, ref=None, settings=TINYPPI_SETTINGS):
-    """Return a fresh profile *name*: the template plus TinyPPI."""
+def make_home(name, ref=None, settings=BALDPI_SETTINGS):
+    """Return a fresh profile *name*: the template plus BaldPI."""
     if not os.path.isdir(config.TEMPLATE):
         raise SystemExit("no profile template: run setup_profiles.py first")
     home = os.path.join(config.HOMES, name)
     shutil.rmtree(home, ignore_errors=True)
     shutil.copytree(config.TEMPLATE, home, symlinks=True)
-    install_tinyppi(home, ref)
-    data = os.path.join(home, ".kodi", "userdata", "addon_data", "script.tinyppi")
+    install_baldpi(home, ref)
+    data = os.path.join(home, ".kodi", "userdata", "addon_data", "script.bald.processinfo")
     os.makedirs(data, exist_ok=True)
     with open(os.path.join(data, "settings.xml"), "w", encoding="utf-8") as handle:
         handle.write(settings)
@@ -330,10 +330,10 @@ def set_path_content(home):
     connection.close()
 
 
-def start_tinyppi(kodi, timeout=30):
-    """Enable TinyPPI (Kodi leaves add-ons copied in disabled) and wait for
+def start_baldpi(kodi, timeout=30):
+    """Enable BaldPI (Kodi leaves add-ons copied in disabled) and wait for
     its service and dashboard."""
-    enable("script.tinyppi")
+    enable("script.bald.processinfo")
     return (kodi.wait_log("KodiMonitor started", 0, timeout)
             and kodi.wait_log("dashboard listening on", 0, timeout))
 
@@ -343,4 +343,4 @@ def require_coreelec_marker():
     in ui/overlay.py); a desktop Kodi passes with an /etc/coreelec folder."""
     if not os.path.isdir("/etc/coreelec"):
         raise SystemExit("/etc/coreelec is missing: create it on the (throwaway) test machine, "
-                         "e.g. 'sudo mkdir /etc/coreelec', so TinyPPI treats Kodi as CoreELEC")
+                         "e.g. 'sudo mkdir /etc/coreelec', so BaldPI treats Kodi as CoreELEC")

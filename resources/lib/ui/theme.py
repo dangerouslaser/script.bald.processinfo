@@ -5,7 +5,7 @@
 
 Maps the color settings to ARGB hex strings and publishes them as Home-window
 (10000) properties for the skin
-(``$INFO[Window(10000).Property(TinyPPI.<Name>Color)]``).  Colors are chosen
+(``$INFO[Window(10000).Property(BaldPI.<Name>Color)]``).  Colors are chosen
 in Kodi's color picker with the add-on's palette (see ``pick_color``).
 """
 
@@ -89,13 +89,13 @@ _DEFAULT_SWATCH = {
     "metadata_changed_color": "FF82B1FF",  # Light blue
     "splash_start_convert_dot_color":   "FF81C784",  # Forest
     "splash_osd_convert_dot_color":     "FF81C784",  # Forest
-    "splash_tinyppi_convert_dot_color": "FF81C784",  # Forest
+    "splash_baldpi_convert_dot_color": "FF81C784",  # Forest
     "splash_start_fel_color":   "FF81C784",  # Forest
     "splash_osd_fel_color":     "FF81C784",  # Forest
-    "splash_tinyppi_fel_color": "FF81C784",  # Forest
+    "splash_baldpi_fel_color": "FF81C784",  # Forest
     "splash_start_mel_color":   "FFFFB74D",  # Tangerine
     "splash_osd_mel_color":     "FFFFB74D",  # Tangerine
-    "splash_tinyppi_mel_color": "FFFFB74D",  # Tangerine
+    "splash_baldpi_mel_color": "FFFFB74D",  # Tangerine
 }
 _BACKGROUND_DEFAULT = "FF272D32"
 
@@ -103,7 +103,7 @@ _BACKGROUND_DEFAULT = "FF272D32"
 # swatch, then the color's name (a string reference for a translated one) or
 # the HEX code:
 #
-#     [COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208]
+#     [COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208]
 #     [COLOR=FFE65350]●[/COLOR] Red 3
 #     [COLOR=FF5733AA]●[/COLOR] #5733AA
 #
@@ -164,7 +164,7 @@ _HEX8_RE = re.compile(r"^[0-9A-Fa-f]{8}$")
 
 
 def _notify(addon, message_id: int, icon: str, duration: int) -> None:
-    """Show a localized TinyPPI settings notification."""
+    """Show a localized BaldPI settings notification."""
     xbmcgui.Dialog().notification(
         addon.getAddonInfo("name"),
         addon.getLocalizedString(message_id),
@@ -216,8 +216,8 @@ _DEFAULT_OPACITIES = {
     "splash_start_divider_color":   35,
     "splash_osd_bg_color":          98,
     "splash_osd_divider_color":     35,
-    "splash_tinyppi_bg_color":      98,
-    "splash_tinyppi_divider_color": 35,
+    "splash_baldpi_bg_color":      98,
+    "splash_baldpi_divider_color": 35,
     # DV layer pill: FEL/MEL opaque, other profiles faint by default.
     "splash_start_fel_color":   100,
     "splash_start_mel_color":   100,
@@ -225,9 +225,9 @@ _DEFAULT_OPACITIES = {
     "splash_osd_fel_color":     100,
     "splash_osd_mel_color":     100,
     "splash_osd_dv_color":      20,
-    "splash_tinyppi_fel_color": 100,
-    "splash_tinyppi_mel_color": 100,
-    "splash_tinyppi_dv_color":  20,
+    "splash_baldpi_fel_color": 100,
+    "splash_baldpi_mel_color": 100,
+    "splash_baldpi_dv_color":  20,
 }
 
 
@@ -312,81 +312,81 @@ def _resolve(spec: _ColorSetting, value: str, legacy_hex: str = "") -> str:
 
 
 _THEME_PROPERTIES = (
-    ("TinyPPI.TitleColor",            _TEXT_COLORS, "title_color"),
-    ("TinyPPI.FilenameColor",         _TEXT_COLORS, "filename_color"),
-    ("TinyPPI.IconColor",             _TEXT_COLORS, "icon_color"),
-    ("TinyPPI.HeaderColor",           _TEXT_COLORS, "header_color"),
-    ("TinyPPI.HeaderIconColor",       _TEXT_COLORS, "header_icon_color"),
-    ("TinyPPI.DescriptionColor",      _TEXT_COLORS, "description_color"),
-    ("TinyPPI.OutputColor",           _TEXT_COLORS, "output_color"),
-    ("TinyPPI.OutputChangedColor",    _TEXT_COLORS, "output_changed_color"),
-    ("TinyPPI.ProgressColor",         _TEXT_COLORS, "progress_color"),
-    ("TinyPPI.FpsColor",              _TEXT_COLORS, "fps_color"),
-    ("TinyPPI.UnitColor",             _TEXT_COLORS, "unit_color"),
-    ("TinyPPI.AccentColor",           _ACCENT_COLORS, "accent_color"),
-    ("TinyPPI.ConvertYesColor",       _TEXT_COLORS, "convert_yes_color"),
-    ("TinyPPI.ConvertNoColor",        _TEXT_COLORS, "convert_no_color"),
-    ("TinyPPI.FelColor",              _TEXT_COLORS, "fel_color"),
-    ("TinyPPI.MelColor",              _TEXT_COLORS, "mel_color"),
-    ("TinyPPI.BackgroundColor",       _BACKGROUND_COLORS, "background_color"),
-    ("TinyPPI.DialogBackgroundColor", _BACKGROUND_COLORS, "dialog_background_color"),
-    ("TinyPPI.DialogGlobalBackgroundColor", _BACKGROUND_COLORS, "dialog_global_background_color"),
-    ("TinyPPI.GlobalBackgroundColor", _BACKGROUND_COLORS, "global_background_color"),
+    ("BaldPI.TitleColor",            _TEXT_COLORS, "title_color"),
+    ("BaldPI.FilenameColor",         _TEXT_COLORS, "filename_color"),
+    ("BaldPI.IconColor",             _TEXT_COLORS, "icon_color"),
+    ("BaldPI.HeaderColor",           _TEXT_COLORS, "header_color"),
+    ("BaldPI.HeaderIconColor",       _TEXT_COLORS, "header_icon_color"),
+    ("BaldPI.DescriptionColor",      _TEXT_COLORS, "description_color"),
+    ("BaldPI.OutputColor",           _TEXT_COLORS, "output_color"),
+    ("BaldPI.OutputChangedColor",    _TEXT_COLORS, "output_changed_color"),
+    ("BaldPI.ProgressColor",         _TEXT_COLORS, "progress_color"),
+    ("BaldPI.FpsColor",              _TEXT_COLORS, "fps_color"),
+    ("BaldPI.UnitColor",             _TEXT_COLORS, "unit_color"),
+    ("BaldPI.AccentColor",           _ACCENT_COLORS, "accent_color"),
+    ("BaldPI.ConvertYesColor",       _TEXT_COLORS, "convert_yes_color"),
+    ("BaldPI.ConvertNoColor",        _TEXT_COLORS, "convert_no_color"),
+    ("BaldPI.FelColor",              _TEXT_COLORS, "fel_color"),
+    ("BaldPI.MelColor",              _TEXT_COLORS, "mel_color"),
+    ("BaldPI.BackgroundColor",       _BACKGROUND_COLORS, "background_color"),
+    ("BaldPI.DialogBackgroundColor", _BACKGROUND_COLORS, "dialog_background_color"),
+    ("BaldPI.DialogGlobalBackgroundColor", _BACKGROUND_COLORS, "dialog_global_background_color"),
+    ("BaldPI.GlobalBackgroundColor", _BACKGROUND_COLORS, "global_background_color"),
     # Codec logos: bg / video / audio / divider colours per context (playback
-    # start, video OSD, TinyPPI overlay).
-    ("TinyPPI.SplashStartBgColor",        _BACKGROUND_COLORS, "splash_start_bg_color"),
-    ("TinyPPI.SplashStartVideoColor",     _TEXT_COLORS,       "splash_start_video_color"),
-    ("TinyPPI.SplashStartAudioColor",     _TEXT_COLORS,       "splash_start_audio_color"),
-    ("TinyPPI.SplashStartDividerColor",   _TEXT_COLORS,       "splash_start_divider_color"),
-    ("TinyPPI.SplashStartConvertDotColor", _TEXT_COLORS,      "splash_start_convert_dot_color"),
+    # start, video OSD, BaldPI overlay).
+    ("BaldPI.SplashStartBgColor",        _BACKGROUND_COLORS, "splash_start_bg_color"),
+    ("BaldPI.SplashStartVideoColor",     _TEXT_COLORS,       "splash_start_video_color"),
+    ("BaldPI.SplashStartAudioColor",     _TEXT_COLORS,       "splash_start_audio_color"),
+    ("BaldPI.SplashStartDividerColor",   _TEXT_COLORS,       "splash_start_divider_color"),
+    ("BaldPI.SplashStartConvertDotColor", _TEXT_COLORS,      "splash_start_convert_dot_color"),
     # DV layer pill: FEL / MEL / other-profile colours, per context.
-    ("TinyPPI.SplashStartFelColor", _TEXT_COLORS, "splash_start_fel_color"),
-    ("TinyPPI.SplashStartMelColor", _TEXT_COLORS, "splash_start_mel_color"),
-    ("TinyPPI.SplashStartDvColor",  _TEXT_COLORS, "splash_start_dv_color"),
-    ("TinyPPI.SplashOsdBgColor",          _BACKGROUND_COLORS, "splash_osd_bg_color"),
-    ("TinyPPI.SplashOsdVideoColor",       _TEXT_COLORS,       "splash_osd_video_color"),
-    ("TinyPPI.SplashOsdAudioColor",       _TEXT_COLORS,       "splash_osd_audio_color"),
-    ("TinyPPI.SplashOsdDividerColor",     _TEXT_COLORS,       "splash_osd_divider_color"),
-    ("TinyPPI.SplashOsdConvertDotColor",  _TEXT_COLORS,       "splash_osd_convert_dot_color"),
-    ("TinyPPI.SplashOsdFelColor", _TEXT_COLORS, "splash_osd_fel_color"),
-    ("TinyPPI.SplashOsdMelColor", _TEXT_COLORS, "splash_osd_mel_color"),
-    ("TinyPPI.SplashOsdDvColor",  _TEXT_COLORS, "splash_osd_dv_color"),
-    ("TinyPPI.SplashTinyppiBgColor",      _BACKGROUND_COLORS, "splash_tinyppi_bg_color"),
-    ("TinyPPI.SplashTinyppiVideoColor",   _TEXT_COLORS,       "splash_tinyppi_video_color"),
-    ("TinyPPI.SplashTinyppiAudioColor",   _TEXT_COLORS,       "splash_tinyppi_audio_color"),
-    ("TinyPPI.SplashTinyppiDividerColor", _TEXT_COLORS,       "splash_tinyppi_divider_color"),
-    ("TinyPPI.SplashTinyppiConvertDotColor", _TEXT_COLORS,    "splash_tinyppi_convert_dot_color"),
-    ("TinyPPI.SplashTinyppiFelColor", _TEXT_COLORS, "splash_tinyppi_fel_color"),
-    ("TinyPPI.SplashTinyppiMelColor", _TEXT_COLORS, "splash_tinyppi_mel_color"),
-    ("TinyPPI.SplashTinyppiDvColor",  _TEXT_COLORS, "splash_tinyppi_dv_color"),
+    ("BaldPI.SplashStartFelColor", _TEXT_COLORS, "splash_start_fel_color"),
+    ("BaldPI.SplashStartMelColor", _TEXT_COLORS, "splash_start_mel_color"),
+    ("BaldPI.SplashStartDvColor",  _TEXT_COLORS, "splash_start_dv_color"),
+    ("BaldPI.SplashOsdBgColor",          _BACKGROUND_COLORS, "splash_osd_bg_color"),
+    ("BaldPI.SplashOsdVideoColor",       _TEXT_COLORS,       "splash_osd_video_color"),
+    ("BaldPI.SplashOsdAudioColor",       _TEXT_COLORS,       "splash_osd_audio_color"),
+    ("BaldPI.SplashOsdDividerColor",     _TEXT_COLORS,       "splash_osd_divider_color"),
+    ("BaldPI.SplashOsdConvertDotColor",  _TEXT_COLORS,       "splash_osd_convert_dot_color"),
+    ("BaldPI.SplashOsdFelColor", _TEXT_COLORS, "splash_osd_fel_color"),
+    ("BaldPI.SplashOsdMelColor", _TEXT_COLORS, "splash_osd_mel_color"),
+    ("BaldPI.SplashOsdDvColor",  _TEXT_COLORS, "splash_osd_dv_color"),
+    ("BaldPI.SplashbaldpiBgColor",      _BACKGROUND_COLORS, "splash_baldpi_bg_color"),
+    ("BaldPI.SplashbaldpiVideoColor",   _TEXT_COLORS,       "splash_baldpi_video_color"),
+    ("BaldPI.SplashbaldpiAudioColor",   _TEXT_COLORS,       "splash_baldpi_audio_color"),
+    ("BaldPI.SplashbaldpiDividerColor", _TEXT_COLORS,       "splash_baldpi_divider_color"),
+    ("BaldPI.SplashbaldpiConvertDotColor", _TEXT_COLORS,    "splash_baldpi_convert_dot_color"),
+    ("BaldPI.SplashbaldpiFelColor", _TEXT_COLORS, "splash_baldpi_fel_color"),
+    ("BaldPI.SplashbaldpiMelColor", _TEXT_COLORS, "splash_baldpi_mel_color"),
+    ("BaldPI.SplashbaldpiDvColor",  _TEXT_COLORS, "splash_baldpi_dv_color"),
     # Channel layout: DV panel background, speaker layout graphic, active
     # channels.
-    ("TinyPPI.ChannelBackgroundColor", _BACKGROUND_COLORS, "channel_background_color"),
-    ("TinyPPI.ChannelLayoutColor",     _CHANNEL_COLORS,    "channel_layout_color"),
-    ("TinyPPI.ChannelIconColor",       _CHANNEL_COLORS,    "channel_icon_color"),
+    ("BaldPI.ChannelBackgroundColor", _BACKGROUND_COLORS, "channel_background_color"),
+    ("BaldPI.ChannelLayoutColor",     _CHANNEL_COLORS,    "channel_layout_color"),
+    ("BaldPI.ChannelIconColor",       _CHANNEL_COLORS,    "channel_icon_color"),
     # DV metadata view: its own colours, independent of the overlay.
-    ("TinyPPI.MetadataChangedColor",     _TEXT_COLORS, "metadata_changed_color"),
-    ("TinyPPI.MetadataGlobalBackgroundColor",  _BACKGROUND_COLORS, "metadata_global_background_color"),
-    ("TinyPPI.MetadataBackgroundColor",        _BACKGROUND_COLORS, "metadata_background_color"),
-    ("TinyPPI.MetadataHeaderColor",            _TEXT_COLORS, "metadata_header_color"),
-    ("TinyPPI.MetadataHeaderIconColor",        _TEXT_COLORS, "metadata_header_icon_color"),
-    ("TinyPPI.MetadataTitleColor",             _TEXT_COLORS, "metadata_title_color"),
-    ("TinyPPI.MetadataColumnColor",            _TEXT_COLORS, "metadata_column_color"),
-    ("TinyPPI.MetadataNameColor",              _TEXT_COLORS, "metadata_name_color"),
-    ("TinyPPI.MetadataValueColor",             _TEXT_COLORS, "metadata_value_color"),
-    ("TinyPPI.MetadataLineColor",              _LINE_COLORS, "metadata_line_color"),
-    ("TinyPPI.MetadataFocusColor",             _LINE_COLORS, "metadata_focus_color"),
-    ("TinyPPI.MetadataScrollbarColor",         _TEXT_COLORS, "metadata_scrollbar_color"),
-    ("TinyPPI.MetadataHintColor",              _TEXT_COLORS, "metadata_hint_color"),
-    ("TinyPPI.LineColor",             _LINE_COLORS, "line_color"),
-    ("TinyPPI.DialogHeaderColor",     _TEXT_COLORS, "dialog_header_color"),
-    ("TinyPPI.DialogHeaderIconColor", _TEXT_COLORS, "dialog_header_icon_color"),
-    ("TinyPPI.DialogLineColor",       _LINE_COLORS, "dialog_line_color"),
+    ("BaldPI.MetadataChangedColor",     _TEXT_COLORS, "metadata_changed_color"),
+    ("BaldPI.MetadataGlobalBackgroundColor",  _BACKGROUND_COLORS, "metadata_global_background_color"),
+    ("BaldPI.MetadataBackgroundColor",        _BACKGROUND_COLORS, "metadata_background_color"),
+    ("BaldPI.MetadataHeaderColor",            _TEXT_COLORS, "metadata_header_color"),
+    ("BaldPI.MetadataHeaderIconColor",        _TEXT_COLORS, "metadata_header_icon_color"),
+    ("BaldPI.MetadataTitleColor",             _TEXT_COLORS, "metadata_title_color"),
+    ("BaldPI.MetadataColumnColor",            _TEXT_COLORS, "metadata_column_color"),
+    ("BaldPI.MetadataNameColor",              _TEXT_COLORS, "metadata_name_color"),
+    ("BaldPI.MetadataValueColor",             _TEXT_COLORS, "metadata_value_color"),
+    ("BaldPI.MetadataLineColor",              _LINE_COLORS, "metadata_line_color"),
+    ("BaldPI.MetadataFocusColor",             _LINE_COLORS, "metadata_focus_color"),
+    ("BaldPI.MetadataScrollbarColor",         _TEXT_COLORS, "metadata_scrollbar_color"),
+    ("BaldPI.MetadataHintColor",              _TEXT_COLORS, "metadata_hint_color"),
+    ("BaldPI.LineColor",             _LINE_COLORS, "line_color"),
+    ("BaldPI.DialogHeaderColor",     _TEXT_COLORS, "dialog_header_color"),
+    ("BaldPI.DialogHeaderIconColor", _TEXT_COLORS, "dialog_header_icon_color"),
+    ("BaldPI.DialogLineColor",       _LINE_COLORS, "dialog_line_color"),
     # Unfocused dialog button text, independent of the description colour.
-    ("TinyPPI.DialogTextColor",       _TEXT_COLORS, "dialog_text_color"),
-    ("TinyPPI.DialogFocusColor",      _DIALOG_FOCUS_COLORS, "dialog_focus_color"),
+    ("BaldPI.DialogTextColor",       _TEXT_COLORS, "dialog_text_color"),
+    ("BaldPI.DialogFocusColor",      _DIALOG_FOCUS_COLORS, "dialog_focus_color"),
     (
-        "TinyPPI.DialogFocusTextColor",
+        "BaldPI.DialogFocusTextColor",
         _DIALOG_FOCUS_TEXT_COLORS,
         "dialog_focus_text_color",
     ),
@@ -455,7 +455,7 @@ def apply_theme(home, addon=None, overrides=None) -> None:
         home.setProperty(property_name, alpha + color[2:])
 
     home.setProperty(
-        "TinyPPI.UnitLabel",
+        "BaldPI.UnitLabel",
         _pick(_UNIT_LABELS, _setting_value(addon, "unit_type", overrides)),
     )
 
@@ -484,7 +484,7 @@ def pick_color(setting_id: str, heading_id: str = "") -> None:
     """Show a color setting's palette in Kodi's picker and store the choice.
 
     Called from the setting's row via
-    ``RunScript(script.tinyppi,pick_color,<setting id>,<label id>)``.  The
+    ``RunScript(script.bald.processinfo,pick_color,<setting id>,<label id>)``.  The
     first tile asks for a HEX color, the second is the setting's default; the
     rest of the palette follows in its own order.  Cancelling leaves the
     setting unchanged.

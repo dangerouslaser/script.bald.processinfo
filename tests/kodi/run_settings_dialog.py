@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # Copyright (c) 2026 U3knOwn
 
-"""Kodi's settings dialog for TinyPPI: every category opens, cleanly."""
+"""Kodi's settings dialog for BaldPI: every category opens, cleanly."""
 
 import os
 import re
@@ -29,9 +29,9 @@ def main():
     k = kodi.Kodi(kodi.make_home("settings-dialog"))
     print(f"Kodi answered after {k.start():.1f} s", flush=True)
     try:
-        kodi.start_tinyppi(k)
+        kodi.start_baldpi(k)
         mark = k.log_size()
-        kodi.builtin("Addon.OpenSettings(script.tinyppi)")
+        kodi.builtin("Addon.OpenSettings(script.bald.processinfo)")
         time.sleep(4)
         report.check("the settings dialog opens", kodi.window()["id"] == 10140, kodi.window())
         kodi.rpc("Input.Left")            # onto the category list
@@ -46,7 +46,7 @@ def main():
         kodi.rpc("Input.Back")
         time.sleep(2)
         bad = [line[:200] for line in k.log(mark).splitlines()
-               if (" error " in line or "warning" in line) and ("etting" in line or "tinyppi" in line.lower())]
+               if (" error " in line or "warning" in line) and ("etting" in line or "baldpi" in line.lower())]
         report.check("no setting errors or warnings in the log", not bad, bad[:6])
     finally:
         k.quit()

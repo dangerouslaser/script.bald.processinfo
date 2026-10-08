@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # Copyright (c) 2026 U3knOwn
 
-"""The TinyPPI overlay dialog and the entry points for both views.
+"""The BaldPI overlay dialog and the entry points for both views.
 
 Imported by main.py (which sets up sys.path) and by the service.
 """
@@ -47,10 +47,10 @@ _ADDON_PATH = settings.addon().getAddonInfo("path")
 # dropped rather than opening it again at once.
 _releasing = threading.Event()
 
-# Held from the _preflight guards until TinyPPI is marked open.  The service
+# Held from the _preflight guards until BaldPI is marked open.  The service
 # handles each request on its own thread, so a second press in that window
 # would stack a second view; it is dropped instead.  Once open, a press
-# toggles TinyPPI closed.
+# toggles BaldPI closed.
 _opening = threading.Lock()
 
 # Set True to allow launching on non-CoreELEC platforms (for testing).
@@ -84,7 +84,7 @@ _NUDGE_ACTIONS = {
     xbmcgui.ACTION_MOVE_DOWN:  (0, _NUDGE_STEP),
 }
 
-# Next view for open_tinyppi(): OK on a DV source opens the metadata view,
+# Next view for open_baldpi(): OK on a DV source opens the metadata view,
 # Back returns.  Back on the overlay ends the session.
 _VIEW_DV_METADATA = "dv_metadata"
 
@@ -105,7 +105,7 @@ _DV_VALUE_PROPERTIES = (
     "Hdr10MaxCllFallVar",
 )
 
-_DV_CHANGED_COLOR    = "TinyPPI.OutputChangedColor"
+_DV_CHANGED_COLOR    = "BaldPI.OutputChangedColor"
 _DV_CHANGED_FALLBACK = "FF82B1FF"  # Blue, the setting's default
 
 # Setting for how long a changed reading stays highlighted (ms); polling
@@ -130,7 +130,7 @@ def _settings() -> xbmcaddon.Addon:
 def _notify_error(message_id: int) -> None:
     """Show an error notification with localized string *message_id*."""
     xbmcgui.Dialog().notification(
-        "TinyPPI",
+        "BaldPI",
         localized(message_id),
         xbmcgui.NOTIFICATION_ERROR,
         4000,
@@ -138,7 +138,7 @@ def _notify_error(message_id: int) -> None:
 
 
 def _set_overlay_state(home, dialog_mode: bool = False) -> None:
-    """Publish the Home-window properties that mark TinyPPI as open."""
+    """Publish the Home-window properties that mark BaldPI as open."""
     set_window_properties(
         home,
         (
@@ -233,7 +233,7 @@ def _release_overlay(home) -> None:
 
 # --- Overlay dialog --------------------------------------------------------
 
-class TinyPPIDialog(xbmcgui.WindowXMLDialog):
+class BaldPIDialog(xbmcgui.WindowXMLDialog):
     """Live player info over fullscreen video.
 
     Closes when playback stops or fullscreen video is left.
@@ -264,7 +264,7 @@ class TinyPPIDialog(xbmcgui.WindowXMLDialog):
         self._color_missing     = False
         # Highlight color, refreshed on the slow cadence (see _update_loop).
         self._changed_color     = ""
-        # Read by open_tinyppi() after doModal() (see _open_dv_metadata).
+        # Read by open_baldpi() after doModal() (see _open_dv_metadata).
         self.next_view  = None
 
     def onInit(self) -> None:
@@ -326,7 +326,7 @@ class TinyPPIDialog(xbmcgui.WindowXMLDialog):
         current = {
             name: self.published.get(name, "") for name in _DV_VALUE_PROPERTIES
         }
-        hdr_type = self.published.get("TinyPPI.HdrType", "").lower()
+        hdr_type = self.published.get("BaldPI.HdrType", "").lower()
         color = self._changed_color if "dolby" in hdr_type else ""
         now   = time.monotonic()
         for name, value in current.items():
@@ -359,7 +359,7 @@ class TinyPPIDialog(xbmcgui.WindowXMLDialog):
         The source type, not the effective one: the side data still describes
         the DV stream while VS10 converts it.
         """
-        return "dolby" in home_window().getProperty("TinyPPI.HdrType").lower()
+        return "dolby" in home_window().getProperty("BaldPI.HdrType").lower()
 
     def _layout(self) -> tuple[bool, bool, bool]:
         """Return ``(hdr, dv, channels)`` for the current layout.
@@ -369,7 +369,7 @@ class TinyPPIDialog(xbmcgui.WindowXMLDialog):
         read takes Kodi's GUI lock.
         """
         channels = (
-            home_window().getProperty("TinyPPI.ShowChannelIcon") == "1"
+            home_window().getProperty("BaldPI.ShowChannelIcon") == "1"
             and bool(self.getProperty("ChannelIconVar"))
         )
         return bool(effective_hdr_type()), is_effective_dv(), channels
@@ -445,7 +445,7 @@ class TinyPPIDialog(xbmcgui.WindowXMLDialog):
     def _open_dv_metadata(self) -> None:
         """Hand over to the Dolby Vision metadata view.
 
-        Only for a DV source with the setting on.  open_tinyppi() opens the
+        Only for a DV source with the setting on.  open_baldpi() opens the
         view after this window has closed: a modal opened from a callback
         would nest in its dispatch loop, and actions sent while a modal is
         closing are dropped.
@@ -532,8 +532,8 @@ def _show_overlay(home) -> str | None:
     # the metadata view, which has no splash.
     home.setProperty(PROP_ACTIVE, "true")
 
-    dialog = TinyPPIDialog(
-        "script-tinyppi-main.xml",
+    dialog = BaldPIDialog(
+        "script-baldpi-main.xml",
         _ADDON_PATH,
         "Default",
         "1080i",
@@ -548,8 +548,8 @@ def _show_overlay(home) -> str | None:
     return next_view
 
 
-def open_tinyppi() -> None:
-    """Check the environment and show TinyPPI until the viewer closes it.
+def open_baldpi() -> None:
+    """Check the environment and show BaldPI until the viewer closes it.
 
     Starts with the overlay; on a DV source OK switches to the metadata view
     and Back returns.  Does nothing where no output readings exist (unless
@@ -560,7 +560,7 @@ def open_tinyppi() -> None:
     player = xbmc.Player()
 
     if not _opening.acquire(blocking=False):
-        log("open request dropped: TinyPPI is already opening")
+        log("open request dropped: BaldPI is already opening")
         return
     try:
         if not _preflight(home, player, "Toggle close"):
@@ -579,14 +579,14 @@ def open_tinyppi() -> None:
         set_window_properties(
             home,
             (
-                ("TinyPPI.Filename", addon.getSetting("filename")),
+                ("BaldPI.Filename", addon.getSetting("filename")),
                 (
-                    "TinyPPI.ShowL5Icon",
+                    "BaldPI.ShowL5Icon",
                     "0" if addon.getSetting("show_l5_icon") == "false" else "1",
                 ),
-                ("TinyPPI.ShowLine", elements_visible),
-                ("TinyPPI.ShowHeaderTitle", elements_visible),
-                ("TinyPPI.ShowHeaderIcon", elements_visible),
+                ("BaldPI.ShowLine", elements_visible),
+                ("BaldPI.ShowHeaderTitle", elements_visible),
+                ("BaldPI.ShowHeaderIcon", elements_visible),
             ),
         )
         # From the HDR type known so far; the update loop refreshes it.
@@ -609,7 +609,7 @@ def open_dialog_mode() -> None:
     # a CoreELEC box, say) gets the overlay instead of an error.
     if not platform.is_amlogic():
         log("no VS10 here -- opening the overlay instead of the dialog", xbmc.LOGINFO)
-        open_tinyppi()
+        open_baldpi()
         return
 
     home   = home_window()
@@ -617,7 +617,7 @@ def open_dialog_mode() -> None:
 
     # See _opening.
     if not _opening.acquire(blocking=False):
-        log("open request dropped: TinyPPI is already opening")
+        log("open request dropped: BaldPI is already opening")
         return
     try:
         if not _preflight(home, player, "Toggle close (dialog mode)"):
@@ -635,9 +635,9 @@ def open_dialog_mode() -> None:
         set_window_properties(
             home,
             (
-                ("TinyPPI.ShowLine", elements_visible),
-                ("TinyPPI.ShowHeaderTitle", elements_visible),
-                ("TinyPPI.ShowHeaderIcon", elements_visible),
+                ("BaldPI.ShowLine", elements_visible),
+                ("BaldPI.ShowHeaderTitle", elements_visible),
+                ("BaldPI.ShowHeaderIcon", elements_visible),
             ),
         )
         apply_theme(home, addon)

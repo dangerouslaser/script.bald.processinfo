@@ -26,10 +26,10 @@
    waits for it.
 =========================================================================== */
 
-window.TinyPPITheme = (function () {
+window.BaldPITheme = (function () {
 
-  const THEME_KEY    = "tinyppi.theme";
-  const STRENGTH_KEY = "tinyppi.tint";
+  const THEME_KEY    = "baldpi.theme";
+  const STRENGTH_KEY = "baldpi.tint";
 
   /* Also the order they are offered in: the two that share a palette, then
      the one that does not. */

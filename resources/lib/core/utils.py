@@ -22,18 +22,18 @@ _READING_GAP_RE = re.compile(r"(\s{2,}|\s+[|l]\s+)")
 
 # Home-window (10000) properties for the overlay state, shared by overlay.py
 # and mode_select.py.
-PROP_RUNNING     = "TinyPPI.Running"
-PROP_ACTIVE      = "TinyPPI.Active"
-PROP_DIALOG_MODE = "TinyPPI.DialogMode"
+PROP_RUNNING     = "BaldPI.Running"
+PROP_ACTIVE      = "BaldPI.Active"
+PROP_DIALOG_MODE = "BaldPI.DialogMode"
 
 # The output type the overlay layout follows (see
 # info.properties.publish_hdr_type).
-PROP_EFFECTIVE_HDR_TYPE = "TinyPPI.EffectiveHdrType"
+PROP_EFFECTIVE_HDR_TYPE = "BaldPI.EffectiveHdrType"
 
 # Whether the stream carries HDR10+ metadata.  A Dolby Vision title with an
 # ST 2094-40 payload next to its RPU is a hybrid grade the driver cannot
 # convert with VS10 (issue #71), so the dialog and dashboard hide the modes.
-PROP_HDR10PLUS_PRESENT = "TinyPPI.Hdr10PlusPresent"
+PROP_HDR10PLUS_PRESENT = "BaldPI.Hdr10PlusPresent"
 
 
 # Per-pass read caches, one per thread (the overlay and the metadata view
@@ -74,7 +74,7 @@ class read_pass:
 
 
 def home_window() -> xbmcgui.Window:
-    """Return the Home window (10000), where TinyPPI publishes its state.
+    """Return the Home window (10000), where BaldPI publishes its state.
 
     A window lookup takes Kodi's GUI lock, so inside a ``read_pass`` one
     handle is shared.  It is never kept beyond the pass: Kodi recreates its
@@ -444,6 +444,6 @@ def log_refresh_failure(view: str, exc: Exception) -> None:
 
 
 def clear_overlay_state(home) -> None:
-    """Clear the Home-window properties that mark TinyPPI as open."""
+    """Clear the Home-window properties that mark BaldPI as open."""
     for prop in (PROP_RUNNING, PROP_ACTIVE, PROP_DIALOG_MODE):
         home.clearProperty(prop)

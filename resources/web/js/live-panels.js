@@ -16,7 +16,7 @@
 
    A page opts in by putting <div id="live"></div> where the panels belong;
    the markup and the drawing are here, the styling is in live-panels.css.  It
-   then hands the snapshot on through TinyPPI.panels.update() and the localized
+   then hands the snapshot on through BaldPI.panels.update() and the localized
    strings through .strings().
 =========================================================================== */
 
@@ -172,19 +172,19 @@
   function setControlsOpen(open, remember) {
     el.controlDrawer.classList.toggle("open", open);
     el.controlToggle.setAttribute("aria-expanded", String(open));
-    if (remember !== false) TinyPPI.setDisclosureState(controlStateKey, open);
+    if (remember !== false) BaldPI.setDisclosureState(controlStateKey, open);
   }
 
   el.controlToggle.addEventListener("click", () => {
     setControlsOpen(el.controlToggle.getAttribute("aria-expanded") !== "true");
   });
-  setControlsOpen(TinyPPI.disclosureState(controlStateKey, false), false);
-  TinyPPI.bindDisclosure(el.tiles, pageState + ".metrics", false);
+  setControlsOpen(BaldPI.disclosureState(controlStateKey, false), false);
+  BaldPI.bindDisclosure(el.tiles, pageState + ".metrics", false);
   /* The chart and the events arrive open: each is what a tab of its own is
      for now (the metadata tab and the history tab), and a tab that opens on a
      folded heading is a tab that has to be pressed twice. */
-  TinyPPI.bindDisclosure(el.chartCard, "metadata.l1", true);
-  TinyPPI.bindDisclosure(el.eventsCard, pageState + ".events", true);
+  BaldPI.bindDisclosure(el.chartCard, "metadata.l1", true);
+  BaldPI.bindDisclosure(el.eventsCard, pageState + ".events", true);
 
   /* --- what is playing -------------------------------------------------- */
 
@@ -262,14 +262,14 @@
       tint("");
       return;
     }
-    const url = TinyPPI.withToken("/api/art?kind=poster&v=" + tag);
+    const url = BaldPI.withToken("/api/art?kind=poster&v=" + tag);
     el.poster.src = url;
     el.artBox.classList.remove("hidden");
     tint(url);
   }
 
   function tint(url) {
-    if (window.TinyPPICover) TinyPPICover.show(el.nowCard, url, el.poster);
+    if (window.BaldPICover) BaldPICover.show(el.nowCard, url, el.poster);
   }
 
   /* A film with no poster is not an error; the frame just goes away, and the
@@ -429,7 +429,7 @@
     const row = audio.rows.find((entry) => entry.id === AUDIO_CODEC_ROW) || audio.rows[0];
     /* A codec Kodi could not name is no badge. */
     const value = (row.value || "").trim();
-    const words = value && value !== TinyPPI.T.na ? value.split(/\s+/) : [];
+    const words = value && value !== BaldPI.T.na ? value.split(/\s+/) : [];
     const last = words[words.length - 1];
     const layout = last && CHANNEL_LAYOUT.test(last) ? last : null;
     const codec = (layout ? words.slice(0, -1) : words).join(" ");
@@ -484,7 +484,7 @@
   /* --- the remote ------------------------------------------------------- */
 
   /* Built once, the first time a snapshot says the add-on will take orders.
-     Everything goes through TinyPPI.command, which carries the token and says
+     Everything goes through BaldPI.command, which carries the token and says
      whether the player did it. */
   function buildTransport() {
     if (el.transport.dataset.built) return;
@@ -518,12 +518,12 @@
     const keys = document.createElement("div");
     keys.className = "tkeys";
     keys.append(
-      button("−10m", () => TinyPPI.command("seek", -600)),
-      button("−1m", () => TinyPPI.command("seek", -60)),
-      button("−10s", () => TinyPPI.command("seek", -10)),
-      button("+10s", () => TinyPPI.command("seek", 10)),
-      button("+1m", () => TinyPPI.command("seek", 60)),
-      button("+10m", () => TinyPPI.command("seek", 600))
+      button("−10m", () => BaldPI.command("seek", -600)),
+      button("−1m", () => BaldPI.command("seek", -60)),
+      button("−10s", () => BaldPI.command("seek", -10)),
+      button("+10s", () => BaldPI.command("seek", 10)),
+      button("+1m", () => BaldPI.command("seek", 60)),
+      button("+10m", () => BaldPI.command("seek", 600))
     );
 
     /* Everything that is not a jump, in the order it is used: a chapter back,
@@ -542,7 +542,7 @@
        other keys are marked "+10s" is a key that has to be worked out; the
        speaker says which kind of louder it means before it is read. */
     const stepButton = (sign, key) => {
-      const node = button("", () => TinyPPI.command(key), "vol");
+      const node = button("", () => BaldPI.command(key), "vol");
       node.dataset.label = key;
       node.append(uiIcon("volume"));
       const mark = document.createElement("span");
@@ -556,7 +556,7 @@
     rest.className = "tvol";
     rest.append(
       imageButton("chapter-previous", "chapter_previous",
-                  () => TinyPPI.command("chapter_previous"), "chapter"),
+                  () => BaldPI.command("chapter_previous"), "chapter"),
       /* The icon says what pressing it does, so it follows the player: pause
          while it plays, play while it is paused.
 
@@ -565,13 +565,13 @@
          the key that is currently doing something rather than as the key worth
          reaching for, and what it is doing is already written on it. */
       imageButton("pause", "playpause",
-                  () => TinyPPI.command("playpause"), "play"),
+                  () => BaldPI.command("playpause"), "play"),
       stepButton("−", "volume_down"),
-      imageButton("volume", "mute", () => TinyPPI.command("mute"), "mute"),
+      imageButton("volume", "mute", () => BaldPI.command("mute"), "mute"),
       stepButton("+", "volume_up"),
-      imageButton("stop", "stop", () => TinyPPI.command("stop")),
+      imageButton("stop", "stop", () => BaldPI.command("stop")),
       imageButton("chapter-next", "chapter_next",
-                  () => TinyPPI.command("chapter_next"), "chapter")
+                  () => BaldPI.command("chapter_next"), "chapter")
     );
     el.transport.append(keys, rest);
     labelControls();
@@ -585,12 +585,12 @@
       const where = Math.min(100, Math.max(0,
         (event.clientX - box.left) / box.width * 100));
       el.bar.style.width = where + "%";
-      TinyPPI.command("seek_percent", where);
+      BaldPI.command("seek_percent", where);
     });
     el.track.addEventListener("keydown", (event) => {
       if (!control) return;
-      if (event.key === "ArrowLeft") TinyPPI.command("seek", -10);
-      else if (event.key === "ArrowRight") TinyPPI.command("seek", 10);
+      if (event.key === "ArrowLeft") BaldPI.command("seek", -10);
+      else if (event.key === "ArrowRight") BaldPI.command("seek", 10);
       else return;
       event.preventDefault();
     });
@@ -604,7 +604,7 @@
      are still all there is. */
   function labelControls() {
     for (const node of el.transport.querySelectorAll("[data-label]")) {
-      const name = TinyPPI.T[node.dataset.label];
+      const name = BaldPI.T[node.dataset.label];
       if (!name) continue;
       node.setAttribute("aria-label", name);
       if (node.tagName === "BUTTON") node.title = name;
@@ -625,7 +625,7 @@
     }
     buildTransport();
     if (!hadControl) {
-      setControlsOpen(TinyPPI.disclosureState(controlStateKey, false), false);
+      setControlsOpen(BaldPI.disclosureState(controlStateKey, false), false);
     }
     el.controlToggle.classList.remove("hidden");
     el.transport.classList.remove("hidden");
@@ -668,10 +668,10 @@
       trackKey = key;
       el.tracks.innerHTML = "";
       if (audio.length > 1) {
-        el.tracks.append(picker("audio", TinyPPI.T.audio_track, audio, false));
+        el.tracks.append(picker("audio", BaldPI.T.audio_track, audio, false));
       }
       if (subs.length) {
-        el.tracks.append(picker("subtitle", TinyPPI.T.subtitles, subs, true));
+        el.tracks.append(picker("subtitle", BaldPI.T.subtitles, subs, true));
       }
     }
 
@@ -691,12 +691,12 @@
     caption.textContent = label;
     const select = document.createElement("select");
     select.id = "pick-" + kind;
-    if (withOff) select.append(new Option(TinyPPI.T.off, "-1"));
+    if (withOff) select.append(new Option(BaldPI.T.off, "-1"));
     for (const option of options) {
       select.append(new Option(option.label, String(option.index)));
     }
     select.addEventListener("change", () => {
-      TinyPPI.command(kind, Number(select.value));
+      BaldPI.command(kind, Number(select.value));
     });
     wrap.append(caption, select);
     return wrap;
@@ -729,7 +729,7 @@
     el.vWarnings.textContent = String(totals.warnings || 0);
     const cacheKnown = metrics.cache !== null && metrics.cache !== undefined;
     el.vPlayerCache.textContent = cacheKnown
-      ? String(Math.round(metrics.cache)) : TinyPPI.T.na;
+      ? String(Math.round(metrics.cache)) : BaldPI.T.na;
     /* "N/A %" would read as a percentage of nothing: the unit goes with the
        figure. */
     el.vPlayerCache.nextElementSibling.textContent = cacheKnown ? "%" : "";
@@ -744,7 +744,7 @@
           : null);
     const known = fps !== null && Number.isFinite(fps);
     el.vFps.textContent = known
-      ? fps.toFixed(3).replace(/0+$/, "").replace(/[.]$/, "") : TinyPPI.T.na;
+      ? fps.toFixed(3).replace(/0+$/, "").replace(/[.]$/, "") : BaldPI.T.na;
     /* The arrow stays as it was until the rate moves again, so a glance at the
        tile says which way the last change went rather than only what the rate
        is now.  A reading that has gone away takes it with it: there is no
@@ -790,7 +790,7 @@
   function eventLabel(kind) {
     const label = EVENT_LABEL[kind];
     if (!label) return kind || "Event";
-    return TinyPPI.T[label[0]] || label[1];
+    return BaldPI.T[label[0]] || label[1];
   }
 
   /* A transition names two whole VS10 output states -- "SDR BT.709" to
@@ -802,8 +802,8 @@
 
   function eventText(entry) {
     const stateText = (value) => {
-      if (value === "__off__") return TinyPPI.T.off;
-      if (value === null || value === undefined) return TinyPPI.T.na;
+      if (value === "__off__") return BaldPI.T.off;
+      if (value === null || value === undefined) return BaldPI.T.na;
       let text = String(value);
       if (entry.kind === "audio" || entry.kind === "subtitle") {
         /* Index and ISO language are useful for identifying a track inside
@@ -813,7 +813,7 @@
           .replace(/^#\d+\s*(?:·\s*)?/, "")
           .replace(/^[A-Z]{2,3}\s*·\s*/i, "");
       }
-      return text || TinyPPI.T.na;
+      return text || BaldPI.T.na;
     };
     if (isTransition(entry)) return stateText(entry.to);
     if (entry.kind === "temperature") return Math.round(entry.value) + " °C";
@@ -821,7 +821,7 @@
       return Math.round(entry.value) + "%";
     }
     return entry.value === null || entry.value === undefined
-      ? TinyPPI.T.na : String(entry.value);
+      ? BaldPI.T.na : String(entry.value);
   }
 
   /* Which way a transition went, for the arrow beside its value: 1 up, -1
@@ -859,7 +859,7 @@
   function renderEvents(events) {
     if (!events || !events.length) {
       el.events.className = "events empty";
-      el.events.textContent = TinyPPI.T.events_empty;
+      el.events.textContent = BaldPI.T.events_empty;
       markMore();
       return;
     }
@@ -937,7 +937,7 @@
       button.className = "range";
       button.dataset.range = String(seconds);
       button.dataset.key = key;
-      button.textContent = TinyPPI.T[key] || key;
+      button.textContent = BaldPI.T[key] || key;
       button.addEventListener("click", () => {
         range = seconds;
         markRange();
@@ -971,7 +971,7 @@
     if (!force && now - pastAt < HISTORY_REFRESH) return;
     lastTry = now;
     fetching = true;
-    TinyPPI.getJSON("/api/history").then((data) => {
+    BaldPI.getJSON("/api/history").then((data) => {
       past = data;
       pastAt = Date.now();
       pastSeq = data.seq;
@@ -1166,7 +1166,7 @@
   /* The charts' colours come from the card they are drawn in, which the
      adaptive theme repaints from the poster.  A canvas cannot notice that on
      its own, so js/cover-tint.js says when it has happened. */
-  document.addEventListener("tinyppi-tint", () => drawCharts());
+  document.addEventListener("baldpi-tint", () => drawCharts());
 
   let resizeTimer = 0;
   window.addEventListener("resize", () => {
@@ -1305,6 +1305,6 @@
     markMore();
   }
 
-  window.TinyPPI.panels = { strings, update, events, peak, draw };
+  window.BaldPI.panels = { strings, update, events, peak, draw };
 
 })();
