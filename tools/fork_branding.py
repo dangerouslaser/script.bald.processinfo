@@ -44,11 +44,14 @@ DESCRIPTION = (
 
 # Never rewritten: our own tooling and tests, and anything that names the upstream project.
 # Upstream's own tests (tests/unit, tests/kodi, the stubs) are renamed with the code they test.
-SKIP_DIRS = {".git", ".github", "branding", "tools"}
-SKIP_PATHS = (Path("tests/test_libreelec.py"), Path("tests/fixtures"))
+# Upstream's CI (.github/workflows/ci.yml) is renamed too, so that it checks the
+# add-on as the fork ships it.
+SKIP_DIRS = {".git", "branding", "tools"}
+SKIP_PATHS = (Path("tests/test_libreelec.py"), Path("tests/fixtures"),
+              Path(".github/workflows/follow-upstream.yml"))
 KEEP = ("CE-Repo/script.tinyppi", "ce-repo.github.io", "repository.jamal2362")
-TEXT_SUFFIXES = {".py", ".xml", ".po", ".md", ".txt", ".html", ".js", ".css", ".json",
-                 ".webmanifest", ".svg", ""}
+TEXT_SUFFIXES = {".py", ".xml", ".po", ".md", ".txt", ".html", ".js", ".mjs", ".css", ".json",
+                 ".webmanifest", ".svg", ".sh", ".yml", ""}
 # Files whose "TinyPPI" is read by people rather than code.
 DISPLAY_FILES = re.compile(r"(\.po|index\.html|manifest\.webmanifest)$")
 
