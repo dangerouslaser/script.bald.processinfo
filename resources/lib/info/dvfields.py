@@ -106,17 +106,20 @@ def _detail_parts(hdr_detail: str) -> tuple[str, str, str]:
     those tokens are the only per-title Dolby Vision facts there are to show.
     Anything not recognised yields ``''`` for its part.
     """
-    segments = [s.strip() for s in (hdr_detail or "").split("\u00b7")]
-    words = segments[0].split() if segments else []
+    head, *rest = [s.strip() for s in (hdr_detail or "").split("\u00b7")]
+    words = head.split()
     profile = words[0] if words and _PROFILE_RE.match(words[0]) else ""
     el_type = next((w.upper() for w in words[1:] if w.upper() in EL_TAGS), "")
-    cm = ""
-    for segment in segments[1:]:
-        match = re.fullmatch(r"CM\s*v?(\d+(?:\.\d+)?)", segment, re.IGNORECASE)
-        if match:
-            version = match.group(1)
-            cm = f"CMv{version if '.' in version else version + '.0'}"
-    return profile, el_type, cm
+    return profile, el_type, next(filter(None, map(_detail_cm, reversed(rest))), "")
+
+
+def _detail_cm(segment: str) -> str:
+    """Return ``CMv4.0`` for an HdrDetail segment ``CM4`` (or ``CMv2.9``), else ''."""
+    match = re.fullmatch(r"CM\s*v?(\d+(?:\.\d+)?)", segment, re.IGNORECASE)
+    if not match:
+        return ""
+    version = match.group(1)
+    return f"CMv{version if '.' in version else version + '.0'}"
 
 # Kodi's label words for each HDR token, checked in this order.
 _LABEL_TOKENS = (
@@ -257,6 +260,18 @@ def _bit_depth(el_type: str) -> str:
     return "12" if el_type == "FEL" else ""
 
 
+def _el_type(rpu: Block | None, hdr_detail: str) -> str:
+    """Return the enhancement layer, FEL or MEL, or ''.
+
+    From the RPU header; without an RPU (a Kodi with no side-data label),
+    what HdrDetail names.
+    """
+    if not rpu:
+        return _detail_parts(hdr_detail)[1]
+    header = rpu.get("header") or {}
+    return (header.get("el_type") or "").upper()
+
+
 def build_info(parsed: Block, hdr_label: str, hdr_detail: str) -> dict[str, str]:
     """Turn one parse result into the overlay fields.
 
@@ -272,15 +287,10 @@ def build_info(parsed: Block, hdr_label: str, hdr_detail: str) -> dict[str, str]
     hdr10plus = parsed.get("hdr10plus")
     mdcv      = parsed.get("mdcv")
     cll       = parsed.get("cll")
-    header    = (rpu or {}).get("header") or {}
 
     token   = _hdr_token(hdr_label, parsed)
-    el_type = (header.get("el_type") or "").upper()
+    el_type = _el_type(rpu, hdr_detail)
     profile = _dv_profile(hdr_detail, config, rpu) if token == "dolbyvision" else ""
-    # Without an RPU (a Kodi with no side-data label), what HdrDetail names.
-    _profile, detail_el, detail_cm = _detail_parts(hdr_detail)
-    if not rpu:
-        el_type = el_type or detail_el
 
     info["hdr_format"]  = token
     info["output_mode"] = _output_mode(token, profile, el_type, hdr10plus)
@@ -292,18 +302,19 @@ def build_info(parsed: Block, hdr_label: str, hdr_detail: str) -> dict[str, str]
         info["hdr10plus_present"] = "1"
 
     if token == "dolbyvision":
-        _dolby_vision_fields(info, parsed, profile, el_type, detail_cm)
+        _dolby_vision_fields(info, parsed, profile, el_type, hdr_detail)
     _rpu_fields(info, rpu or {})
     _static_fields(info, mdcv, cll)
     return info
 
 
 def _dolby_vision_fields(info: dict[str, str], parsed: Block, profile: str,
-                         el_type: str, detail_cm: str = "") -> None:
+                         el_type: str, hdr_detail: str = "") -> None:
     """Fill the Dolby Vision rows: CM version, structure, profile, layers."""
     config = parsed.get("config")
     rpu    = parsed.get("rpu")
-    info["cm_version"]     = _cm_version(rpu) or ("" if rpu else detail_cm)
+    # Without an RPU (a Kodi with no side-data label), what HdrDetail names.
+    info["cm_version"]     = _cm_version(rpu) if rpu else _detail_parts(hdr_detail)[2]
     info["structure"]      = _structure_abbr(parsed.get("structure"), config, el_type)
     info["dv_version"]     = _dv_record_version(config)
     info["dv_profile"]     = profile

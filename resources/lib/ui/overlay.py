@@ -129,6 +129,17 @@ def _settings() -> xbmcaddon.Addon:
     return settings.addon()
 
 
+def _is_coreelec() -> bool:
+    """Return whether this is a CoreELEC installation."""
+    if os.path.isdir("/etc/coreelec"):
+        return True
+    try:
+        with open("/etc/os-release") as f:
+            return any("coreelec" in line.lower() for line in f)
+    except OSError:
+        return False
+
+
 def _notify_error(message_id: int) -> None:
     """Show an error notification with localized string *message_id*."""
     xbmcgui.Dialog().notification(
@@ -162,7 +173,8 @@ def _preflight(home: PropertyTarget, player: xbmc.Player, toggle_log: str) -> bo
     open view closed) and returns False.
     """
     if not _ALLOW_NON_COREELEC:
-        if not platform.is_supported():
+        # Fork: DRM gives the output readings off CoreELEC (core.platform).
+        if not (_is_coreelec() or platform.has_drm()):
             _notify_error(32215)
             return False
 

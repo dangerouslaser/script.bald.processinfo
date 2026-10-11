@@ -4,8 +4,9 @@
 """Fixtures shared by the unit tests.
 
 Fork (Bald Process Info): upstream's unit tests describe an Amlogic box.
-The fork keeps VS10 to Amlogic (core.platform.is_amlogic), and the test runner
-is not one, so these tests run as on Amlogic.  The fork's own LibreELEC tests
+The fork keeps VS10 to Amlogic (core.platform.is_amlogic) and lets the overlay
+open wherever DRM is (core.platform.has_drm); the test runner may be neither,
+so these tests run as on Amlogic without DRM.  The fork's own LibreELEC tests
 (tests/test_libreelec.py) set the platform themselves.
 """
 
@@ -18,6 +19,7 @@ from dashboard_server import serve
 @pytest.fixture(autouse=True)
 def on_amlogic(monkeypatch):
     monkeypatch.setattr(platform, "_amlogic", True)
+    monkeypatch.setattr(platform, "has_drm", lambda: False)
 
 
 @pytest.fixture
