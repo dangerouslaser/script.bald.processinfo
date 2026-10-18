@@ -2,7 +2,7 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later
      Copyright (c) 2026 U3knOwn -->
 <settings version="1">
-    <section id="script.tinyppi">
+    <section id="script.bald.processinfo">
         <category id="General" label="32000" help="32001">
             <group id="1" label="32002">
                 <setting id="launch_mode" type="integer" label="32003" help="32004">
@@ -91,13 +91,13 @@
                 </setting>
             </group>
         </category>
-        <category id="TinyPPIOverlay" label="32031" help="32032">
+        <category id="BaldPIOverlay" label="32031" help="32032">
             <group id="1" label="32033">
                 <setting id="global_background_color" type="string" label="32033" help="32034">
                     <level>0</level>
-                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.tinyppi 32210] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.bald.processinfo 32210] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,global_background_color,32033)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,global_background_color,32033)</data>
                     </control>
                 </setting>
                 <setting id="global_background_opacity" type="integer" label="32035" help="32036">
@@ -114,9 +114,9 @@
             <group id="2" label="32037">
                 <setting id="background_color" type="string" label="32037" help="32038">
                     <level>0</level>
-                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.tinyppi 32210] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.bald.processinfo 32210] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,background_color,32037)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,background_color,32037)</data>
                     </control>
                 </setting>
                 <setting id="background_opacity" type="integer" label="32035" help="32039">
@@ -133,9 +133,9 @@
             <group id="3" label="32040">
                 <setting id="title_color" type="string" label="32040" help="32041">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,title_color,32040)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,title_color,32040)</data>
                     </control>
                 </setting>
                 <setting id="title_opacity" type="integer" label="32035" help="32042">
@@ -152,9 +152,9 @@
             <group id="4" label="32043">
                 <setting id="header_color" type="string" label="32043" help="32044">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,header_color,32043)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,header_color,32043)</data>
                     </control>
                 </setting>
                 <setting id="header_opacity" type="integer" label="32035" help="32042">
@@ -171,9 +171,9 @@
             <group id="5" label="32045">
                 <setting id="description_color" type="string" label="32045" help="32046">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,description_color,32045)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,description_color,32045)</data>
                     </control>
                 </setting>
                 <setting id="description_opacity" type="integer" label="32035" help="32042">
@@ -190,9 +190,9 @@
             <group id="6" label="32047">
                 <setting id="output_color" type="string" label="32047" help="32048">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,output_color,32047)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,output_color,32047)</data>
                     </control>
                 </setting>
                 <setting id="output_opacity" type="integer" label="32035" help="32042">
@@ -209,9 +209,9 @@
             <group id="7" label="32049">
                 <setting id="output_changed_color" type="string" label="32049" help="32050">
                     <level>0</level>
-                    <default>[COLOR=FF82B1FF]●[/COLOR] $ADDON[script.tinyppi 32209] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF82B1FF]●[/COLOR] $ADDON[script.bald.processinfo 32209] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,output_changed_color,32049)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,output_changed_color,32049)</data>
                     </control>
                 </setting>
                 <setting id="output_changed_opacity" type="integer" label="32035" help="32042">
@@ -238,14 +238,14 @@
             <group id="8" label="32053">
                 <setting id="filename_color" type="string" label="32053" help="32054">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="filename">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,filename_color,32053)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,filename_color,32053)</data>
                     </control>
                 </setting>
                 <setting id="filename_opacity" type="integer" label="32035" help="32042">
@@ -267,9 +267,9 @@
             <group id="9" label="32055">
                 <setting id="fps_color" type="string" label="32055" help="32056">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,fps_color,32055)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,fps_color,32055)</data>
                     </control>
                 </setting>
                 <setting id="fps_opacity" type="integer" label="32035" help="32042">
@@ -286,14 +286,14 @@
             <group id="10" label="32057">
                 <setting id="unit_color" type="string" label="32057" help="32058">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="!is" setting="unit_type">2</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,unit_color,32057)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,unit_color,32057)</data>
                     </control>
                 </setting>
                 <setting id="unit_opacity" type="integer" label="32035" help="32042">
@@ -315,9 +315,9 @@
             <group id="11" label="32059">
                 <setting id="accent_color" type="string" label="32059" help="32060">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,accent_color,32059)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,accent_color,32059)</data>
                     </control>
                 </setting>
                 <setting id="accent_opacity" type="integer" label="32035" help="32042">
@@ -334,9 +334,9 @@
             <group id="12" label="32061">
                 <setting id="icon_color" type="string" label="32061" help="32062">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,icon_color,32061)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,icon_color,32061)</data>
                     </control>
                 </setting>
                 <setting id="icon_opacity" type="integer" label="32035" help="32042">
@@ -353,9 +353,9 @@
             <group id="13" label="32063">
                 <setting id="header_icon_color" type="string" label="32063" help="32064">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,header_icon_color,32063)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,header_icon_color,32063)</data>
                     </control>
                 </setting>
                 <setting id="header_icon_opacity" type="integer" label="32035" help="32042">
@@ -372,9 +372,9 @@
             <group id="14" label="32065">
                 <setting id="progress_color" type="string" label="32065" help="32066">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,progress_color,32065)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,progress_color,32065)</data>
                     </control>
                 </setting>
                 <setting id="progress_opacity" type="integer" label="32035" help="32042">
@@ -391,9 +391,9 @@
             <group id="15" label="32067">
                 <setting id="line_color" type="string" label="32067" help="32068">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,line_color,32067)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,line_color,32067)</data>
                     </control>
                 </setting>
                 <setting id="line_opacity" type="integer" label="32035" help="32042">
@@ -410,9 +410,9 @@
             <group id="16" label="32069">
                 <setting id="convert_yes_color" type="string" label="32069" help="32070">
                     <level>0</level>
-                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.tinyppi 32214] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.bald.processinfo 32214] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,convert_yes_color,32069)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,convert_yes_color,32069)</data>
                     </control>
                 </setting>
                 <setting id="convert_yes_opacity" type="integer" label="32035" help="32042">
@@ -429,9 +429,9 @@
             <group id="17" label="32071">
                 <setting id="convert_no_color" type="string" label="32071" help="32072">
                     <level>0</level>
-                    <default>[COLOR=FFFF5252]●[/COLOR] $ADDON[script.tinyppi 32212] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFFF5252]●[/COLOR] $ADDON[script.bald.processinfo 32212] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,convert_no_color,32071)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,convert_no_color,32071)</data>
                     </control>
                 </setting>
                 <setting id="convert_no_opacity" type="integer" label="32035" help="32042">
@@ -448,9 +448,9 @@
             <group id="18" label="32073">
                 <setting id="fel_color" type="string" label="32073" help="32074">
                     <level>0</level>
-                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.tinyppi 32214] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.bald.processinfo 32214] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,fel_color,32073)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,fel_color,32073)</data>
                     </control>
                 </setting>
                 <setting id="fel_opacity" type="integer" label="32035" help="32042">
@@ -467,9 +467,9 @@
             <group id="19" label="32075">
                 <setting id="mel_color" type="string" label="32075" help="32076">
                     <level>0</level>
-                    <default>[COLOR=FFFFB74D]●[/COLOR] $ADDON[script.tinyppi 32213] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFFFB74D]●[/COLOR] $ADDON[script.bald.processinfo 32213] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,mel_color,32075)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,mel_color,32075)</data>
                     </control>
                 </setting>
                 <setting id="mel_opacity" type="integer" label="32035" help="32042">
@@ -495,9 +495,9 @@
             <group id="2" label="32033">
                 <setting id="metadata_global_background_color" type="string" label="32033" help="32082">
                     <level>0</level>
-                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.tinyppi 32210] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.bald.processinfo 32210] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,metadata_global_background_color,32033)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,metadata_global_background_color,32033)</data>
                     </control>
                 </setting>
                 <setting id="metadata_global_background_opacity" type="integer" label="32035" help="32042">
@@ -514,9 +514,9 @@
             <group id="3" label="32037">
                 <setting id="metadata_background_color" type="string" label="32037" help="32083">
                     <level>0</level>
-                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.tinyppi 32210] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.bald.processinfo 32210] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,metadata_background_color,32037)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,metadata_background_color,32037)</data>
                     </control>
                 </setting>
                 <setting id="metadata_background_opacity" type="integer" label="32035" help="32042">
@@ -533,9 +533,9 @@
             <group id="4" label="32043">
                 <setting id="metadata_header_color" type="string" label="32043" help="32084">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,metadata_header_color,32043)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,metadata_header_color,32043)</data>
                     </control>
                 </setting>
                 <setting id="metadata_header_opacity" type="integer" label="32035" help="32042">
@@ -552,9 +552,9 @@
             <group id="5" label="32063">
                 <setting id="metadata_header_icon_color" type="string" label="32063" help="32085">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,metadata_header_icon_color,32063)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,metadata_header_icon_color,32063)</data>
                     </control>
                 </setting>
                 <setting id="metadata_header_icon_opacity" type="integer" label="32035" help="32042">
@@ -571,9 +571,9 @@
             <group id="6" label="32040">
                 <setting id="metadata_title_color" type="string" label="32040" help="32086">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,metadata_title_color,32040)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,metadata_title_color,32040)</data>
                     </control>
                 </setting>
                 <setting id="metadata_title_opacity" type="integer" label="32035" help="32042">
@@ -590,9 +590,9 @@
             <group id="7" label="32087">
                 <setting id="metadata_column_color" type="string" label="32087" help="32088">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,metadata_column_color,32087)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,metadata_column_color,32087)</data>
                     </control>
                 </setting>
                 <setting id="metadata_column_opacity" type="integer" label="32035" help="32042">
@@ -609,9 +609,9 @@
             <group id="8" label="32045">
                 <setting id="metadata_name_color" type="string" label="32045" help="32089">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,metadata_name_color,32045)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,metadata_name_color,32045)</data>
                     </control>
                 </setting>
                 <setting id="metadata_name_opacity" type="integer" label="32035" help="32042">
@@ -628,9 +628,9 @@
             <group id="9" label="32047">
                 <setting id="metadata_value_color" type="string" label="32047" help="32090">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,metadata_value_color,32047)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,metadata_value_color,32047)</data>
                     </control>
                 </setting>
                 <setting id="metadata_value_opacity" type="integer" label="32035" help="32042">
@@ -647,9 +647,9 @@
             <group id="10" label="32049">
                 <setting id="metadata_changed_color" type="string" label="32049" help="32050">
                     <level>0</level>
-                    <default>[COLOR=FF82B1FF]●[/COLOR] $ADDON[script.tinyppi 32209] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF82B1FF]●[/COLOR] $ADDON[script.bald.processinfo 32209] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,metadata_changed_color,32049)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,metadata_changed_color,32049)</data>
                     </control>
                 </setting>
                 <setting id="metadata_changed_opacity" type="integer" label="32035" help="32042">
@@ -676,9 +676,9 @@
             <group id="11" label="32067">
                 <setting id="metadata_line_color" type="string" label="32067" help="32091">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,metadata_line_color,32067)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,metadata_line_color,32067)</data>
                     </control>
                 </setting>
                 <setting id="metadata_line_opacity" type="integer" label="32035" help="32042">
@@ -695,9 +695,9 @@
             <group id="12" label="32092">
                 <setting id="metadata_focus_color" type="string" label="32092" help="32093">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,metadata_focus_color,32092)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,metadata_focus_color,32092)</data>
                     </control>
                 </setting>
                 <setting id="metadata_focus_opacity" type="integer" label="32035" help="32042">
@@ -714,9 +714,9 @@
             <group id="13" label="32094">
                 <setting id="metadata_scrollbar_color" type="string" label="32094" help="32095">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,metadata_scrollbar_color,32094)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,metadata_scrollbar_color,32094)</data>
                     </control>
                 </setting>
                 <setting id="metadata_scrollbar_opacity" type="integer" label="32035" help="32042">
@@ -733,9 +733,9 @@
             <group id="14" label="32096">
                 <setting id="metadata_hint_color" type="string" label="32096" help="32097">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,metadata_hint_color,32096)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,metadata_hint_color,32096)</data>
                     </control>
                 </setting>
                 <setting id="metadata_hint_opacity" type="integer" label="32035" help="32042">
@@ -871,14 +871,14 @@
                 </setting>
                 <setting id="splash_start_bg_color" type="string" label="32123" help="32124">
                     <level>0</level>
-                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.tinyppi 32210] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.bald.processinfo 32210] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_enabled">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_start_bg_color,32123)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_start_bg_color,32123)</data>
                     </control>
                 </setting>
                 <setting id="splash_start_bg_opacity" type="integer" label="32035" help="32042">
@@ -898,14 +898,14 @@
                 </setting>
                 <setting id="splash_start_video_color" type="string" label="32125" help="32126">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_enabled">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_start_video_color,32125)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_start_video_color,32125)</data>
                     </control>
                 </setting>
                 <setting id="splash_start_video_opacity" type="integer" label="32035" help="32042">
@@ -925,14 +925,14 @@
                 </setting>
                 <setting id="splash_start_audio_color" type="string" label="32127" help="32128">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_enabled">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_start_audio_color,32127)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_start_audio_color,32127)</data>
                     </control>
                 </setting>
                 <setting id="splash_start_audio_opacity" type="integer" label="32035" help="32042">
@@ -952,14 +952,14 @@
                 </setting>
                 <setting id="splash_start_divider_color" type="string" label="32129" help="32130">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_enabled">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_start_divider_color,32129)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_start_divider_color,32129)</data>
                     </control>
                 </setting>
                 <setting id="splash_start_divider_opacity" type="integer" label="32035" help="32042">
@@ -979,14 +979,14 @@
                 </setting>
                 <setting id="splash_start_convert_dot_color" type="string" label="32131" help="32132">
                     <level>0</level>
-                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.tinyppi 32214] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.bald.processinfo 32214] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_enabled">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_start_convert_dot_color,32131)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_start_convert_dot_color,32131)</data>
                     </control>
                 </setting>
                 <setting id="splash_start_convert_dot_opacity" type="integer" label="32035" help="32042">
@@ -1006,14 +1006,14 @@
                 </setting>
                 <setting id="splash_start_fel_color" type="string" label="32133" help="32134">
                     <level>0</level>
-                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.tinyppi 32214] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.bald.processinfo 32214] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_enabled">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_start_fel_color,32133)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_start_fel_color,32133)</data>
                     </control>
                 </setting>
                 <setting id="splash_start_fel_opacity" type="integer" label="32035" help="32042">
@@ -1033,14 +1033,14 @@
                 </setting>
                 <setting id="splash_start_mel_color" type="string" label="32135" help="32136">
                     <level>0</level>
-                    <default>[COLOR=FFFFB74D]●[/COLOR] $ADDON[script.tinyppi 32213] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFFFB74D]●[/COLOR] $ADDON[script.bald.processinfo 32213] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_enabled">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_start_mel_color,32135)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_start_mel_color,32135)</data>
                     </control>
                 </setting>
                 <setting id="splash_start_mel_opacity" type="integer" label="32035" help="32042">
@@ -1060,14 +1060,14 @@
                 </setting>
                 <setting id="splash_start_dv_color" type="string" label="32137" help="32138">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_enabled">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_start_dv_color,32137)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_start_dv_color,32137)</data>
                     </control>
                 </setting>
                 <setting id="splash_start_dv_opacity" type="integer" label="32035" help="32042">
@@ -1191,14 +1191,14 @@
                 </setting>
                 <setting id="splash_osd_bg_color" type="string" label="32123" help="32124">
                     <level>0</level>
-                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.tinyppi 32210] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.bald.processinfo 32210] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_show_on_osd">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_osd_bg_color,32123)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_osd_bg_color,32123)</data>
                     </control>
                 </setting>
                 <setting id="splash_osd_bg_opacity" type="integer" label="32035" help="32042">
@@ -1218,14 +1218,14 @@
                 </setting>
                 <setting id="splash_osd_video_color" type="string" label="32125" help="32126">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_show_on_osd">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_osd_video_color,32125)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_osd_video_color,32125)</data>
                     </control>
                 </setting>
                 <setting id="splash_osd_video_opacity" type="integer" label="32035" help="32042">
@@ -1245,14 +1245,14 @@
                 </setting>
                 <setting id="splash_osd_audio_color" type="string" label="32127" help="32128">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_show_on_osd">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_osd_audio_color,32127)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_osd_audio_color,32127)</data>
                     </control>
                 </setting>
                 <setting id="splash_osd_audio_opacity" type="integer" label="32035" help="32042">
@@ -1272,14 +1272,14 @@
                 </setting>
                 <setting id="splash_osd_divider_color" type="string" label="32129" help="32130">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_show_on_osd">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_osd_divider_color,32129)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_osd_divider_color,32129)</data>
                     </control>
                 </setting>
                 <setting id="splash_osd_divider_opacity" type="integer" label="32035" help="32042">
@@ -1299,14 +1299,14 @@
                 </setting>
                 <setting id="splash_osd_convert_dot_color" type="string" label="32131" help="32132">
                     <level>0</level>
-                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.tinyppi 32214] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.bald.processinfo 32214] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_show_on_osd">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_osd_convert_dot_color,32131)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_osd_convert_dot_color,32131)</data>
                     </control>
                 </setting>
                 <setting id="splash_osd_convert_dot_opacity" type="integer" label="32035" help="32042">
@@ -1326,14 +1326,14 @@
                 </setting>
                 <setting id="splash_osd_fel_color" type="string" label="32133" help="32134">
                     <level>0</level>
-                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.tinyppi 32214] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.bald.processinfo 32214] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_show_on_osd">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_osd_fel_color,32133)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_osd_fel_color,32133)</data>
                     </control>
                 </setting>
                 <setting id="splash_osd_fel_opacity" type="integer" label="32035" help="32042">
@@ -1353,14 +1353,14 @@
                 </setting>
                 <setting id="splash_osd_mel_color" type="string" label="32135" help="32136">
                     <level>0</level>
-                    <default>[COLOR=FFFFB74D]●[/COLOR] $ADDON[script.tinyppi 32213] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFFFB74D]●[/COLOR] $ADDON[script.bald.processinfo 32213] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_show_on_osd">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_osd_mel_color,32135)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_osd_mel_color,32135)</data>
                     </control>
                 </setting>
                 <setting id="splash_osd_mel_opacity" type="integer" label="32035" help="32042">
@@ -1380,14 +1380,14 @@
                 </setting>
                 <setting id="splash_osd_dv_color" type="string" label="32137" help="32138">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
                             <condition operator="is" setting="splash_show_on_osd">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_osd_dv_color,32137)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_osd_dv_color,32137)</data>
                     </control>
                 </setting>
                 <setting id="splash_osd_dv_opacity" type="integer" label="32035" help="32042">
@@ -1407,32 +1407,32 @@
                 </setting>
             </group>
             <group id="3" label="32031">
-                <setting id="splash_show_on_tinyppi" type="boolean" label="32142" help="32143">
+                <setting id="splash_show_on_baldpi" type="boolean" label="32142" help="32143">
                     <level>0</level>
                     <default>false</default>
                     <control type="toggle" />
                 </setting>
-                <setting id="splash_tinyppi_show_video" type="boolean" label="32105" help="32106">
+                <setting id="splash_baldpi_show_video" type="boolean" label="32105" help="32106">
                     <level>0</level>
                     <default>true</default>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="toggle" />
                 </setting>
-                <setting id="splash_tinyppi_show_audio" type="boolean" label="32107" help="32108">
+                <setting id="splash_baldpi_show_audio" type="boolean" label="32107" help="32108">
                     <level>0</level>
                     <default>true</default>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="toggle" />
                 </setting>
-                <setting id="splash_tinyppi_order" type="integer" label="32109" help="32110">
+                <setting id="splash_baldpi_order" type="integer" label="32109" help="32110">
                     <level>0</level>
                     <default>0</default>
                     <constraints>
@@ -1443,12 +1443,12 @@
                     </constraints>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="list" format="string" />
                 </setting>
-                <setting id="splash_tinyppi_pill_position" type="integer" label="32113" help="32114">
+                <setting id="splash_baldpi_pill_position" type="integer" label="32113" help="32114">
                     <level>0</level>
                     <default>0</default>
                     <constraints>
@@ -1459,12 +1459,12 @@
                     </constraints>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="list" format="string" />
                 </setting>
-                <setting id="splash_tinyppi_offset_x" type="integer" label="32117" help="32118">
+                <setting id="splash_baldpi_offset_x" type="integer" label="32117" help="32118">
                     <level>0</level>
                     <default>0</default>
                     <constraints>
@@ -1474,12 +1474,12 @@
                     </constraints>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="slider" format="percentage" />
                 </setting>
-                <setting id="splash_tinyppi_offset_y" type="integer" label="32119" help="32120">
+                <setting id="splash_baldpi_offset_y" type="integer" label="32119" help="32120">
                     <level>0</level>
                     <default>0</default>
                     <constraints>
@@ -1489,12 +1489,12 @@
                     </constraints>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="slider" format="percentage" />
                 </setting>
-                <setting id="splash_tinyppi_scale" type="integer" label="32121" help="32122">
+                <setting id="splash_baldpi_scale" type="integer" label="32121" help="32122">
                     <level>0</level>
                     <default>100</default>
                     <constraints>
@@ -1504,24 +1504,24 @@
                     </constraints>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="slider" format="integer" />
                 </setting>
-                <setting id="splash_tinyppi_bg_color" type="string" label="32123" help="32124">
+                <setting id="splash_baldpi_bg_color" type="string" label="32123" help="32124">
                     <level>0</level>
-                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.tinyppi 32210] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.bald.processinfo 32210] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_tinyppi_bg_color,32123)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_baldpi_bg_color,32123)</data>
                     </control>
                 </setting>
-                <setting id="splash_tinyppi_bg_opacity" type="integer" label="32035" help="32042">
+                <setting id="splash_baldpi_bg_opacity" type="integer" label="32035" help="32042">
                     <level>0</level>
                     <default>98</default>
                     <constraints>
@@ -1531,24 +1531,24 @@
                     </constraints>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="slider" format="percentage" />
                 </setting>
-                <setting id="splash_tinyppi_video_color" type="string" label="32125" help="32126">
+                <setting id="splash_baldpi_video_color" type="string" label="32125" help="32126">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_tinyppi_video_color,32125)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_baldpi_video_color,32125)</data>
                     </control>
                 </setting>
-                <setting id="splash_tinyppi_video_opacity" type="integer" label="32035" help="32042">
+                <setting id="splash_baldpi_video_opacity" type="integer" label="32035" help="32042">
                     <level>0</level>
                     <default>100</default>
                     <constraints>
@@ -1558,24 +1558,24 @@
                     </constraints>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="slider" format="percentage" />
                 </setting>
-                <setting id="splash_tinyppi_audio_color" type="string" label="32127" help="32128">
+                <setting id="splash_baldpi_audio_color" type="string" label="32127" help="32128">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_tinyppi_audio_color,32127)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_baldpi_audio_color,32127)</data>
                     </control>
                 </setting>
-                <setting id="splash_tinyppi_audio_opacity" type="integer" label="32035" help="32042">
+                <setting id="splash_baldpi_audio_opacity" type="integer" label="32035" help="32042">
                     <level>0</level>
                     <default>100</default>
                     <constraints>
@@ -1585,24 +1585,24 @@
                     </constraints>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="slider" format="percentage" />
                 </setting>
-                <setting id="splash_tinyppi_divider_color" type="string" label="32129" help="32130">
+                <setting id="splash_baldpi_divider_color" type="string" label="32129" help="32130">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_tinyppi_divider_color,32129)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_baldpi_divider_color,32129)</data>
                     </control>
                 </setting>
-                <setting id="splash_tinyppi_divider_opacity" type="integer" label="32035" help="32042">
+                <setting id="splash_baldpi_divider_opacity" type="integer" label="32035" help="32042">
                     <level>0</level>
                     <default>35</default>
                     <constraints>
@@ -1612,24 +1612,24 @@
                     </constraints>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="slider" format="percentage" />
                 </setting>
-                <setting id="splash_tinyppi_convert_dot_color" type="string" label="32131" help="32132">
+                <setting id="splash_baldpi_convert_dot_color" type="string" label="32131" help="32132">
                     <level>0</level>
-                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.tinyppi 32214] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.bald.processinfo 32214] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_tinyppi_convert_dot_color,32131)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_baldpi_convert_dot_color,32131)</data>
                     </control>
                 </setting>
-                <setting id="splash_tinyppi_convert_dot_opacity" type="integer" label="32035" help="32042">
+                <setting id="splash_baldpi_convert_dot_opacity" type="integer" label="32035" help="32042">
                     <level>0</level>
                     <default>100</default>
                     <constraints>
@@ -1639,24 +1639,24 @@
                     </constraints>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="slider" format="percentage" />
                 </setting>
-                <setting id="splash_tinyppi_fel_color" type="string" label="32133" help="32134">
+                <setting id="splash_baldpi_fel_color" type="string" label="32133" help="32134">
                     <level>0</level>
-                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.tinyppi 32214] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF81C784]●[/COLOR] $ADDON[script.bald.processinfo 32214] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_tinyppi_fel_color,32133)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_baldpi_fel_color,32133)</data>
                     </control>
                 </setting>
-                <setting id="splash_tinyppi_fel_opacity" type="integer" label="32035" help="32042">
+                <setting id="splash_baldpi_fel_opacity" type="integer" label="32035" help="32042">
                     <level>0</level>
                     <default>100</default>
                     <constraints>
@@ -1666,24 +1666,24 @@
                     </constraints>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="slider" format="percentage" />
                 </setting>
-                <setting id="splash_tinyppi_mel_color" type="string" label="32135" help="32136">
+                <setting id="splash_baldpi_mel_color" type="string" label="32135" help="32136">
                     <level>0</level>
-                    <default>[COLOR=FFFFB74D]●[/COLOR] $ADDON[script.tinyppi 32213] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFFFB74D]●[/COLOR] $ADDON[script.bald.processinfo 32213] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_tinyppi_mel_color,32135)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_baldpi_mel_color,32135)</data>
                     </control>
                 </setting>
-                <setting id="splash_tinyppi_mel_opacity" type="integer" label="32035" help="32042">
+                <setting id="splash_baldpi_mel_opacity" type="integer" label="32035" help="32042">
                     <level>0</level>
                     <default>100</default>
                     <constraints>
@@ -1693,24 +1693,24 @@
                     </constraints>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="slider" format="percentage" />
                 </setting>
-                <setting id="splash_tinyppi_dv_color" type="string" label="32137" help="32138">
+                <setting id="splash_baldpi_dv_color" type="string" label="32137" help="32138">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,splash_tinyppi_dv_color,32137)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,splash_baldpi_dv_color,32137)</data>
                     </control>
                 </setting>
-                <setting id="splash_tinyppi_dv_opacity" type="integer" label="32035" help="32042">
+                <setting id="splash_baldpi_dv_opacity" type="integer" label="32035" help="32042">
                     <level>0</level>
                     <default>20</default>
                     <constraints>
@@ -1720,7 +1720,7 @@
                     </constraints>
                     <dependencies>
                         <dependency type="visible">
-                            <condition operator="is" setting="splash_show_on_tinyppi">true</condition>
+                            <condition operator="is" setting="splash_show_on_baldpi">true</condition>
                         </dependency>
                     </dependencies>
                     <control type="slider" format="percentage" />
@@ -1767,9 +1767,9 @@
             <group id="7" label="32033">
                 <setting id="dialog_global_background_color" type="string" label="32033" help="32034">
                     <level>0</level>
-                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.tinyppi 32210] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.bald.processinfo 32210] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,dialog_global_background_color,32033)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,dialog_global_background_color,32033)</data>
                     </control>
                 </setting>
                 <setting id="dialog_global_background_opacity" type="integer" label="32035" help="32036">
@@ -1786,9 +1786,9 @@
             <group id="1" label="32037">
                 <setting id="dialog_background_color" type="string" label="32037" help="32155">
                     <level>0</level>
-                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.tinyppi 32210] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.bald.processinfo 32210] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,dialog_background_color,32037)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,dialog_background_color,32037)</data>
                     </control>
                 </setting>
                 <setting id="dialog_background_opacity" type="integer" label="32035" help="32042">
@@ -1805,9 +1805,9 @@
             <group id="2" label="32043">
                 <setting id="dialog_header_color" type="string" label="32043" help="32156">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,dialog_header_color,32043)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,dialog_header_color,32043)</data>
                     </control>
                 </setting>
                 <setting id="dialog_header_opacity" type="integer" label="32035" help="32042">
@@ -1824,9 +1824,9 @@
             <group id="3" label="32063">
                 <setting id="dialog_header_icon_color" type="string" label="32063" help="32157">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,dialog_header_icon_color,32063)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,dialog_header_icon_color,32063)</data>
                     </control>
                 </setting>
                 <setting id="dialog_header_icon_opacity" type="integer" label="32035" help="32042">
@@ -1843,9 +1843,9 @@
             <group id="4" label="32067">
                 <setting id="dialog_line_color" type="string" label="32067" help="32158">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,dialog_line_color,32067)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,dialog_line_color,32067)</data>
                     </control>
                 </setting>
                 <setting id="dialog_line_opacity" type="integer" label="32035" help="32042">
@@ -1862,9 +1862,9 @@
             <group id="22" label="32159">
                 <setting id="dialog_text_color" type="string" label="32159" help="32160">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,dialog_text_color,32159)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,dialog_text_color,32159)</data>
                     </control>
                 </setting>
                 <setting id="dialog_text_opacity" type="integer" label="32035" help="32042">
@@ -1881,9 +1881,9 @@
             <group id="5" label="32092">
                 <setting id="dialog_focus_color" type="string" label="32092" help="32161">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,dialog_focus_color,32092)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,dialog_focus_color,32092)</data>
                     </control>
                 </setting>
                 <setting id="dialog_focus_opacity" type="integer" label="32035" help="32042">
@@ -1900,9 +1900,9 @@
             <group id="6" label="32162">
                 <setting id="dialog_focus_text_color" type="string" label="32162" help="32163">
                     <level>0</level>
-                    <default>[COLOR=FF000000]●[/COLOR] $ADDON[script.tinyppi 32211] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF000000]●[/COLOR] $ADDON[script.bald.processinfo 32211] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,dialog_focus_text_color,32162)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,dialog_focus_text_color,32162)</data>
                     </control>
                 </setting>
                 <setting id="dialog_focus_text_opacity" type="integer" label="32035" help="32042">
@@ -1948,9 +1948,9 @@
             <group id="2" label="32037">
                 <setting id="channel_background_color" type="string" label="32037" help="32175">
                     <level>0</level>
-                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.tinyppi 32210] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FF272D32]●[/COLOR] $ADDON[script.bald.processinfo 32210] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,channel_background_color,32037)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,channel_background_color,32037)</data>
                     </control>
                 </setting>
                 <setting id="channel_background_opacity" type="integer" label="32035" help="32042">
@@ -1967,9 +1967,9 @@
             <group id="3" label="32176">
                 <setting id="channel_layout_color" type="string" label="32176" help="32177">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,channel_layout_color,32176)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,channel_layout_color,32176)</data>
                     </control>
                 </setting>
                 <setting id="channel_layout_opacity" type="integer" label="32035" help="32042">
@@ -1986,9 +1986,9 @@
             <group id="4" label="32164">
                 <setting id="channel_icon_color" type="string" label="32164" help="32178">
                     <level>0</level>
-                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.tinyppi 32208] $ADDON[script.tinyppi 32203]</default>
+                    <default>[COLOR=FFEDEDED]●[/COLOR] $ADDON[script.bald.processinfo 32208] $ADDON[script.bald.processinfo 32203]</default>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,pick_color,channel_icon_color,32164)</data>
+                        <data>RunScript(script.bald.processinfo,pick_color,channel_icon_color,32164)</data>
                     </control>
                 </setting>
                 <setting id="channel_icon_opacity" type="integer" label="32035" help="32042">
@@ -2029,7 +2029,7 @@
                         <dependency type="enable" setting="web_enabled">true</dependency>
                     </dependencies>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,web_info)</data>
+                        <data>RunScript(script.bald.processinfo,web_info)</data>
                     </control>
                 </setting>
             </group>
@@ -2047,7 +2047,7 @@
                 <setting id="web_token_new" type="action" label="32189" help="32190">
                     <level>0</level>
                     <control type="button" format="action">
-                        <data>RunScript(script.tinyppi,web_token)</data>
+                        <data>RunScript(script.bald.processinfo,web_token)</data>
                     </control>
                 </setting>
                 <setting id="web_metadata" type="boolean" label="32191" help="32192">

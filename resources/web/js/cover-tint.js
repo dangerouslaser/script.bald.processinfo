@@ -34,7 +34,7 @@
    and its strength are watched here, since either can change without it.
 =========================================================================== */
 
-window.TinyPPICover = (function () {
+window.BaldPICover = (function () {
 
   /* The poster is only read for its colours, so it is sampled small: a few
      thousand pixels are plenty to find what a picture is mostly made of. */
@@ -131,7 +131,7 @@ window.TinyPPICover = (function () {
   const THEME_BOUND = ["--muted", "--dim"];
 
   /* The colour arithmetic lives in js/colour.js. */
-  const { contrast, rgbToOklch, oklchToRgb, composite } = TinyPPIColour;
+  const { contrast, rgbToOklch, oklchToRgb, composite } = BaldPIColour;
 
   /* ============================================================
      Reading the poster
@@ -658,7 +658,7 @@ window.TinyPPICover = (function () {
     /* Anything drawn rather than styled has to be told: the luminance chart
        takes its colours from the card it sits in, and a canvas does not
        repaint itself when a custom property under it changes. */
-    document.dispatchEvent(new CustomEvent("tinyppi-tint"));
+    document.dispatchEvent(new CustomEvent("baldpi-tint"));
   }
 
   function repaint() {

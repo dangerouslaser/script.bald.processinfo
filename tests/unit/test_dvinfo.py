@@ -122,7 +122,7 @@ def test_luminances(value, text):
 
 def test_enhancement_layer_tags_take_the_theme_colour():
     assert dvinfo._colourise_el_tag("7.6 FEL") == "7.6 [COLOR FF81C784]FEL[/COLOR]"
-    xbmcgui.Window(10000).setProperty("TinyPPI.MelColor", "FF123456")
+    xbmcgui.Window(10000).setProperty("BaldPI.MelColor", "FF123456")
     assert dvinfo._colourise_el_tag("MEL") == "[COLOR FF123456]MEL[/COLOR]"
     assert dvinfo._colourise_el_tag("8.1") == "8.1"
 

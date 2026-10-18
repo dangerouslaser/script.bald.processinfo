@@ -12,14 +12,14 @@
    dialog -- and a page supplies only what it does with a snapshot once it
    arrives.
 
-   A page calls TinyPPI.boot({onState, onStrings}) and gets called back; it
+   A page calls BaldPI.boot({onState, onStrings}) and gets called back; it
    never touches the EventSource itself.
 =========================================================================== */
 
-window.TinyPPI = (function () {
+window.BaldPI = (function () {
 
-  const TOKEN_KEY = "tinyppi.token";
-  const DISCLOSURE_KEY = "tinyppi.disclosure.";
+  const TOKEN_KEY = "baldpi.token";
+  const DISCLOSURE_KEY = "baldpi.disclosure.";
 
   /* Chrome strings, replaced by the localized set from /api/hello.  The
      English here is only what shows in the instant before that answers. */
@@ -204,7 +204,7 @@ window.TinyPPI = (function () {
       token = tokenInput.value.trim().toUpperCase();
       storeToken(token);
       /* The settings tab shows which token this device holds. */
-      document.dispatchEvent(new CustomEvent("tinyppi-token"));
+      document.dispatchEvent(new CustomEvent("baldpi-token"));
       /* The stream rides on a session the token buys (an EventSource cannot
          send a header), so a new token means a new connection. */
       connect();
@@ -218,7 +218,7 @@ window.TinyPPI = (function () {
   function applyChromeStrings() {
     /* The theme choices are built before this file runs and carry their own
        English until the localized set arrives; see js/theme.js. */
-    if (window.TinyPPITheme) TinyPPITheme.strings(T);
+    if (window.BaldPITheme) BaldPITheme.strings(T);
     $("dlgTitle").textContent  = T.token_title;
     $("dlgText").textContent   = T.token_text;
     $("dlgOk").textContent     = T.save;
@@ -230,7 +230,7 @@ window.TinyPPI = (function () {
   /* The token travels in a header only, never in an address: addresses end
      up in histories and logs. */
   function tokenHeaders() {
-    return token ? { "X-TinyPPI-Token": token } : {};
+    return token ? { "X-BaldPI-Token": token } : {};
   }
 
   let toastTimer = 0;
@@ -563,7 +563,7 @@ window.TinyPPI = (function () {
     return (head.length < pad ? head.padEnd(pad) : head + "  ") + plainValue(value);
   }
 
-  /* Hand *report* to the viewer as TinyPPI_<title>_<tail>.txt, with either
+  /* Hand *report* to the viewer as BaldPI_<title>_<tail>.txt, with either
      part left out when there is none -- *tail* is what tells one page's report
      from the other's when both are saved for the same film.
 
@@ -574,7 +574,7 @@ window.TinyPPI = (function () {
   function copyReport(report, title, tail) {
     if (!report) return;
     const named = fileSafe(title || "");
-    const name = "TinyPPI" + (named ? "_" + named : "") + (tail ? "_" + tail : "");
+    const name = "BaldPI" + (named ? "_" + named : "") + (tail ? "_" + tail : "");
     return Promise.resolve()
       .then(() => navigator.clipboard.writeText(report))
       .then(() => toast(T.copied))
@@ -639,7 +639,7 @@ window.TinyPPI = (function () {
       const response = await fetch("/api/command", {
         method: "POST",
         headers: { "Content-Type": "application/json",
-                   "X-TinyPPI-Token": token },
+                   "X-BaldPI-Token": token },
         body: JSON.stringify({ action, value })
       });
       if (response.status === 401) { toast(T.token_bad, true); askToken(); return false; }

@@ -45,7 +45,7 @@ from info.imax import is_enhanced_title, is_known_imax_title
 
 # Channel graphics ship pre-scaled to the skin's boxes, so Kodi never
 # resamples them: SDR and HDR10/HDR10+/HLG use 495x298, DV the smaller
-# 400x241 panel (see script-tinyppi-main.xml).
+# 400x241 panel (see script-baldpi-main.xml).
 _CHANNEL_DIR_DEFAULT = "channels/495x298"
 _CHANNEL_DIR_DV      = "channels/400x241"
 
@@ -57,7 +57,7 @@ def _channel_dir() -> str:
 
 def _channels_shown() -> bool:
     """Return whether the channel graphics are switched on."""
-    return home_window().getProperty("TinyPPI.ShowChannelIcon") == "1"
+    return home_window().getProperty("BaldPI.ShowChannelIcon") == "1"
 
 
 # --- Video properties ------------------------------------------------------

@@ -240,7 +240,7 @@ def test_one_socket_serves_ipv6_and_ipv4_where_it_can(monkeypatch, has_ipv6, dua
 
     assert made == tried
     assert (srv.name, srv.producer, srv.stop, srv.token) == (chosen, producer, stop, TOKEN)
-    expected = [(xbmc.LOGDEBUG, f"TinyPPI [web]: IPv6 unavailable ({_NO_IPV6}), "
+    expected = [(xbmc.LOGDEBUG, f"BaldPI [web]: IPv6 unavailable ({_NO_IPV6}), "
                                 "listening on IPv4 only")] if dual_error else []
     assert expected == xbmc.LOG
 
@@ -326,7 +326,7 @@ def test_refused_connections_are_logged_once_a_minute(bare, clock):
     clock.now += 59
     assert not bare.verify_request(None, ("10.0.0.9", 3))
     assert bare.verify_request(None, ("10.0.0.8", 1))
-    assert _warnings() == ["TinyPPI [web]: refusing a connection from 10.0.0.9: "
+    assert _warnings() == ["BaldPI [web]: refusing a connection from 10.0.0.9: "
                            "16 open from it, 16 in all"]
 
     clock.now += 1
@@ -352,7 +352,7 @@ def test_at_most_48_connections_are_held_in_all(bare):
     assert bare.verify_request(None, ("10.0.2.1", 1))
     bare._connections[_Held()] = "10.0.1.47"
     assert not bare.verify_request(None, ("10.0.2.1", 1))
-    assert _warnings() == ["TinyPPI [web]: refusing a connection from 10.0.2.1: "
+    assert _warnings() == ["BaldPI [web]: refusing a connection from 10.0.2.1: "
                            "0 open from it, 48 in all"]
 
 
@@ -393,7 +393,7 @@ def test_a_client_leaving_early_is_logged_at_debug(bare, error):
         raise error("gone")
     except error:
         bare.handle_error(None, ("::ffff:192.168.1.30", 51000))
-    assert xbmc.LOG == [(xbmc.LOGDEBUG, "TinyPPI [web]: connection from 192.168.1.30 ended early")]
+    assert xbmc.LOG == [(xbmc.LOGDEBUG, "BaldPI [web]: connection from 192.168.1.30 ended early")]
 
 
 def test_a_failing_request_is_logged_with_its_traceback(bare):
@@ -403,7 +403,7 @@ def test_a_failing_request_is_logged_with_its_traceback(bare):
         bare.handle_error(None, ("::ffff:192.168.1.30", 51000))
     [(level, message)] = xbmc.LOG
     assert level == xbmc.LOGERROR
-    assert message.startswith("TinyPPI [web]: request from 192.168.1.30 failed:\nTraceback")
+    assert message.startswith("BaldPI [web]: request from 192.168.1.30 failed:\nTraceback")
     assert message.rstrip().endswith("ValueError: bad frame")
 
 
@@ -553,7 +553,7 @@ def test_enabling_the_dashboard_starts_it_with_a_new_token(lifecycle):
     assert lifecycle.producers[0].calls == ["start"]
     status, _, body = request(srv, "/api/hello")
     assert status == 200 and json.loads(body)["auth_read"] is True
-    assert (xbmc.LOGINFO, "TinyPPI [web]: dashboard listening on http://box:8123/") in xbmc.LOG
+    assert (xbmc.LOGINFO, "BaldPI [web]: dashboard listening on http://box:8123/") in xbmc.LOG
 
 
 def test_disabling_the_dashboard_stops_every_thread(lifecycle):
@@ -570,7 +570,7 @@ def test_disabling_the_dashboard_stops_every_thread(lifecycle):
     assert srv.socket.fileno() == -1
     assert srv.stop_event.is_set() and producer.stop_event is srv.stop_event
     assert producer.calls == ["start", "wake", "join"]
-    assert (xbmc.LOGINFO, "TinyPPI [web]: stopping dashboard") in xbmc.LOG
+    assert (xbmc.LOGINFO, "BaldPI [web]: stopping dashboard") in xbmc.LOG
     assert _warnings() == []
 
 
@@ -604,7 +604,7 @@ def test_a_new_port_or_token_restarts_the_server(lifecycle, key, value):
     assert second is not first and first.socket.fileno() == -1
     assert lifecycle.ports == [8123, int(xbmcaddon.SETTINGS["web_port"])]
     assert second.token == xbmcaddon.SETTINGS["web_token"]
-    assert (xbmc.LOGINFO, "TinyPPI [web]: port or token changed, restarting") in xbmc.LOG
+    assert (xbmc.LOGINFO, "BaldPI [web]: port or token changed, restarting") in xbmc.LOG
     assert [p.calls for p in lifecycle.producers] == [["start", "wake", "join"], ["start"]]
 
 
@@ -643,7 +643,7 @@ def test_a_port_in_use_leaves_the_dashboard_stopped(lifecycle, monkeypatch):
     assert lifecycle.producers[0].calls == []
     # Nothing ran, so stopping has nothing to log.
     assert xbmc.LOG == [(xbmc.LOGERROR,
-                         "TinyPPI [web]: cannot bind port 8099: [Errno 98] Address already in use")]
+                         "BaldPI [web]: cannot bind port 8099: [Errno 98] Address already in use")]
 
 
 def _raise(exc):
@@ -664,7 +664,7 @@ def test_a_thread_that_cannot_start_leaves_the_dashboard_stopped(lifecycle, monk
         monkeypatch.setattr(_Producer, "is_alive", lambda producer: True)
         real_start = threading.Thread.start
         monkeypatch.setattr(threading.Thread, "start", lambda thread: (
-            _raise(refusals.pop()) if refusals and thread.name == "TinyPPI-web-server"
+            _raise(refusals.pop()) if refusals and thread.name == "BaldPI-web-server"
             else real_start(thread)))
 
     lifecycle.dash.start(8099, TOKEN)
@@ -676,7 +676,7 @@ def test_a_thread_that_cannot_start_leaves_the_dashboard_stopped(lifecycle, monk
     assert producer.stop_event.is_set()
     assert producer.calls == (["wake"] if failing == "producer" else ["start", "wake", "join"])
     assert xbmc.LOG == [(xbmc.LOGERROR,
-                         "TinyPPI [web]: cannot start the dashboard: can't start new thread")]
+                         "BaldPI [web]: cannot start the dashboard: can't start new thread")]
 
     # Nothing is left for stop(), and the next start works.
     lifecycle.dash.stop()
@@ -760,7 +760,7 @@ def test_a_failing_shutdown_step_is_logged_and_the_rest_still_run(lifecycle, mon
     lifecycle.dash.stop()
 
     assert fake.calls == _SHUTDOWN
-    assert _warnings() == [f"TinyPPI [web]: {warning}"]
+    assert _warnings() == [f"BaldPI [web]: {warning}"]
     assert not thread.is_alive()
     assert lifecycle.producers[0].calls == ["start", "wake", "join"]
 
@@ -783,7 +783,7 @@ def test_request_threads_still_busy_after_the_grace_period_are_cut_off(lifecycle
     assert fake.timeouts[0] == web_server._HANGUP_GRACE
     # After cutting off, they get the rest of the one shared deadline.
     assert all(1.0 < timeout <= web_server._JOIN_TIMEOUT for timeout in fake.timeouts[1:])
-    assert _warnings() == [f"TinyPPI [web]: {warning}" for warning in warnings]
+    assert _warnings() == [f"BaldPI [web]: {warning}" for warning in warnings]
 
 
 def test_threads_that_outlast_the_deadline_are_reported(lifecycle, monkeypatch):
@@ -798,8 +798,8 @@ def test_threads_that_outlast_the_deadline_are_reported(lifecycle, monkeypatch):
         thread.join(2)
 
     assert not lifecycle.dash.running
-    assert _warnings() == ["TinyPPI [web]: web server thread did not stop",
-                           "TinyPPI [web]: snapshot producer did not stop"]
+    assert _warnings() == ["BaldPI [web]: web server thread did not stop",
+                           "BaldPI [web]: snapshot producer did not stop"]
     assert fake.timeouts == [0.0]
 
 
@@ -817,7 +817,7 @@ def test_stop_tears_down_whichever_parts_exist(part):
     assert fake.calls == (_SHUTDOWN if part == "server" else [])
     assert producer.calls == ([] if part == "server" else ["wake", "join"])
     assert not dash.running and dash._producer is None
-    assert (xbmc.LOGINFO, "TinyPPI [web]: stopping dashboard") in xbmc.LOG
+    assert (xbmc.LOGINFO, "BaldPI [web]: stopping dashboard") in xbmc.LOG
 
 
 def test_every_server_has_its_own_read_session():

@@ -317,11 +317,11 @@ def test_a_wedged_refresh_thread_is_handed_over_with_a_warning():
     utils.join_refresh_thread(wedged)
     assert joined == [utils._JOIN_TIMEOUT]
     assert xbmc.LOG == [(xbmc.LOGWARNING,
-                         "TinyPPI: refresh thread still running after 1.0s, handing over anyway")]
+                         "BaldPI: refresh thread still running after 1.0s, handing over anyway")]
 
 
 def test_a_refresh_failure_is_logged_as_a_warning():
     utils.log_refresh_failure("overlay", ValueError("bad label"))
     assert xbmc.LOG == [(xbmc.LOGWARNING,
-                         "TinyPPI: overlay refresh failed, continuing with the last values: "
+                         "BaldPI: overlay refresh failed, continuing with the last values: "
                          "bad label")]

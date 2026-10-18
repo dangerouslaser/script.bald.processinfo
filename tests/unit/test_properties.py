@@ -87,8 +87,8 @@ def test_audio_rows_without_codec_read_na():
 
 def show_channels(hdr_type=""):
     home = xbmcgui.Window(10000)
-    home.setProperty("TinyPPI.ShowChannelIcon", "1")
-    home.setProperty("TinyPPI.EffectiveHdrType", hdr_type)
+    home.setProperty("BaldPI.ShowChannelIcon", "1")
+    home.setProperty("BaldPI.EffectiveHdrType", hdr_type)
 
 
 @pytest.mark.parametrize("hw, short, long", [(True, "HW", "Hardware"), (False, "SW", "Software")])
@@ -158,7 +158,7 @@ def test_all_zero_bars_are_a_real_no_crop_in_dolby_vision():
     frame(dar="1.77")
     assert properties.get_AspectRatioVar("0 | 0 | 0 | 0", is_dv=True) == "1.78"
     assert properties.get_AspectRatioVar("0 | 0 | 0 | 0", is_dv=False) == "1.77"
-    xbmcgui.Window(10000).setProperty("TinyPPI.EffectiveHdrType", "dolbyvision")
+    xbmcgui.Window(10000).setProperty("BaldPI.EffectiveHdrType", "dolbyvision")
     assert properties.get_AspectRatioVar("0 | 0 | 0 | 0") == "1.78"
 
 

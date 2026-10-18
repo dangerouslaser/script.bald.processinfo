@@ -27,9 +27,9 @@ MODE_BAR = 1
 MODE_SINGLE = 2
 
 XML_FILES = {
-    MODE_DIALOG: "script-tinyppi-dialog.xml",
-    MODE_BAR: "script-tinyppi-dialog-bar.xml",
-    MODE_SINGLE: "script-tinyppi-dialog-single.xml",
+    MODE_DIALOG: "script-baldpi-dialog.xml",
+    MODE_BAR: "script-baldpi-dialog-bar.xml",
+    MODE_SINGLE: "script-baldpi-dialog-single.xml",
 }
 
 # Panel size per layout, as drawn by the window files.
@@ -47,7 +47,7 @@ SCREEN_MARGIN = 50
 # The panel group the dialog moves, and the property that keeps it hidden
 # until it has been placed.
 GROUP_PANEL = 2
-PROP_PLACED = "TinyPPI.DialogPlaced"
+PROP_PLACED = "BaldPI.DialogPlaced"
 
 # The single-button layout's button; it shows the current choice.
 SINGLE_BUTTON = 1500
@@ -61,14 +61,14 @@ ACTION_MOVE_RIGHT = 2
 # so exactly one branch is ever visible.
 _HOME = f"Window({HOME_WINDOW_ID}).Property"
 _PLAIN_CONDITION = (
-    "String.IsEqual(%s(TinyPPI.HdrType),hdr10plus)"
-    " | String.Contains(%s(TinyPPI.HdrType),hlg)"
-    " | String.IsEqual(%s(TinyPPI.Hdr10PlusPresent),1)" % (_HOME, _HOME, _HOME)
+    "String.IsEqual(%s(BaldPI.HdrType),hdr10plus)"
+    " | String.Contains(%s(BaldPI.HdrType),hlg)"
+    " | String.IsEqual(%s(BaldPI.Hdr10PlusPresent),1)" % (_HOME, _HOME, _HOME)
 )
 _HAS_VS10_CONDITION = (
-    "!String.IsEqual(%s(TinyPPI.HdrType),hdr10plus)"
-    " + !String.Contains(%s(TinyPPI.HdrType),hlg)"
-    " + !String.IsEqual(%s(TinyPPI.Hdr10PlusPresent),1)" % (_HOME, _HOME, _HOME)
+    "!String.IsEqual(%s(BaldPI.HdrType),hdr10plus)"
+    " + !String.Contains(%s(BaldPI.HdrType),hlg)"
+    " + !String.IsEqual(%s(BaldPI.Hdr10PlusPresent),1)" % (_HOME, _HOME, _HOME)
 )
 
 # The Player Process Info button that starts every branch; one control per
@@ -90,7 +90,7 @@ class Branch(TypedDict):
 BRANCHES: tuple[Branch, ...] = (
     {
         "key": "sdr",
-        "visible": "String.IsEmpty(%s(TinyPPI.HdrType)) + %s"
+        "visible": "String.IsEmpty(%s(BaldPI.HdrType)) + %s"
                    % (_HOME, _HAS_VS10_CONDITION),
         "buttons": (
             (1001, PPI_LABEL, None),
@@ -101,7 +101,7 @@ BRANCHES: tuple[Branch, ...] = (
     },
     {
         "key": "hdr10",
-        "visible": "String.IsEqual(%s(TinyPPI.HdrType),hdr10) + %s"
+        "visible": "String.IsEqual(%s(BaldPI.HdrType),hdr10) + %s"
                    % (_HOME, _HAS_VS10_CONDITION),
         "buttons": (
             (1101, PPI_LABEL, None),
@@ -112,7 +112,7 @@ BRANCHES: tuple[Branch, ...] = (
     },
     {
         "key": "dv",
-        "visible": "String.Contains(%s(TinyPPI.HdrType),dolby) + %s"
+        "visible": "String.Contains(%s(BaldPI.HdrType),dolby) + %s"
                    % (_HOME, _HAS_VS10_CONDITION),
         "buttons": (
             (1201, PPI_LABEL, None),

@@ -32,7 +32,7 @@ class Detection:
         if self.error:
             raise self.error
         if self.queue:
-            home.setProperty("TinyPPI.HdrType", self.queue.pop(0))
+            home.setProperty("BaldPI.HdrType", self.queue.pop(0))
         if self.side_effect:
             self.side_effect()
 
@@ -99,7 +99,7 @@ def home():
 def opened(mode, hdr_type="", monitor=None):
     """Open the dialog in layout *mode* with *hdr_type* published."""
     xbmcaddon.SETTINGS["dialog_mode"] = str(mode)
-    home().setProperty("TinyPPI.HdrType", hdr_type)
+    home().setProperty("BaldPI.HdrType", hdr_type)
     dialog = mode_select.SettingsDialog(layout.xml_file(), mode_select._ADDON_PATH, "Default", "1080i")
     dialog.onInit()
     if monitor is not None:
@@ -258,7 +258,7 @@ def test_back_and_stop_close_without_a_choice(detection, threads, action, mode):
 def test_a_mode_button_closes_and_its_mode_is_applied_once_the_dialog_is_gone(
         detection, threads, launch, hdr_type, control_id, mode):
     xbmcaddon.SETTINGS["dialog_mode"] = str(layout.MODE_DIALOG)
-    home().setProperty("TinyPPI.HdrType", hdr_type)
+    home().setProperty("BaldPI.HdrType", hdr_type)
 
     def answer(dialog):
         dialog.onInit()
@@ -279,7 +279,7 @@ def test_the_process_info_button_opens_the_overlay(detection, threads, monkeypat
         return [home().getProperty(prop) for prop in (PROP_RUNNING, PROP_ACTIVE, PROP_DIALOG_MODE)]
 
     shown = []
-    monkeypatch.setattr(overlay, "open_tinyppi", lambda: shown.append(state()))
+    monkeypatch.setattr(overlay, "open_baldpi", lambda: shown.append(state()))
     for prop in (PROP_RUNNING, PROP_ACTIVE, PROP_DIALOG_MODE):
         home().setProperty(prop, "true")
     dialog = opened(mode)
@@ -309,7 +309,7 @@ def test_a_branch_change_while_open_moves_the_focus(detection, threads):
 
 def test_a_branch_change_keeps_the_single_button_within_its_choices(detection, threads, monkeypatch):
     shown = []
-    monkeypatch.setattr(overlay, "open_tinyppi", lambda: shown.append("overlay"))
+    monkeypatch.setattr(overlay, "open_baldpi", lambda: shown.append("overlay"))
     dialog = opened(layout.MODE_SINGLE, monitor=Monitor())
     detection.queue = ["dolbyvision"]
     for _ in range(3):
@@ -341,7 +341,7 @@ def test_the_loop_ends_at_once_when_kodi_shuts_down(detection, threads):
 
 
 def test_the_loop_does_nothing_before_the_dialog_is_shown(detection):
-    dialog = mode_select.SettingsDialog("script-tinyppi-dialog.xml", mode_select._ADDON_PATH)
+    dialog = mode_select.SettingsDialog("script-baldpi-dialog.xml", mode_select._ADDON_PATH)
     dialog._hdr_type_loop()
     assert detection.calls == 0 and dialog.calls == []
 
@@ -365,7 +365,7 @@ def test_open_dialog_applies_the_chosen_mode_once_the_dialog_is_gone(launch):
     launch.answer = lambda dialog: dialog.onClick(1004)
     mode_select.open_dialog()
     assert launch.events == [
-        ("created", ("script-tinyppi-dialog-bar.xml", xbmcaddon.ROOT, "Default", "1080i"), ""),
+        ("created", ("script-baldpi-dialog-bar.xml", xbmcaddon.ROOT, "Default", "1080i"), ""),
         ("shown",),
         ("delay", 250),
         ("set_mode", "dv"),

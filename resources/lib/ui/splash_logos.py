@@ -50,7 +50,7 @@ def video_has_audio(player: xbmc.Player) -> bool:
 def is_converting(hdr_type: str, gamut: str) -> bool:
     """Return whether the output *gamut* shows a conversion.
 
-    Mirrors the check-circle condition in script-tinyppi-main.xml: non-DV
+    Mirrors the check-circle condition in script-baldpi-main.xml: non-DV
     source output as DV, HDR/DV output as SDR, or SDR/DV output as HDR10.
     *hdr_type* comes from the side data, so this works without the overlay.
     """

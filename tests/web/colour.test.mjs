@@ -9,7 +9,7 @@ import { bare } from "./harness.mjs";
 
 const page = bare("colour.js");
 after(() => page.close());
-const colour = page.TinyPPIColour;
+const colour = page.BaldPIColour;
 const { contrast, luminance, rgbToOklch, oklchToRgb, composite,
         srgbToLinear, linearToSrgb, inGamut, rgbToOklab, oklabToLinearRgb } = colour;
 

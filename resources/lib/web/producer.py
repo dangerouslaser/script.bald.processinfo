@@ -39,7 +39,7 @@ class Producer(threading.Thread):
     """
 
     def __init__(self, stop_event: threading.Event) -> None:
-        super().__init__(name="TinyPPI-web-producer", daemon=True)
+        super().__init__(name="BaldPI-web-producer", daemon=True)
         # Not ``_stop``: that would shadow a Thread internal and break join().
         self._stopping  = stop_event
         self._builder   = SnapshotBuilder()

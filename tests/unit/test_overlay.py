@@ -19,7 +19,7 @@ from info import publish
 from ui import dvmetadata, mode_select, overlay
 
 FULLSCREEN = "Window.IsActive(fullscreenvideo)"
-CHANGED_COLOR = "TinyPPI.OutputChangedColor"
+CHANGED_COLOR = "BaldPI.OutputChangedColor"
 
 
 class Clock:
@@ -91,7 +91,7 @@ def use(**values):
 
 
 def make_dialog():
-    return overlay.TinyPPIDialog("script-tinyppi-main.xml", overlay._ADDON_PATH, "Default", "1080i")
+    return overlay.BaldPIDialog("script-baldpi-main.xml", overlay._ADDON_PATH, "Default", "1080i")
 
 
 @pytest.fixture
@@ -118,8 +118,8 @@ def moves(dialog, control_id=5000):
 
 
 def show_layout(dialog, hdr_type="", channels=False):
-    home().setProperty("TinyPPI.EffectiveHdrType", hdr_type)
-    home().setProperty("TinyPPI.ShowChannelIcon", "1" if channels else "0")
+    home().setProperty("BaldPI.EffectiveHdrType", hdr_type)
+    home().setProperty("BaldPI.ShowChannelIcon", "1" if channels else "0")
     dialog.setProperty("ChannelIconVar", "channels/6.png" if channels else "")
 
 
@@ -178,7 +178,7 @@ def test_an_unsupported_system_is_refused_with_a_notification(monkeypatch, ready
     assert overlay._preflight(home(), Player(), "Toggle close") is False
     [notice] = xbmcgui.DIALOGS
     assert notice == ("notification",
-                      ("TinyPPI", localized(message), xbmcgui.NOTIFICATION_ERROR, 4000), {})
+                      ("BaldPI", localized(message), xbmcgui.NOTIFICATION_ERROR, 4000), {})
 
 
 def test_the_platform_checks_can_be_switched_off_for_testing(monkeypatch, ready):
@@ -193,7 +193,7 @@ def test_a_720p_skin_is_refused(ready):
     os.makedirs(ready / "skin" / "720p")
     assert overlay._preflight(home(), Player(), "Toggle close") is False
     assert [args[1] for _name, args, _kw in xbmcgui.DIALOGS] == [localized(32217)]
-    assert (xbmc.LOGWARNING, "TinyPPI: 720p skin detected – unsupported") in xbmc.LOG
+    assert (xbmc.LOGWARNING, "BaldPI: 720p skin detected – unsupported") in xbmc.LOG
 
 
 @pytest.mark.parametrize(("fullscreen", "playing"), [(False, True), (True, False)])
@@ -207,7 +207,7 @@ def test_a_press_while_open_toggles_the_view_closed(ready):
     home().setProperty(PROP_RUNNING, "true")
     assert overlay._preflight(home(), Player(), "Toggle close (dialog mode)") is False
     assert xbmc.BUILTINS == ["Action(Back)"]
-    assert (xbmc.LOGINFO, "TinyPPI: Toggle close (dialog mode)") in xbmc.LOG
+    assert (xbmc.LOGINFO, "BaldPI: Toggle close (dialog mode)") in xbmc.LOG
 
 
 def test_a_press_while_the_closed_overlay_settles_is_dropped(monkeypatch, ready):
@@ -245,7 +245,7 @@ def test_the_configured_offset_follows_the_layout(opened, hdr_type, channels, ex
 
 def test_the_channel_icon_alone_does_not_widen_the_layout(opened):
     dialog = opened(offset_x=100)
-    home().setProperty("TinyPPI.ShowChannelIcon", "1")      # but the window has no icon
+    home().setProperty("BaldPI.ShowChannelIcon", "1")      # but the window has no icon
     dialog._apply_position_offset()
     assert position(dialog) == (593, 0)
 
@@ -356,7 +356,7 @@ def test_ok_hands_a_dolby_vision_source_over_to_the_metadata_view(opened, enable
                                                                   next_view):
     dialog = opened(dv_metadata_view=enabled)
     dialog.calls.clear()
-    home().setProperty("TinyPPI.HdrType", source)
+    home().setProperty("BaldPI.HdrType", source)
     dialog.onAction(xbmcgui.Action(xbmcgui.ACTION_SELECT_ITEM))
     assert dialog.next_view == next_view
     assert dialog.calls == ([("close", ())] if next_view else [])
@@ -377,7 +377,7 @@ def remembered(color="FFFF0000", **shown):
 
 def test_a_changed_dv_reading_is_highlighted_for_the_set_duration(clock):
     dialog = remembered(DoviProfileNumberVar="8", DoviCmVersionVar="CM v4.0")
-    dialog.published = {"TinyPPI.HdrType": "Dolby Vision", "DoviProfileNumberVar": "7",
+    dialog.published = {"BaldPI.HdrType": "Dolby Vision", "DoviProfileNumberVar": "7",
                         "DoviCmVersionVar": "CM v4.0"}
     dialog._highlight_dv_changes()
     assert dialog.getProperty("DoviProfileNumberVar") == "[COLOR=FFFF0000]7[/COLOR]"
@@ -392,34 +392,34 @@ def test_a_changed_dv_reading_is_highlighted_for_the_set_duration(clock):
 
 def test_opening_values_are_not_highlighted(clock):
     dialog = remembered(DoviProfileNumberVar="8")
-    dialog.published = {"TinyPPI.HdrType": "Dolby Vision", "DoviProfileNumberVar": "8"}
+    dialog.published = {"BaldPI.HdrType": "Dolby Vision", "DoviProfileNumberVar": "8"}
     dialog._highlight_dv_changes()
     assert dialog.getProperty("DoviProfileNumberVar") == "8"
 
 
 def test_readings_outside_dolby_vision_are_never_highlighted(clock):
     dialog = remembered(Hdr10MdlVar="1000 nits")
-    dialog.published = {"TinyPPI.HdrType": "HDR10", "Hdr10MdlVar": "4000 nits"}
+    dialog.published = {"BaldPI.HdrType": "HDR10", "Hdr10MdlVar": "4000 nits"}
     dialog._highlight_dv_changes()
     assert dialog.getProperty("Hdr10MdlVar") == "4000 nits"
 
 
 def test_nothing_is_highlighted_before_the_overlay_is_initialised(clock):
     dialog = make_dialog()
-    dialog.published = {"TinyPPI.HdrType": "Dolby Vision", "DoviProfileNumberVar": "7"}
+    dialog.published = {"BaldPI.HdrType": "Dolby Vision", "DoviProfileNumberVar": "7"}
     dialog._highlight_dv_changes()
     assert dialog.getProperty("DoviProfileNumberVar") == ""
 
 
 def test_without_a_themed_color_the_default_blue_is_used_and_logged_once(clock):
     dialog = remembered(color="", DoviProfileNumberVar="8")
-    dialog.published = {"TinyPPI.HdrType": "Dolby Vision", "DoviProfileNumberVar": "7"}
+    dialog.published = {"BaldPI.HdrType": "Dolby Vision", "DoviProfileNumberVar": "7"}
     dialog._highlight_dv_changes()
     assert dialog.getProperty("DoviProfileNumberVar") == "[COLOR=FF82B1FF]7[/COLOR]"
     dialog._dv_changed_color()
     warnings = [line for level, line in xbmc.LOG
                 if level == xbmc.LOGWARNING and CHANGED_COLOR in line]
-    assert warnings == ["TinyPPI: TinyPPI.OutputChangedColor is not published, highlighting "
+    assert warnings == ["BaldPI: BaldPI.OutputChangedColor is not published, highlighting "
                         "changed overlay values in FF82B1FF instead"]
 
 
@@ -488,7 +488,7 @@ def test_the_loop_highlights_the_readings_each_tick_publishes(monkeypatch, loop,
     loop._remember_dv_values()
 
     def scene(window, published):
-        published.update({"TinyPPI.HdrType": "Dolby Vision", "DoviProfileNumberVar": "7"})
+        published.update({"BaldPI.HdrType": "Dolby Vision", "DoviProfileNumberVar": "7"})
 
     monkeypatch.setattr(publish, "publish_scene_properties", scene)
     loop._monitor = Monitor(clock, ticks=1)
@@ -520,7 +520,7 @@ def test_a_failing_refresh_is_logged_once_and_the_loop_goes_on(monkeypatch, loop
     assert loop._monitor.waits == [0.1] * 3
     failures = [entry for entry in xbmc.LOG if "refresh failed" in entry[1]]
     assert failures == [(xbmc.LOGWARNING,
-                         "TinyPPI: overlay refresh failed, continuing with the last values: "
+                         "BaldPI: overlay refresh failed, continuing with the last values: "
                          "no window")]
     assert ("close", ()) in loop.calls
 
@@ -533,7 +533,7 @@ def test_showing_the_overlay_fills_it_first_and_waits_for_its_loop(monkeypatch, 
 
     def fill(window, published):
         order.append(("publish", window))
-        window.setProperty("TinyPPI.HdrType", "Dolby Vision")
+        window.setProperty("BaldPI.HdrType", "Dolby Vision")
 
     def do_modal(dialog):
         order.append(("doModal", dialog))
@@ -542,7 +542,7 @@ def test_showing_the_overlay_fills_it_first_and_waits_for_its_loop(monkeypatch, 
         dialog.next_view = "dv_metadata"
 
     monkeypatch.setattr(publish, "publish_properties", fill)
-    monkeypatch.setattr(overlay.TinyPPIDialog, "doModal", do_modal)
+    monkeypatch.setattr(overlay.BaldPIDialog, "doModal", do_modal)
     assert overlay._show_overlay(home()) == "dv_metadata"
     [(dialog, active)] = shown
     assert order == [("publish", dialog), ("doModal", dialog)]
@@ -605,15 +605,15 @@ def test_the_overlay_opens_with_its_settings_and_releases_the_state(entry, settl
                                                                     l5_icon, filename, visible, l5):
     use(background_opacity=opacity, show_l5_icon=l5_icon, filename=filename)
     home().setProperty(PROP_DIALOG_MODE, "true")         # left over from the dialog
-    overlay.open_tinyppi()
+    overlay.open_baldpi()
     assert entry.preflight == ["Toggle close"] and entry.fonts == 1
     assert entry.shown == [{PROP_RUNNING: "true", PROP_ACTIVE: "true", PROP_DIALOG_MODE: ""}]
     [channel_window] = entry.channels
-    assert channel_window.getProperty("TinyPPI.ShowL5Icon") == l5     # the Home window
+    assert channel_window.getProperty("BaldPI.ShowL5Icon") == l5     # the Home window
     assert entry.themes == [str(opacity)]
-    assert home().getProperty("TinyPPI.Filename") == str(filename).lower()
-    assert home().getProperty("TinyPPI.ShowL5Icon") == l5
-    for name in ("TinyPPI.ShowLine", "TinyPPI.ShowHeaderTitle", "TinyPPI.ShowHeaderIcon"):
+    assert home().getProperty("BaldPI.Filename") == str(filename).lower()
+    assert home().getProperty("BaldPI.ShowL5Icon") == l5
+    for name in ("BaldPI.ShowLine", "BaldPI.ShowHeaderTitle", "BaldPI.ShowHeaderIcon"):
         assert home().getProperty(name) == visible
     assert state() == dict.fromkeys(CLOSED_STATE, "")
     assert settle == [(0.2, True)] and not overlay._releasing.is_set()
@@ -626,7 +626,7 @@ def test_the_overlay_opens_with_its_settings_and_releases_the_state(entry, settl
 def test_ok_and_back_switch_between_the_overlay_and_the_metadata_view(entry, show_results,
                                                                      dv_results, shown, dv_views):
     entry.show_results, entry.dv_results = list(show_results), list(dv_results)
-    overlay.open_tinyppi()
+    overlay.open_baldpi()
     assert len(entry.shown) == shown and entry.dv_views == dv_views
     assert state() == dict.fromkeys(CLOSED_STATE, "")
 
@@ -637,7 +637,7 @@ def test_the_state_is_released_even_when_the_overlay_fails(monkeypatch, entry, s
 
     monkeypatch.setattr(overlay, "_show_overlay", broken)
     with pytest.raises(RuntimeError):
-        overlay.open_tinyppi()
+        overlay.open_baldpi()
     assert state() == dict.fromkeys(CLOSED_STATE, "")
     assert settle == [(0.2, True)]
 
@@ -648,15 +648,15 @@ def test_the_dialog_mode_opens_the_vs10_dialog(entry, settle):
     assert entry.preflight == ["Toggle close (dialog mode)"] and entry.fonts == 1
     assert entry.dialogs == [{PROP_RUNNING: "true", PROP_ACTIVE: "true", PROP_DIALOG_MODE: "true"}]
     assert entry.themes == ["0"] and entry.shown == []
-    assert "TinyPPI.Filename" not in xbmcgui.PROPERTIES[10000]
-    for name in ("TinyPPI.ShowLine", "TinyPPI.ShowHeaderTitle", "TinyPPI.ShowHeaderIcon"):
+    assert "BaldPI.Filename" not in xbmcgui.PROPERTIES[10000]
+    for name in ("BaldPI.ShowLine", "BaldPI.ShowHeaderTitle", "BaldPI.ShowHeaderIcon"):
         assert home().getProperty(name) == "0"
     assert state() == dict.fromkeys(CLOSED_STATE, "")
     assert settle == [(0.2, True)]
 
 
 @pytest.mark.parametrize(("open_view", "toggle_log"), [
-    (overlay.open_tinyppi, "Toggle close"),
+    (overlay.open_baldpi, "Toggle close"),
     (overlay.open_dialog_mode, "Toggle close (dialog mode)"),
 ])
 def test_a_refused_check_opens_nothing_and_frees_the_next_press(entry, settle, open_view,
@@ -670,7 +670,7 @@ def test_a_refused_check_opens_nothing_and_frees_the_next_press(entry, settle, o
     overlay._opening.release()
 
 
-@pytest.mark.parametrize("open_view", [overlay.open_tinyppi, overlay.open_dialog_mode])
+@pytest.mark.parametrize("open_view", [overlay.open_baldpi, overlay.open_dialog_mode])
 def test_a_second_press_while_opening_is_dropped(entry, open_view):
     assert overlay._opening.acquire(blocking=False)
     try:
@@ -678,4 +678,4 @@ def test_a_second_press_while_opening_is_dropped(entry, open_view):
     finally:
         overlay._opening.release()
     assert entry.preflight == [] and entry.shown == [] and entry.dialogs == []
-    assert (xbmc.LOGDEBUG, "TinyPPI: open request dropped: TinyPPI is already opening") in xbmc.LOG
+    assert (xbmc.LOGDEBUG, "BaldPI: open request dropped: BaldPI is already opening") in xbmc.LOG

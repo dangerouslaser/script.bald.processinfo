@@ -27,7 +27,7 @@ def test_without_kodi_the_settings_are_not_read(generator_copy):
                               dialog_position_y="0")
     assert generator_copy.xbmc is None and generator_copy.settings is None
     assert generator_copy.dialog_mode() == layout.MODE_SINGLE
-    assert generator_copy.xml_file() == "script-tinyppi-dialog-single.xml"
+    assert generator_copy.xml_file() == "script-baldpi-dialog-single.xml"
     width, height = layout.PANEL_SIZE[layout.MODE_BAR]
     assert generator_copy.panel_position(layout.MODE_BAR) == (
         (layout.SCREEN_WIDTH - width) // 2, layout.SCREEN_HEIGHT - height - layout.SCREEN_MARGIN)

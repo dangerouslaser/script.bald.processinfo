@@ -51,7 +51,7 @@ SOURCES = f"""<sources>
 
 
 def sidedata(addons):
-    """Fetch TinyPPI's dependency (its native parser is for aarch64 only)."""
+    """Fetch BaldPI's dependency (its native parser is for aarch64 only)."""
     dest = os.path.join(addons, "script.module.sidedata")
     cache = os.path.join(config.ROOT, "script.module.sidedata")
     if not os.path.isdir(cache):
@@ -77,7 +77,7 @@ def main():
 
     kodi = driver.Kodi(config.TEMPLATE)
     print(f"Kodi answered after {kodi.start():.1f} s")
-    driver.enable("script.module.sidedata", "script.tinyppi.testhelper")
+    driver.enable("script.module.sidedata", "script.bald.processinfo.testhelper")
     time.sleep(3)
     kodi.quit()
     kodi.stop_display()

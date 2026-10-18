@@ -21,8 +21,8 @@ from stream import Page
 def scan(name, ref=None):
     home = driver.make_home(name, ref)
     with driver.Kodi(home) as kodi:
-        if not driver.start_tinyppi(kodi):
-            raise SystemExit("TinyPPI did not start")
+        if not driver.start_baldpi(kodi):
+            raise SystemExit("BaldPI did not start")
         time.sleep(2)
         page = Page()
         page.start()

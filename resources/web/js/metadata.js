@@ -9,13 +9,13 @@
    Fed by the same stream as the rest of the dashboard: the rows arrive as
    (kind, name, value) exactly as info.dvmetadata builds them for the
    on-screen view, and this tab only lays them out.  js/dashboard.js hands
-   every snapshot on through TinyPPI.metadata.render().
+   every snapshot on through BaldPI.metadata.render().
 =========================================================================== */
 
-TinyPPI.metadata = (function () {
+BaldPI.metadata = (function () {
 
-  const $ = TinyPPI.$;
-  const T = TinyPPI.T;
+  const $ = BaldPI.$;
+  const T = BaldPI.T;
 
   const el = {
     listCard: $("listCard"), idleCard: $("metaIdleCard"), metaRows: $("metaRows"),
@@ -26,8 +26,8 @@ TinyPPI.metadata = (function () {
   /* live-panels.js creates the L1 chart in the live tab's mount point; it
      belongs here, straight under the L5 active-picture card. */
   el.frameCard.after($("chartCard"));
-  TinyPPI.bindDisclosure(el.frameCard, "metadata.l5", false);
-  TinyPPI.bindDisclosure(el.listCard, "metadata.details", true);
+  BaldPI.bindDisclosure(el.frameCard, "metadata.l5", false);
+  BaldPI.bindDisclosure(el.listCard, "metadata.details", true);
 
   let state = null;
   let signature = "";   /* the list's shape, so nodes are rebuilt only when it moves */
@@ -135,13 +135,13 @@ TinyPPI.metadata = (function () {
         const held = document.createElement("span");
         held.className = "state";
         /* A held block says so on its heading -- see info.dvmetadata._state. */
-        TinyPPI.renderValue(held, row.value || "");
+        BaldPI.renderValue(held, row.value || "");
         node.append(name, held);
         live.push({ node: held, index, field: "value", last: row.value || "" });
       } else if (row.kind === "wide") {
         node = document.createElement("div");
         node.className = "mwide mono";
-        TinyPPI.renderValue(node, row.value);
+        BaldPI.renderValue(node, row.value);
         live.push({ node, index, field: "value", last: row.value || "" });
       } else {
         node = document.createElement("div");
@@ -151,7 +151,7 @@ TinyPPI.metadata = (function () {
         key.textContent = row.name;
         const value = document.createElement("span");
         value.className = "v mono";
-        TinyPPI.renderValue(value, row.value);
+        BaldPI.renderValue(value, row.value);
         node.append(key, value);
         live.push({ node: value, index, field: "value", row: node,
                     last: row.value || "" });
@@ -246,7 +246,7 @@ TinyPPI.metadata = (function () {
         const node = document.createElement("span");
         node.className = "mono";
         const value = (rows[cell.source].cells || [])[cell.cell] || "";
-        TinyPPI.renderValue(node, value);
+        BaldPI.renderValue(node, value);
         grid.append(node);
         live.push({ node, index: cell.source, field: "cell", cell: cell.cell,
                     last: value });
@@ -266,7 +266,7 @@ TinyPPI.metadata = (function () {
         const cell = (row.cells || [])[entry.cell] || "";
         if (entry.last === cell) continue;
         entry.last = cell;
-        TinyPPI.renderValue(entry.node, cell);
+        BaldPI.renderValue(entry.node, cell);
         /* A trim is the fastest-moving reading the view has, and on screen it
            is highlighted like any other; the cell itself lights up, since a
            whole table row of them lit at once would say less than the one
@@ -277,7 +277,7 @@ TinyPPI.metadata = (function () {
       const text = row.value || "";
       if (entry.last === text) continue;
       entry.last = text;
-      TinyPPI.renderValue(entry.node, text);
+      BaldPI.renderValue(entry.node, text);
       /* Mirrors the overlay's own highlight: a reading that moved is written in
          the change color and fades back. */
       if (entry.row) flash(entry);
@@ -297,27 +297,27 @@ TinyPPI.metadata = (function () {
 
   function buildReport() {
     if (!state || !(state.metadata || []).length) return "";
-    const lines = ["TinyPPI — " + T.metadata];
+    const lines = ["BaldPI — " + T.metadata];
     if (state.title) lines.push(state.title);
     if (state.filename) lines.push(state.filename);
     lines.push("");
     for (const row of state.metadata) {
       if (row.kind === "space") lines.push("");
       else if (row.kind === "section")
-        lines.push("[" + row.name + (row.value ? " - " + TinyPPI.plainValue(row.value) : "") + "]");
-      else if (row.kind === "wide") lines.push("  " + TinyPPI.plainValue(row.value));
-      else if (row.cells) lines.push(TinyPPI.reportLine(row.name, row.cells.join("  ")));
-      else lines.push(TinyPPI.reportLine(row.name, row.value));
+        lines.push("[" + row.name + (row.value ? " - " + BaldPI.plainValue(row.value) : "") + "]");
+      else if (row.kind === "wide") lines.push("  " + BaldPI.plainValue(row.value));
+      else if (row.cells) lines.push(BaldPI.reportLine(row.name, row.cells.join("  ")));
+      else lines.push(BaldPI.reportLine(row.name, row.value));
     }
     return lines.join("\n");
   }
 
   /* The clipboard, or a file named after the film where the browser will not
      give it the clipboard, the same way as the dashboard's report (see
-     TinyPPI.copyReport).  Tailed "metadata" so this list and that report can
+     BaldPI.copyReport).  Tailed "metadata" so this list and that report can
      both be saved for the same film without one landing on the other. */
   function copy() {
-    TinyPPI.copyReport(buildReport(), (state || {}).title, "metadata");
+    BaldPI.copyReport(buildReport(), (state || {}).title, "metadata");
   }
 
   /* Whether there is a list to copy: nothing to list is nothing to copy, so the

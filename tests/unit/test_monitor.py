@@ -72,13 +72,13 @@ def test_every_notification_is_logged_cut_short(threads, calls):
 
 def test_an_open_request_is_acknowledged_and_run(threads, monkeypatch):
     opened = []
-    overlay = types.SimpleNamespace(open_tinyppi=lambda: opened.append("overlay"),
+    overlay = types.SimpleNamespace(open_baldpi=lambda: opened.append("overlay"),
                                     open_dialog_mode=lambda: opened.append("dialog"))
     monkeypatch.setitem(sys.modules, "ui.overlay", overlay)
     home = xbmcgui.Window(10000)
     for message, view in (("open_overlay", "overlay"), ("open_dialog", "dialog")):
         home.setProperty(PROP_OPEN_REQUEST, f"token-{view}")
-        service.KodiMonitor().onNotification("script.tinyppi", f"Other.{message}", "")
+        service.KodiMonitor().onNotification("script.bald.processinfo", f"Other.{message}", "")
         assert home.getProperty(PROP_OPEN_ACK) == f"token-{view}"
         assert home.getProperty(PROP_OPEN_REQUEST) == ""
     threads.run_all()
@@ -93,7 +93,7 @@ def test_open_messages_from_other_senders_are_ignored(threads):
 def test_a_withdrawn_request_opens_nothing(threads):
     home = xbmcgui.Window(10000)
     home.setProperty(PROP_OPEN_REQUEST, OPEN_WITHDRAWN)
-    service.KodiMonitor().onNotification("script.tinyppi", "Other.open_overlay", "")
+    service.KodiMonitor().onNotification("script.bald.processinfo", "Other.open_overlay", "")
     assert threads.started == []
     assert home.getProperty(PROP_OPEN_ACK) == OPEN_WITHDRAWN
     assert home.getProperty(PROP_OPEN_REQUEST) == ""
@@ -103,10 +103,10 @@ def test_a_failing_view_is_logged(threads, monkeypatch):
     def broken():
         raise RuntimeError("no window")
     monkeypatch.setitem(sys.modules, "ui.overlay",
-                        types.SimpleNamespace(open_tinyppi=broken, open_dialog_mode=broken))
-    service.KodiMonitor().onNotification("script.tinyppi", "Other.open_overlay", "")
+                        types.SimpleNamespace(open_baldpi=broken, open_dialog_mode=broken))
+    service.KodiMonitor().onNotification("script.bald.processinfo", "Other.open_overlay", "")
     threads.run_all()
-    assert (xbmc.LOGERROR, "TinyPPI [service]: Exception opening the overlay view: no window") in xbmc.LOG
+    assert (xbmc.LOGERROR, "BaldPI [service]: Exception opening the overlay view: no window") in xbmc.LOG
 
 
 def test_a_skin_load_registers_the_fonts(threads, monkeypatch):
@@ -131,7 +131,7 @@ def test_no_font_work_while_kodi_stops(threads, monkeypatch):
 
 
 def splash_ran(threads, monkeypatch, video=True, **flags):
-    for name in ("splash_enabled", "splash_show_on_osd", "splash_show_on_tinyppi"):
+    for name in ("splash_enabled", "splash_show_on_osd", "splash_show_on_baldpi"):
         xbmcaddon.SETTINGS[name] = "true" if flags.get(name) else "false"
     xbmc.CONDITIONS["Player.HasVideo"] = video
     ran = []
@@ -147,7 +147,7 @@ def test_the_splash_starts_only_when_enabled_for_a_video(threads, monkeypatch):
     assert not splash_ran(threads, monkeypatch, video=False, splash_enabled=True)
     assert splash_ran(threads, monkeypatch, splash_enabled=True)
     assert splash_ran(threads, monkeypatch, splash_show_on_osd=True)
-    assert splash_ran(threads, monkeypatch, splash_show_on_tinyppi=True)
+    assert splash_ran(threads, monkeypatch, splash_show_on_baldpi=True)
 
 
 def test_one_splash_at_a_time(threads, monkeypatch):
@@ -191,7 +191,7 @@ def test_a_failing_dashboard_does_not_take_the_monitor_down(threads):
     service.KodiMonitor(types.SimpleNamespace(apply_settings=broken)).apply_dashboard_settings()
     service.KodiMonitor(None).apply_dashboard_settings()
     assert (xbmc.LOGERROR,
-            "TinyPPI [service]: Exception applying web dashboard settings: port in use") in xbmc.LOG
+            "BaldPI [service]: Exception applying web dashboard settings: port in use") in xbmc.LOG
 
 
 def test_the_warm_up_skips_everything_while_kodi_stops(monkeypatch):
@@ -232,7 +232,7 @@ def test_a_failing_font_registration_is_logged(threads, monkeypatch):
     service.KodiMonitor().onNotification("xbmc", "GUI.OnSkinLoaded", "")
     threads.run_all()
     assert (xbmc.LOGERROR,
-            "TinyPPI [service]: Exception registering the fonts: read-only skin") in xbmc.LOG
+            "BaldPI [service]: Exception registering the fonts: read-only skin") in xbmc.LOG
 
 
 def test_unreadable_settings_start_no_splash(threads, monkeypatch):
@@ -242,7 +242,7 @@ def test_unreadable_settings_start_no_splash(threads, monkeypatch):
     service.KodiMonitor().onNotification("xbmc", "Player.OnAVStart", "")
     assert threads.started == []
     assert (xbmc.LOGERROR,
-            "TinyPPI [service]: Exception starting splash: add-on being updated") in xbmc.LOG
+            "BaldPI [service]: Exception starting splash: add-on being updated") in xbmc.LOG
 
 
 # --- The service script -------------------------------------------------------
@@ -302,14 +302,14 @@ def test_the_service_starts_everything_and_stops_the_dashboard_at_shutdown(monke
     assert xbmcgui.Window(10000).getProperty(PROP_SERVICE) == ""   # no handovers any more
     [(target, (monitor,))] = started
     assert target.__name__ == "_warm_up" and type(monitor).__name__ == "KodiMonitor"
-    assert (xbmc.LOGINFO, "TinyPPI [service]: KodiMonitor started") in xbmc.LOG
+    assert (xbmc.LOGINFO, "BaldPI [service]: KodiMonitor started") in xbmc.LOG
     assert not any("color setting" in line for _level, line in xbmc.LOG)
 
 
 def test_the_service_reports_carried_over_colors(monkeypatch):
     run_service(monkeypatch, moved=3)
     assert (xbmc.LOGINFO,
-            "TinyPPI [service]: carried 3 color setting(s) over to the color picker") in xbmc.LOG
+            "BaldPI [service]: carried 3 color setting(s) over to the color picker") in xbmc.LOG
 
 
 def test_failing_startup_and_shutdown_steps_never_stop_the_service(monkeypatch):
@@ -320,10 +320,10 @@ def test_failing_startup_and_shutdown_steps_never_stop_the_service(monkeypatch):
     problems = [entry for entry in xbmc.LOG if entry[0] >= xbmc.LOGWARNING]
     assert problems == [
         (xbmc.LOGWARNING,
-         "TinyPPI [service]: carrying the color settings over failed: colors broke"),
-        (xbmc.LOGWARNING, "TinyPPI [service]: apply_theme at startup failed: theme broke"),
+         "BaldPI [service]: carrying the color settings over failed: colors broke"),
+        (xbmc.LOGWARNING, "BaldPI [service]: apply_theme at startup failed: theme broke"),
         (xbmc.LOGERROR,
-         "TinyPPI [service]: stopping the web dashboard failed: dashboard stopped broke"),
+         "BaldPI [service]: stopping the web dashboard failed: dashboard stopped broke"),
     ]
 
 
@@ -335,9 +335,9 @@ def test_the_warm_up_carries_on_past_every_failure(monkeypatch):
     monkeypatch.setattr(service.images, "prune_cache", broken)
     service._warm_up(types.SimpleNamespace(waitForAbort=lambda timeout=None: False))
     warnings = [line for level, line in xbmc.LOG if level == xbmc.LOGWARNING]
-    assert warnings[0] == "TinyPPI [service]: registering the fonts failed: no access"
-    assert warnings[1].startswith("TinyPPI [service]: pre-loading the views failed: ")
-    assert warnings[2] == "TinyPPI [service]: tidying the texture cache failed: no access"
+    assert warnings[0] == "BaldPI [service]: registering the fonts failed: no access"
+    assert warnings[1].startswith("BaldPI [service]: pre-loading the views failed: ")
+    assert warnings[2] == "BaldPI [service]: tidying the texture cache failed: no access"
     assert len(warnings) == 3
 
 

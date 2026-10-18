@@ -101,8 +101,8 @@ def writes(driver):
     by_path = {str(path): name for name, path in driver.paths.items()}
     found = []
     for _level, line in xbmc.LOG:
-        if " = " in line and line.startswith("TinyPPI: /"):
-            path, value = line[len("TinyPPI: "):].split(" = ", 1)
+        if " = " in line and line.startswith("BaldPI: /"):
+            path, value = line[len("BaldPI: "):].split(" = ", 1)
             found.append((by_path.get(path, path), value))
     return found
 
@@ -118,7 +118,7 @@ def test_conversion_modes(driver, kodi, mode, dvmode, output):
     assert writes(driver) == [("_ENABLE", "Y"), ("_POLICY", "2"), ("_DVMODE", dvmode)]
     assert driver.read("_DV_OUTPUT") == output
     assert kodi.resets == [f"VS10 output switched to '{mode}'"]
-    assert any(f"mode '{mode}' set via built-in TinyPPI VS10 (sysfs)" in line
+    assert any(f"mode '{mode}' set via built-in BaldPI VS10 (sysfs)" in line
                for _level, line in xbmc.LOG)
 
 
@@ -264,12 +264,12 @@ def test_failed_writes_are_reported(driver, kodi, tmp_path, monkeypatch):
 def test_unknown_modes_do_nothing(driver, kodi):
     vs10.set_mode("rainbow")
     assert writes(driver) == []
-    assert (xbmc.LOGERROR, "TinyPPI: Unknown mode 'rainbow'") in xbmc.LOG
+    assert (xbmc.LOGERROR, "BaldPI: Unknown mode 'rainbow'") in xbmc.LOG
 
 
 def test_hybrid_grades_are_switched_with_a_warning(driver, kodi):
     home = xbmcgui.Window(10000)
-    home.setProperty("TinyPPI.HdrType", "dolbyvision")
+    home.setProperty("BaldPI.HdrType", "dolbyvision")
     home.setProperty(vs10_kodi.PROP_HDR10PLUS_PRESENT, "1")
     vs10.set_mode("sdr10")
     assert any("also carries HDR10+" in line for level, line in xbmc.LOG
@@ -295,7 +295,7 @@ def test_a_native_action_crossing_the_dv_line_that_never_lands_is_not_reset(driv
     assert writes(driver) == []
     assert kodi.resets == []
     assert (xbmc.LOGWARNING,
-            "TinyPPI: 'dv' did not move the driver's output mode -> no display reset") in xbmc.LOG
+            "BaldPI: 'dv' did not move the driver's output mode -> no display reset") in xbmc.LOG
 
 
 @pytest.mark.parametrize(("value", "led"), [
@@ -326,12 +326,12 @@ def test_a_staged_switch_that_overruns_is_left_running(monkeypatch):
     try:
         vs10._switch_through_sdr("dv")
         assert (xbmc.LOGWARNING,
-                "TinyPPI: staged switch to 'dv' is still running after 0s -> leaving it to "
+                "BaldPI: staged switch to 'dv' is still running after 0s -> leaving it to "
                 "finish on its own") in xbmc.LOG
     finally:
         release.set()
         for thread in threading.enumerate():
-            if thread.name == "TinyPPI-vs10-stage":
+            if thread.name == "BaldPI-vs10-stage":
                 thread.join(1)
     assert reached == ["dv"]
 

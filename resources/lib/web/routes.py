@@ -66,7 +66,7 @@ _TOKEN_IN_QUERY = re.compile(r"(token=)[^&\s\"']*", re.IGNORECASE)
 # sites' requests, and it is valid for reading only and for this server's
 # lifetime (a new token restarts the server).  No Max-Age: it ends with the
 # browser session.
-_SESSION_COOKIE = "tinyppi_session"
+_SESSION_COOKIE = "baldpi_session"
 _SESSION_ATTRIBUTES = "Path=/api/; HttpOnly; SameSite=Strict"
 
 # An artwork tag as the add-on makes them (CRC-32 in hex, see
@@ -110,7 +110,7 @@ class Handler(BaseHTTPRequestHandler):
     """The request handler; ``server`` holds the producer, token and files."""
 
     protocol_version = "HTTP/1.1"
-    server_version   = "TinyPPI"
+    server_version   = "BaldPI"
     sys_version      = ""
     # Applied before the first request line, so a silent connection cannot
     # hold a thread forever.
@@ -200,7 +200,7 @@ class Handler(BaseHTTPRequestHandler):
 
         Only the header counts: a URL ends up in logs and histories.
         """
-        return self.headers.get("X-TinyPPI-Token", "").strip()
+        return self.headers.get("X-BaldPI-Token", "").strip()
 
     def _session_holder(self) -> bool:
         """Return whether the request carries this server's read session.
@@ -311,7 +311,7 @@ class Handler(BaseHTTPRequestHandler):
         """
         addon = settings.addon()
         self._send_json({
-            "name":        "TinyPPI",
+            "name":        "BaldPI",
             "version":     addon.getAddonInfo("version"),
             # Per request, so an untrusted host name asks for the token.
             "auth_read":   self._token_to_read(),

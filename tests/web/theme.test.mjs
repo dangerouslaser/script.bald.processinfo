@@ -65,13 +65,13 @@ test("a first visit gets the adaptive theme at standard strength, before anythin
   assert.equal(window.document.getElementById("themeSettings").childElementCount, 0);
   await contentLoaded(window);
   assert.equal(options(window).length, 3);
-  assert.equal(window.TinyPPITheme.theme(), "dark-adaptive");
-  assert.equal(window.TinyPPITheme.strength(), 1);
-  assert.equal(window.TinyPPITheme.ADAPTIVE, "dark-adaptive");
+  assert.equal(window.BaldPITheme.theme(), "dark-adaptive");
+  assert.equal(window.BaldPITheme.strength(), 1);
+  assert.equal(window.BaldPITheme.ADAPTIVE, "dark-adaptive");
 });
 
 test("the theme and strength chosen last time are put back", async () => {
-  const { window } = await themed({ "tinyppi.theme": "midnight", "tinyppi.tint": "2" });
+  const { window } = await themed({ "baldpi.theme": "midnight", "baldpi.tint": "2" });
   assert.deepEqual(html(window), ["midnight", "2"]);
   assert.deepEqual(chosen(window), ["midnight"]);
   assert.equal(window.document.getElementById("themeStrength").hidden, true);
@@ -81,12 +81,12 @@ test("the theme and strength chosen last time are put back", async () => {
 test("the phone's bars wear the theme from the first paint, not only after a press", async () => {
   const bars = (window) => window.document.querySelector('meta[name="theme-color"]').getAttribute("content");
   assert.equal(bars((await themed()).window), "#0b0d10");
-  assert.equal(bars((await themed({ "tinyppi.theme": "midnight" })).window), "#04060c");
+  assert.equal(bars((await themed({ "baldpi.theme": "midnight" })).window), "#04060c");
 });
 
 test("unknown stored values fall back to the defaults", async () => {
   for (const [theme, tint] of [["neon", "7"], ["Midnight", "-1"], ["", "x"], ["dark", "0.5"]]) {
-    const { window } = await themed({ "tinyppi.theme": theme, "tinyppi.tint": tint });
+    const { window } = await themed({ "baldpi.theme": theme, "baldpi.tint": tint });
     const expected = theme === "dark" ? ["dark", "0"] : ["dark-adaptive", "1"];
     assert.deepEqual(html(window), expected, `${theme} / ${tint}`);
   }
@@ -135,7 +135,7 @@ test("a press on a theme wears it at once, keeps it, and paints the phone's bars
   const meta = window.document.querySelector('meta[name="theme-color"]');
   options(window)[2].click();
   assert.deepEqual(html(window), ["midnight", "1"]);
-  assert.equal(window.localStorage.getItem("tinyppi.theme"), "midnight");
+  assert.equal(window.localStorage.getItem("baldpi.theme"), "midnight");
   assert.equal(meta.getAttribute("content"), "#04060c");
   assert.deepEqual(chosen(window), ["midnight"]);
   assert.deepEqual(options(window).map((option) => option.getAttribute("aria-checked")),
@@ -148,19 +148,19 @@ test("a press on a theme wears it at once, keeps it, and paints the phone's bars
   assert.deepEqual(chosen(window), ["dark"]);
   options(window)[1].click();
   assert.equal(window.document.getElementById("themeStrength").hidden, false);
-  assert.equal(window.TinyPPITheme.theme(), "dark-adaptive");
+  assert.equal(window.BaldPITheme.theme(), "dark-adaptive");
 });
 
 test("a press on a strength sets it, keeps it and marks it", async () => {
   const { window } = await themed();
   levels(window)[2].click();
   assert.deepEqual(html(window), ["dark-adaptive", "2"]);
-  assert.equal(window.localStorage.getItem("tinyppi.tint"), "2");
+  assert.equal(window.localStorage.getItem("baldpi.tint"), "2");
   assert.deepEqual(pressed(window), ["2"]);
-  assert.equal(window.TinyPPITheme.strength(), 2);
+  assert.equal(window.BaldPITheme.strength(), 2);
   levels(window)[0].click();
   assert.deepEqual(pressed(window), ["0"]);
-  assert.equal(window.TinyPPITheme.strength(), 0);
+  assert.equal(window.BaldPITheme.strength(), 0);
 });
 
 test("what is on <html> is read back, and nonsense there reads as the default", async () => {
@@ -168,22 +168,22 @@ test("what is on <html> is read back, and nonsense there reads as the default", 
   const root = window.document.documentElement;
   root.setAttribute("data-theme", "midnight");
   root.setAttribute("data-cover-strength", "0");
-  assert.equal(window.TinyPPITheme.theme(), "midnight");
-  assert.equal(window.TinyPPITheme.strength(), 0);
+  assert.equal(window.BaldPITheme.theme(), "midnight");
+  assert.equal(window.BaldPITheme.strength(), 0);
   root.setAttribute("data-theme", "sepia");
   root.setAttribute("data-cover-strength", "3");
-  assert.equal(window.TinyPPITheme.theme(), "dark-adaptive");
-  assert.equal(window.TinyPPITheme.strength(), 1);
+  assert.equal(window.BaldPITheme.theme(), "dark-adaptive");
+  assert.equal(window.BaldPITheme.strength(), 1);
   root.removeAttribute("data-cover-strength");
-  assert.equal(window.TinyPPITheme.strength(), 1);
+  assert.equal(window.BaldPITheme.strength(), 1);
 });
 
 test("localized words rebuild the choice, the same words leave it be", async () => {
   const { window } = await themed();
   const before = options(window)[0];
-  window.TinyPPITheme.strings({ theme_dark: "Dark", tint_label: "", other: "x" });
+  window.BaldPITheme.strings({ theme_dark: "Dark", tint_label: "", other: "x" });
   assert.equal(options(window)[0], before);              // nothing changed, nothing rebuilt
-  window.TinyPPITheme.strings({ theme_dark: "Dunkel", theme_menu: "Thema wählen", tint_strong: "Stark" });
+  window.BaldPITheme.strings({ theme_dark: "Dunkel", theme_menu: "Thema wählen", tint_strong: "Stark" });
   assert.notEqual(options(window)[0], before);
   assert.equal(options(window)[0].textContent, "Dunkel");
   assert.equal(options(window)[2].textContent, "Midnight");
@@ -198,7 +198,7 @@ test("core.js hands the add-on's words over once /api/hello answers", async () =
     routes: { "/api/hello": [200, { strings: { theme_adaptive: "Dunkel (adaptiv)", tint_label: "Stärke" } }] }
   });
   await contentLoaded(window);
-  await window.TinyPPI.boot({});
+  await window.BaldPI.boot({});
   assert.equal(options(window)[1].textContent, "Dunkel (adaptiv)");
   assert.equal(window.document.querySelector("#themeStrength .theme-group-label").textContent, "Stärke");
 });
@@ -216,7 +216,7 @@ test("a page without the settings card still wears the theme", async () => {
   opened.push(window);
   await contentLoaded(window);
   assert.deepEqual(html(window), ["dark-adaptive", "1"]);
-  window.TinyPPITheme.strings({ theme_dark: "Dunkel" });
+  window.BaldPITheme.strings({ theme_dark: "Dunkel" });
   assert.equal(window.document.querySelector(".theme-option"), null);
 });
 

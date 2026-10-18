@@ -87,7 +87,7 @@ _NOISE = random.Random(7).randbytes(2000)
 @pytest.mark.parametrize(("content_type", "body", "compressed"), [
     ("text/css; charset=utf-8", b"body { color: red; }\n" * 60, True),
     ("application/json", b'{"seq": 1}, ' * 80, True),
-    ("application/manifest+json", b'{"name": "TinyPPI"} ' * 40, True),
+    ("application/manifest+json", b'{"name": "BaldPI"} ' * 40, True),
     ("image/svg+xml", b"<path d='M0 0h24v24H0z'/>" * 30, True),
     ("text/plain", b"a" * static.MIN_COMPRESS, True),
     ("text/plain", b"a" * (static.MIN_COMPRESS - 1), False),

@@ -192,7 +192,7 @@ def test_a_device_without_connectors_is_not_reset(drm):
     assert not display.reset("VS10 switch")
     assert fake.updates == []
     assert xbmc.LOG == [(xbmc.LOGWARNING,
-                         "TinyPPI: display reset (VS10 switch) not available -- no DRM connector "
+                         "BaldPI: display reset (VS10 switch) not available -- no DRM connector "
                          "with an UPDATE property could be driven from this process")]
 
 
@@ -226,4 +226,4 @@ def test_the_first_of_several_other_connectors_is_the_fallback(drm):
     }, fds=(7,))
     assert display.reset("test")
     assert fake.updates == [(31, 40, 1)]
-    assert xbmc.LOG == [(xbmc.LOGINFO, "TinyPPI: display reset (test)")]
+    assert xbmc.LOG == [(xbmc.LOGINFO, "BaldPI: display reset (test)")]

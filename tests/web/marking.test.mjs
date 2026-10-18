@@ -197,7 +197,7 @@ test("marking as watched or unwatched writes it with the token, then reads every
   answer(view, "unwatched");
   await settle();
   const sent = view.requests.find((request) => request.url === "/api/watched");
-  assert.equal(sent.init.headers["X-TinyPPI-Token"], "T0K3N");
+  assert.equal(sent.init.headers["X-BaldPI-Token"], "T0K3N");
   assert.equal(sent.init.headers["Content-Type"], "application/json");
   assert.deepEqual(reads(view), { library: 2, series: 2, continue: 2, episodes: 0 });
 

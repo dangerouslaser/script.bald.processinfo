@@ -484,7 +484,7 @@ test("playing sends the film with the token, and every wall waits on it", async 
   await press(view, "Brazil");
   const sent = view.requests.find((request) => request.url === "/api/play");
   assert.equal(sent.init.method, "POST");
-  assert.equal(sent.init.headers["X-TinyPPI-Token"], "T0K3N");
+  assert.equal(sent.init.headers["X-BaldPI-Token"], "T0K3N");
   assert.equal(sent.init.headers["Content-Type"], "application/json");
   assert.deepEqual(plays(view), [{ movieid: 2 }]);
   assert.equal(view.$("toast").textContent, "Starting…");

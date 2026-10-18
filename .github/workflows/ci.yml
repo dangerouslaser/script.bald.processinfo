@@ -88,10 +88,10 @@ jobs:
       - name: Export the add-on without development files
         run: |
           mkdir -p "$RUNNER_TEMP/addons"
-          git archive HEAD --prefix=script.tinyppi/ | tar -x -C "$RUNNER_TEMP/addons"
+          git archive HEAD --prefix=script.bald.processinfo/ | tar -x -C "$RUNNER_TEMP/addons"
       # The add-on ships through its own repository, not Kodi's: no check of
       # the dependencies against Kodi's repository (script.module.sidedata
       # is in ours), and the dashboard's file types allowed (see the script).
       - name: Check
         working-directory: ${{ runner.temp }}/addons
-        run: python "$GITHUB_WORKSPACE/tools/check_addon.py" --branch piers --skip-dependency-checks script.tinyppi
+        run: python "$GITHUB_WORKSPACE/tools/check_addon.py" --branch piers --skip-dependency-checks script.bald.processinfo

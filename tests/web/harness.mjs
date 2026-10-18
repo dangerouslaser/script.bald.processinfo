@@ -73,7 +73,7 @@ export function page({ scripts = ["core.js"], routes = {}, token = "" } = {}) {
   };
   window.HTMLDialogElement.prototype.showModal = function () { this.open = true; };
   window.HTMLDialogElement.prototype.close = function () { this.open = false; };
-  if (token) window.localStorage.setItem("tinyppi.token", token);
+  if (token) window.localStorage.setItem("baldpi.token", token);
   for (const name of scripts) run(dom, name);
   return { window, streams, requests, dom };
 }

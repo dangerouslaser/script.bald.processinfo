@@ -4,15 +4,15 @@
 "use strict";
 
 /* ===========================================================================
-   TinyPPI second-screen dashboard.
+   BaldPI second-screen dashboard.
 
-   Everything printed here comes from the snapshot TinyPPI.boot delivers; the
+   Everything printed here comes from the snapshot BaldPI.boot delivers; the
    labels come translated with it, out of Kodi's own string table.  The
    connection itself lives in core.js.
 
    One page in six tabs -- live, Dolby Vision metadata, films, series and
    history, the same five in the same order as the floating bar of the
-   TinyPPI app, and the settings.  Every tab is fed from the one stream whichever is in front;
+   BaldPI app, and the settings.  Every tab is fed from the one stream whichever is in front;
    the metadata tab draws itself (js/metadata.js) and this file hands it the
    snapshot.
 
@@ -31,8 +31,8 @@
 /* exported $, T, control, el, offerShelves, render, selectTab, storedTab,
    tabFromAddress */
 
-const $ = TinyPPI.$;
-const T = TinyPPI.T;
+const $ = BaldPI.$;
+const T = BaldPI.T;
 
 const el = {
   version: $("version"), idleCard: $("idleCard"),
@@ -97,7 +97,7 @@ const DEFAULT_OPEN_GROUPS = new Set([
   "video", "audio", "processing", "dv", "system", "metadata"
 ]);
 
-TinyPPI.bindDisclosure(el.vs10Card, "dashboard.vs10", false);
+BaldPI.bindDisclosure(el.vs10Card, "dashboard.vs10", false);
 /* The shelves arrive open, as they do in the app: each has a tab of its own
    now, and somebody who pressed "Films" came for the films.  They used to
    arrive folded, when they stood under the readings on the one page and two
@@ -110,26 +110,26 @@ TinyPPI.bindDisclosure(el.vs10Card, "dashboard.vs10", false);
 
    The first marks these cards ever wrote are dropped rather than left in
    storage to mean nothing (see bindDisclosure in js/core.js). */
-TinyPPI.forgetDisclosure("dashboard.films");
-TinyPPI.forgetDisclosure("dashboard.series");
-TinyPPI.forgetDisclosure("dashboard.continue");
-TinyPPI.bindDisclosure(el.filmsCard, "dashboard.filmshelf", true);
-TinyPPI.bindDisclosure(el.seriesCard, "dashboard.seriesshelf", true);
-TinyPPI.bindDisclosure(el.unseenFilmsCard, "dashboard.unseenfilms", true);
-TinyPPI.bindDisclosure(el.unseenSeriesCard, "dashboard.unseenseries", true);
+BaldPI.forgetDisclosure("dashboard.films");
+BaldPI.forgetDisclosure("dashboard.series");
+BaldPI.forgetDisclosure("dashboard.continue");
+BaldPI.bindDisclosure(el.filmsCard, "dashboard.filmshelf", true);
+BaldPI.bindDisclosure(el.seriesCard, "dashboard.seriesshelf", true);
+BaldPI.bindDisclosure(el.unseenFilmsCard, "dashboard.unseenfilms", true);
+BaldPI.bindDisclosure(el.unseenSeriesCard, "dashboard.unseenseries", true);
 /* The row of things left half-watched, one on either shelf: the films on the
    films tab and the episodes on the series tab, as the app splits them. */
-TinyPPI.bindDisclosure(el.continueFilmsCard, "dashboard.continuefilms", true);
-TinyPPI.bindDisclosure(el.continueSeriesCard, "dashboard.continueseries", true);
+BaldPI.bindDisclosure(el.continueFilmsCard, "dashboard.continuefilms", true);
+BaldPI.bindDisclosure(el.continueSeriesCard, "dashboard.continueseries", true);
 /* And what arrived last, under them. */
-TinyPPI.bindDisclosure(el.recentFilmsCard, "dashboard.recentfilms", true);
-TinyPPI.bindDisclosure(el.recentSeriesCard, "dashboard.recentseries", true);
+BaldPI.bindDisclosure(el.recentFilmsCard, "dashboard.recentfilms", true);
+BaldPI.bindDisclosure(el.recentSeriesCard, "dashboard.recentseries", true);
 
 /* --- tabs --------------------------------------------------------------- */
 
 /* The places the bar switches between, in its order. */
 const TABS = ["live", "metadata", "films", "series", "history", "settings"];
-const TAB_KEY = "tinyppi.tab";
+const TAB_KEY = "baldpi.tab";
 
 let tab = null;            /* the tab in front                               */
 const scrolls = new Map(); /* how far down each tab was left                 */
@@ -207,7 +207,7 @@ function selectTab(name, fromUser) {
   window.scrollTo(0, scrolls.get(name) || 0);
   /* The chart and the event list are measured, and a tab that was away was
      measured at no size at all. */
-  requestAnimationFrame(() => TinyPPI.panels.draw());
+  requestAnimationFrame(() => BaldPI.panels.draw());
 }
 
 /* The tab bar itself: which of the five are on offer.  A tab that has just
@@ -309,19 +309,19 @@ wakeBar();
 function updateCopy() {
   el.copyBtn.disabled =
     !state || !(state.playing || (state.last && state.last.title));
-  el.copyMetaBtn.disabled = !TinyPPI.metadata.listed();
+  el.copyMetaBtn.disabled = !BaldPI.metadata.listed();
 }
 
 /* Which token this device holds, all but its last two characters hidden: it
    says whether there is one and which, without putting it on a screen that
    may be the one on the wall. */
 function renderToken() {
-  const token = TinyPPI.token || "";
+  const token = BaldPI.token || "";
   el.tokenShown.textContent = token
     ? "\u2022".repeat(Math.max(0, token.length - 2)) + token.slice(-2)
     : T.na;
 }
-document.addEventListener("tinyppi-token", renderToken);
+document.addEventListener("baldpi-token", renderToken);
 renderToken();
 
 /* --- render ------------------------------------------------------------- */
@@ -335,8 +335,8 @@ function render(next) {
 
   /* The common live module draws what is playing, the summary tiles, the
      luminance chart on the metadata tab and the events on the history tab. */
-  TinyPPI.panels.update(next);
-  TinyPPI.metadata.render(next);
+  BaldPI.panels.update(next);
+  BaldPI.metadata.render(next);
   /* The former metrics card disappeared while idle; preserve that behaviour
      now that its grid lives inside the event card, which may hold the events
      of the title that just ended. */
@@ -523,23 +523,23 @@ async function switchMode(mode, button) {
   pending = mode;
   for (const node of el.modes.children) node.disabled = true;
   button.classList.add("busy");
-  TinyPPI.toast(T.switching);
+  BaldPI.toast(T.switching);
   try {
     const response = await fetch("/api/mode", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "X-TinyPPI-Token": TinyPPI.token },
+      headers: { "Content-Type": "application/json", "X-BaldPI-Token": BaldPI.token },
       body: JSON.stringify({ mode })
     });
     if (response.status === 401) {
-      TinyPPI.toast(T.token_bad, true);
-      TinyPPI.askToken();
+      BaldPI.toast(T.token_bad, true);
+      BaldPI.askToken();
     } else if (!response.ok) {
-      TinyPPI.toast(T.switch_failed, true);
+      BaldPI.toast(T.switch_failed, true);
     } else {
-      TinyPPI.toast(T.switched);
+      BaldPI.toast(T.switched);
     }
   } catch (_) {
-    TinyPPI.toast(T.switch_failed, true);
+    BaldPI.toast(T.switch_failed, true);
   } finally {
     /* The driver needs a moment to settle before the next snapshot shows the
        new output; keep the buttons locked until then rather than inviting a
@@ -585,7 +585,7 @@ function renderGroups(groups) {
     if (!card) {
       card = document.createElement("details");
       card.className = "card";
-      TinyPPI.bindDisclosure(
+      BaldPI.bindDisclosure(
         card, "dashboard.group." + group.id, DEFAULT_OPEN_GROUPS.has(group.id)
       );
       const heading = document.createElement("summary");
@@ -639,7 +639,7 @@ function renderRows(container, group) {
     if (node.last !== row.value + "\n" + row.detail) {
       if (node.last !== null && FLASH_ROWS.has(row.id)) flash(node);
       node.last = row.value + "\n" + row.detail;
-      TinyPPI.renderValue(node.value, text);
+      BaldPI.renderValue(node.value, text);
       if (row.detail) {
         const detail = document.createElement("span");
         detail.className = "d";
@@ -667,8 +667,8 @@ function flash(node) {
 /* --- report ------------------------------------------------------------- */
 
 function reportValue(row) {
-  const value = TinyPPI.plainValue(row.value);
-  const detail = row.detail ? TinyPPI.plainValue(row.detail) : "";
+  const value = BaldPI.plainValue(row.value);
+  const detail = row.detail ? BaldPI.plainValue(row.detail) : "";
   if (!/[✔✘]/.test(row.value || "")) {
     return value + (detail ? "  " + detail : "");
   }
@@ -691,19 +691,19 @@ function reportValue(row) {
 function summaryLines(session, peak) {
   const lines = [];
   if (peak !== null && peak !== undefined) {
-    lines.push(TinyPPI.reportLine(T.peak, TinyPPI.fmtNits(peak) + " nits"));
+    lines.push(BaldPI.reportLine(T.peak, BaldPI.fmtNits(peak) + " nits"));
   }
-  lines.push(TinyPPI.reportLine(T.switches, String((session || {}).switches || 0)));
-  lines.push(TinyPPI.reportLine(T.warnings, String((session || {}).warnings || 0)));
+  lines.push(BaldPI.reportLine(T.switches, String((session || {}).switches || 0)));
+  lines.push(BaldPI.reportLine(T.warnings, String((session || {}).warnings || 0)));
   return ["[" + T.summary + "]", ...lines, ""];
 }
 
 function eventLines() {
-  const events = TinyPPI.panels.events();
+  const events = BaldPI.panels.events();
   if (!events.length) return [];
   const lines = ["[" + T.events + "]"];
   for (const event of events) {
-    lines.push(TinyPPI.reportLine(
+    lines.push(BaldPI.reportLine(
       (event.pos ? event.pos + "  " : "") + event.label, event.text));
   }
   lines.push("");
@@ -712,25 +712,25 @@ function eventLines() {
 
 function buildReport() {
   if (!state) return "";
-  const peak = TinyPPI.panels.peak();
+  const peak = BaldPI.panels.peak();
   if (!state.playing) {
     /* Nothing is playing, so the report is of the title that was: its heading,
        its figures and its events, with no rows to print between them. */
     const last = state.last;
     if (!last || !last.title) return "";
-    return ["TinyPPI", last.title, "",
+    return ["BaldPI", last.title, "",
             ...summaryLines(last, last.peak === undefined ? peak : last.peak),
             ...eventLines()].join("\n");
   }
 
-  const lines = ["TinyPPI"];
+  const lines = ["BaldPI"];
   if (state.title) lines.push(state.title);
   if (state.filename) lines.push(state.filename);
   lines.push("");
   for (const group of ordered(state.groups || [])) {
     lines.push("[" + group.title + "]");
     for (const row of group.rows) {
-      lines.push(TinyPPI.reportLine(row.label, reportValue(row)));
+      lines.push(BaldPI.reportLine(row.label, reportValue(row)));
     }
     lines.push("");
   }
@@ -741,10 +741,10 @@ function buildReport() {
 
 /* The clipboard, or a file named after the film where the browser will not
    give it the clipboard; the metadata list is handed over the same way (see
-   TinyPPI.copyReport). */
-el.copyMetaBtn.addEventListener("click", () => TinyPPI.metadata.copy());
+   BaldPI.copyReport). */
+el.copyMetaBtn.addEventListener("click", () => BaldPI.metadata.copy());
 el.copyBtn.addEventListener("click", () => {
   const title = (state || {}).playing
     ? state.title : ((state || {}).last || {}).title;
-  TinyPPI.copyReport(buildReport(), title);
+  BaldPI.copyReport(buildReport(), title);
 });

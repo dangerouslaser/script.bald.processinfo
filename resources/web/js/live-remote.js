@@ -12,7 +12,7 @@
    are shared with the rest of the card (icon, setIcon).
 =========================================================================== */
 
-window.TinyPPIRemote = (function () {
+window.BaldPIRemote = (function () {
 
   function uiIcon(name) {
     const image = document.createElement("img");
@@ -81,18 +81,18 @@ window.TinyPPIRemote = (function () {
     function setControlsOpen(open, remember) {
       el.drawer.classList.toggle("open", open);
       controlToggle.setAttribute("aria-expanded", String(open));
-      if (remember !== false) TinyPPI.setDisclosureState(controlStateKey, open);
+      if (remember !== false) BaldPI.setDisclosureState(controlStateKey, open);
     }
 
     controlToggle.addEventListener("click", () => {
       setControlsOpen(controlToggle.getAttribute("aria-expanded") !== "true");
     });
-    setControlsOpen(TinyPPI.disclosureState(controlStateKey, false), false);
+    setControlsOpen(BaldPI.disclosureState(controlStateKey, false), false);
 
     /* --- the remote ------------------------------------------------------- */
 
     /* Built once, the first time a snapshot says the add-on will take orders.
-       Everything goes through TinyPPI.command, which carries the token and says
+       Everything goes through BaldPI.command, which carries the token and says
        whether the player did it. */
     function buildTransport() {
       if (el.transport.dataset.built) return;
@@ -126,12 +126,12 @@ window.TinyPPIRemote = (function () {
       const keys = document.createElement("div");
       keys.className = "tkeys";
       keys.append(
-        button("−10m", () => TinyPPI.command("seek", -600)),
-        button("−1m", () => TinyPPI.command("seek", -60)),
-        button("−10s", () => TinyPPI.command("seek", -10)),
-        button("+10s", () => TinyPPI.command("seek", 10)),
-        button("+1m", () => TinyPPI.command("seek", 60)),
-        button("+10m", () => TinyPPI.command("seek", 600))
+        button("−10m", () => BaldPI.command("seek", -600)),
+        button("−1m", () => BaldPI.command("seek", -60)),
+        button("−10s", () => BaldPI.command("seek", -10)),
+        button("+10s", () => BaldPI.command("seek", 10)),
+        button("+1m", () => BaldPI.command("seek", 60)),
+        button("+10m", () => BaldPI.command("seek", 600))
       );
 
       /* Everything that is not a jump, in the order it is used: a chapter back,
@@ -150,7 +150,7 @@ window.TinyPPIRemote = (function () {
          other keys are marked "+10s" is a key that has to be worked out; the
          speaker says which kind of louder it means before it is read. */
       const stepButton = (sign, key) => {
-        const node = button("", () => TinyPPI.command(key), "vol");
+        const node = button("", () => BaldPI.command(key), "vol");
         node.dataset.label = key;
         node.append(uiIcon("volume"));
         const mark = document.createElement("span");
@@ -164,7 +164,7 @@ window.TinyPPIRemote = (function () {
       rest.className = "tvol";
       rest.append(
         imageButton("chapter-previous", "chapter_previous",
-                    () => TinyPPI.command("chapter_previous"), "chapter"),
+                    () => BaldPI.command("chapter_previous"), "chapter"),
         /* The icon says what pressing it does, so it follows the player: pause
            while it plays, play while it is paused.
 
@@ -173,13 +173,13 @@ window.TinyPPIRemote = (function () {
            the key that is currently doing something rather than as the key worth
            reaching for, and what it is doing is already written on it. */
         imageButton("pause", "playpause",
-                    () => TinyPPI.command("playpause"), "play"),
+                    () => BaldPI.command("playpause"), "play"),
         stepButton("−", "volume_down"),
-        imageButton("volume", "mute", () => TinyPPI.command("mute"), "mute"),
+        imageButton("volume", "mute", () => BaldPI.command("mute"), "mute"),
         stepButton("+", "volume_up"),
-        imageButton("stop", "stop", () => TinyPPI.command("stop")),
+        imageButton("stop", "stop", () => BaldPI.command("stop")),
         imageButton("chapter-next", "chapter_next",
-                    () => TinyPPI.command("chapter_next"), "chapter")
+                    () => BaldPI.command("chapter_next"), "chapter")
       );
       el.transport.append(keys, rest);
       labelControls();
@@ -213,8 +213,8 @@ window.TinyPPIRemote = (function () {
         dragTo(event);
         const { chapter, where } = drag;
         endDrag();
-        if (chapter) TinyPPI.command("chapter_goto", chapter.index);
-        else TinyPPI.command("seek_percent", where);
+        if (chapter) BaldPI.command("chapter_goto", chapter.index);
+        else BaldPI.command("seek_percent", where);
       });
       el.track.addEventListener("pointercancel", (event) => {
         if (drag && event.pointerId === drag.id) endDrag();
@@ -224,10 +224,10 @@ window.TinyPPIRemote = (function () {
          to; on one that has not, they are left to scroll the page. */
       el.track.addEventListener("keydown", (event) => {
         if (!control) return;
-        if (event.key === "ArrowLeft") TinyPPI.command("seek", -10);
-        else if (event.key === "ArrowRight") TinyPPI.command("seek", 10);
-        else if (event.key === "PageUp" && chapterCount > 1) TinyPPI.command("chapter_previous");
-        else if (event.key === "PageDown" && chapterCount > 1) TinyPPI.command("chapter_next");
+        if (event.key === "ArrowLeft") BaldPI.command("seek", -10);
+        else if (event.key === "ArrowRight") BaldPI.command("seek", 10);
+        else if (event.key === "PageUp" && chapterCount > 1) BaldPI.command("chapter_previous");
+        else if (event.key === "PageDown" && chapterCount > 1) BaldPI.command("chapter_next");
         else return;
         event.preventDefault();
       });
@@ -264,7 +264,7 @@ window.TinyPPIRemote = (function () {
        are still all there is. */
     function labelControls() {
       for (const node of el.transport.querySelectorAll("[data-label]")) {
-        const name = TinyPPI.T[node.dataset.label];
+        const name = BaldPI.T[node.dataset.label];
         if (!name) continue;
         node.setAttribute("aria-label", name);
         if (node.tagName === "BUTTON") node.title = name;
@@ -287,7 +287,7 @@ window.TinyPPIRemote = (function () {
       }
       buildTransport();
       if (!hadControl) {
-        setControlsOpen(TinyPPI.disclosureState(controlStateKey, false), false);
+        setControlsOpen(BaldPI.disclosureState(controlStateKey, false), false);
       }
       controlToggle.classList.remove("hidden");
       el.transport.classList.remove("hidden");
@@ -330,10 +330,10 @@ window.TinyPPIRemote = (function () {
         trackKey = key;
         el.tracks.innerHTML = "";
         if (audio.length > 1) {
-          el.tracks.append(picker("audio", TinyPPI.T.audio_track, audio, false));
+          el.tracks.append(picker("audio", BaldPI.T.audio_track, audio, false));
         }
         if (subs.length) {
-          el.tracks.append(picker("subtitle", TinyPPI.T.subtitles, subs, true));
+          el.tracks.append(picker("subtitle", BaldPI.T.subtitles, subs, true));
         }
       }
 
@@ -353,12 +353,12 @@ window.TinyPPIRemote = (function () {
       caption.textContent = label;
       const select = document.createElement("select");
       select.id = "pick-" + kind;
-      if (withOff) select.append(new Option(TinyPPI.T.off, "-1"));
+      if (withOff) select.append(new Option(BaldPI.T.off, "-1"));
       for (const option of options) {
         select.append(new Option(option.label, String(option.index)));
       }
       select.addEventListener("change", () => {
-        TinyPPI.command(kind, Number(select.value));
+        BaldPI.command(kind, Number(select.value));
       });
       wrap.append(caption, select);
       return wrap;

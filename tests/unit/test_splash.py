@@ -19,8 +19,8 @@ FULLSCREEN = "Window.IsActive(fullscreenvideo)"
 GAMUT = "Player.Process(amlogic.eoft_gamut)"
 POLL, TICK, FADE_OUT = splash._POLL_INTERVAL, splash._RENDER_TICK, splash._FADE_OUT_SECONDS
 CONVERTING = splash.PROP_CONVERTING
-VISIBLE = {"start": "TinyPPI.SplashStartVisible", "osd": "TinyPPI.SplashOsdVisible",
-           "tinyppi": "TinyPPI.SplashTinyPPIVisible"}
+VISIBLE = {"start": "BaldPI.SplashStartVisible", "osd": "BaldPI.SplashOsdVisible",
+           "baldpi": "BaldPI.SplashBaldPIVisible"}
 
 # One distinct tint per colour key, so a control's colour tells what it is.
 COLOURS = {
@@ -248,17 +248,17 @@ def test_controls_are_laid_out_in_the_windows_own_space(monkeypatch, size, dims)
 # --- Settings and colours ---------------------------------------------------------
 
 def test_the_settings_are_read_per_mode():
-    use(splash_enabled=True, splash_show_on_osd=False, splash_show_on_tinyppi=True,
+    use(splash_enabled=True, splash_show_on_osd=False, splash_show_on_baldpi=True,
         splash_duration=5, splash_osd_show_video=False, splash_osd_order=1,
         splash_osd_offset_x=10, splash_osd_offset_y=20, splash_osd_scale=120,
         splash_osd_pill_position=1)
     config = splash_settings.read_settings(xbmcaddon.Addon())
-    assert (config.show_on_start, config.show_on_osd, config.show_on_tinyppi, config.duration) == (
+    assert (config.show_on_start, config.show_on_osd, config.show_on_baldpi, config.duration) == (
         True, False, True, 5)
     assert config.modes["osd"] == splash_settings.ModeSettings(
         show_video=False, show_audio=True, audio_first=True, offset_x=10, offset_y=20,
         scale=1.2, pill_at_top=True)
-    assert config.modes["start"] == config.modes["tinyppi"] == splash_settings.ModeSettings(
+    assert config.modes["start"] == config.modes["baldpi"] == splash_settings.ModeSettings(
         True, True, False, 0, 0, 1.0, False)
 
 
@@ -266,8 +266,8 @@ def test_the_settings_are_read_per_mode():
     ("100", 1.0), ("115", 1.15), ("80", 0.8), ("50", 0.8), ("130", 1.3), ("200", 1.3), ("big", 1.0),
 ])
 def test_the_mode_size_is_clamped(stored, scale):
-    use(splash_tinyppi_scale=stored)
-    assert splash_settings._mode_scale(xbmcaddon.Addon(), "tinyppi") == pytest.approx(scale)
+    use(splash_baldpi_scale=stored)
+    assert splash_settings._mode_scale(xbmcaddon.Addon(), "baldpi") == pytest.approx(scale)
 
 
 def test_an_unknown_mode_has_the_normal_size():
@@ -276,9 +276,9 @@ def test_an_unknown_mode_has_the_normal_size():
 
 def test_mode_colours_come_from_the_theme_with_fallbacks():
     home = xbmcgui.Window(HOME)
-    home.setProperty("TinyPPI.SplashOsdBgColor", "80102030")
-    home.setProperty("TinyPPI.SplashOsdFelColor", "FF00FF00")
-    home.setProperty("TinyPPI.SplashStartVideoColor", "FFFF0000")   # another mode's
+    home.setProperty("BaldPI.SplashOsdBgColor", "80102030")
+    home.setProperty("BaldPI.SplashOsdFelColor", "FF00FF00")
+    home.setProperty("BaldPI.SplashStartVideoColor", "FFFF0000")   # another mode's
     assert splash._mode_colors(home, "osd") == {
         "bg": "80102030", "video": "FFEDEDED", "audio": "FFEDEDED", "divider": "59FFFFFF",
         "convert_dot": "FF81C784", "fel": "FF00FF00", "mel": "FFFFB74D", "other": "FFEDEDED",
@@ -289,40 +289,40 @@ def test_mode_colours_come_from_the_theme_with_fallbacks():
 
 @pytest.mark.parametrize(("mode", "suppress", "run", "parts"), [
     ("start", False, "", [
-        is_true("TinyPPI.SplashVisible"), is_true("TinyPPI.SplashStartVisible"),
-        "!" + is_true("TinyPPI.Running"), "!" + is_true("TinyPPI.DialogMode")]),
+        is_true("BaldPI.SplashVisible"), is_true("BaldPI.SplashStartVisible"),
+        "!" + is_true("BaldPI.Running"), "!" + is_true("BaldPI.DialogMode")]),
     ("start", True, "7-1", [
-        is_true("TinyPPI.SplashVisible"), is_true("TinyPPI.SplashStartVisible"),
-        "String.IsEqual(Window(10000).Property(TinyPPI.SplashRun),7-1)",
-        "!" + is_true("TinyPPI.Running"), "!" + is_true("TinyPPI.DialogMode"),
+        is_true("BaldPI.SplashVisible"), is_true("BaldPI.SplashStartVisible"),
+        "String.IsEqual(Window(10000).Property(BaldPI.SplashRun),7-1)",
+        "!" + is_true("BaldPI.Running"), "!" + is_true("BaldPI.DialogMode"),
         "!Window.IsVisible(videoosd)"]),
     ("osd", True, "", [
-        is_true("TinyPPI.SplashVisible"), is_true("TinyPPI.SplashOsdVisible"),
+        is_true("BaldPI.SplashVisible"), is_true("BaldPI.SplashOsdVisible"),
         "Window.IsVisible(videoosd)",
-        "!" + is_true("TinyPPI.Running"), "!" + is_true("TinyPPI.DialogMode")]),
-    ("tinyppi", False, "", [
-        is_true("TinyPPI.SplashVisible"), is_true("TinyPPI.SplashTinyPPIVisible"),
-        is_true("TinyPPI.Active"), "!" + is_true("TinyPPI.DialogMode"),
-        "Window.IsVisible(script-tinyppi-main.xml)"]),
+        "!" + is_true("BaldPI.Running"), "!" + is_true("BaldPI.DialogMode")]),
+    ("baldpi", False, "", [
+        is_true("BaldPI.SplashVisible"), is_true("BaldPI.SplashBaldPIVisible"),
+        is_true("BaldPI.Active"), "!" + is_true("BaldPI.DialogMode"),
+        "Window.IsVisible(script-baldpi-main.xml)"]),
 ])
 def test_each_mode_has_its_own_visibility_condition(mode, suppress, run, parts):
     assert splash._visible_condition(mode, suppress, run).split(" + ") == parts
 
 
 def test_a_mode_without_rules_of_its_own_needs_only_the_visibility_properties(monkeypatch):
-    monkeypatch.setitem(splash._MODE_VISIBLE_PROPS, "pip", "TinyPPI.SplashPipVisible")
+    monkeypatch.setitem(splash._MODE_VISIBLE_PROPS, "pip", "BaldPI.SplashPipVisible")
     assert splash._visible_condition("pip").split(" + ") == [
-        is_true("TinyPPI.SplashVisible"), is_true("TinyPPI.SplashPipVisible")]
+        is_true("BaldPI.SplashVisible"), is_true("BaldPI.SplashPipVisible")]
 
 
 def test_mode_visibility_is_cleared_for_one_mode_or_all():
     home = xbmcgui.Window(HOME)
-    for prop in (*VISIBLE.values(), "TinyPPI.Active"):
+    for prop in (*VISIBLE.values(), "BaldPI.Active"):
         home.setProperty(prop, "true")
     splash._clear_mode_visibility(home, "osd")
-    assert set(xbmcgui.PROPERTIES[HOME]) == {VISIBLE["start"], VISIBLE["tinyppi"], "TinyPPI.Active"}
+    assert set(xbmcgui.PROPERTIES[HOME]) == {VISIBLE["start"], VISIBLE["baldpi"], "BaldPI.Active"}
     splash._clear_mode_visibility(home)
-    assert set(xbmcgui.PROPERTIES[HOME]) == {"TinyPPI.Active"}
+    assert set(xbmcgui.PROPERTIES[HOME]) == {"BaldPI.Active"}
 
 
 # --- Fades ---------------------------------------------------------------------------
@@ -364,7 +364,7 @@ def test_fading_in_hides_adds_binds_then_shows_and_finally_plays_the_fade():
     assert controls[0].calls == [*hidden, ("setVisibleCondition", ("COND", False)), anims,
                                  ("setVisible", (True,))]
     assert dot.condition == "COND + " + is_true(CONVERTING)
-    assert xbmcgui.PROPERTIES[HOME] == {"TinyPPI.SplashVisible": "true", VISIBLE["osd"]: "true"}
+    assert xbmcgui.PROPERTIES[HOME] == {"BaldPI.SplashVisible": "true", VISIBLE["osd"]: "true"}
 
 
 @pytest.mark.parametrize("aborting", [False, True])
@@ -558,7 +558,7 @@ class Kodi:
                     if kind == "set" and key == splash.PROP_SPLASH_RUN)[0]
 
     def splash_props(self):
-        return sorted(key for key in self.home if key.startswith("TinyPPI.Splash"))
+        return sorted(key for key in self.home if key.startswith("BaldPI.Splash"))
 
 
 def mode_of(controls):
@@ -621,9 +621,9 @@ def test_the_start_logos_show_for_the_set_duration_then_the_controller_ends(kodi
     run = kodi.run_token()
     assert run == f"{os.getpid()}-0"
     condition = " + ".join([
-        is_true("TinyPPI.SplashVisible"), is_true(VISIBLE["start"]),
-        f"String.IsEqual(Window(10000).Property(TinyPPI.SplashRun),{run})",
-        "!" + is_true("TinyPPI.Running"), "!" + is_true("TinyPPI.DialogMode"),
+        is_true("BaldPI.SplashVisible"), is_true(VISIBLE["start"]),
+        f"String.IsEqual(Window(10000).Property(BaldPI.SplashRun),{run})",
+        "!" + is_true("BaldPI.Running"), "!" + is_true("BaldPI.DialogMode"),
     ])
     assert {c.condition for c in controls[:-1]} == {condition}
     assert controls[-1].condition == condition + " + " + is_true(CONVERTING)
@@ -639,25 +639,25 @@ def test_the_start_logos_show_for_the_set_duration_then_the_controller_ends(kodi
 
 
 def test_the_osd_and_overlay_logos_follow_the_fullscreen_window(kodi):
-    use(splash_show_on_osd=True, splash_show_on_tinyppi=True)
+    use(splash_show_on_osd=True, splash_show_on_baldpi=True)
     kodi.at(2, lambda: xbmc.CONDITIONS.update({FULLSCREEN: False}))
     kodi.at(3, lambda: xbmc.CONDITIONS.update({FULLSCREEN: True}))
     kodi.stop_at(4)
     kodi.run()
 
     assert kodi.timeline() == [
-        ("add", "osd"), ("add", "tinyppi"),
-        ("remove", "osd"), ("remove", "tinyppi"),        # left fullscreen
-        ("add", "osd"), ("add", "tinyppi"),              # back again
-        ("remove", "osd"), ("remove", "tinyppi"),        # playback ended
+        ("add", "osd"), ("add", "baldpi"),
+        ("remove", "osd"), ("remove", "baldpi"),        # left fullscreen
+        ("add", "osd"), ("add", "baldpi"),              # back again
+        ("remove", "osd"), ("remove", "baldpi"),        # playback ended
     ]
-    osd, tinyppi = kodi.drawn()[:2]
+    osd, baldpi = kodi.drawn()[:2]
     assert "+ Window.IsVisible(videoosd) +" in osd[0].condition
-    assert is_true("TinyPPI.Active") in tinyppi[0].condition
+    assert is_true("BaldPI.Active") in baldpi[0].condition
     # Both fade out together: one wait, then both are removed.
     first_remove = kodi.events.index(("remove", osd))
     assert kodi.events[first_remove - 2:first_remove] == [
-        ("clear", VISIBLE["osd"]), ("clear", VISIBLE["tinyppi"])]
+        ("clear", VISIBLE["osd"]), ("clear", VISIBLE["baldpi"])]
     assert kodi.waits.count(FADE_OUT) == 1
     assert kodi.splash_props() == []
 
@@ -719,16 +719,16 @@ def test_a_new_audio_track_redraws_the_logos(kodi):
     assert kodi.events[-2:] == [("remove", new_start), ("remove", new_osd)]
     lines = [line for _level, line in xbmc.LOG]
     for mode in ("start", "osd"):
-        assert f"TinyPPI [splash]: {mode} redrawn for output 'HDR10 BT2020', source 'hdr10'" in lines
+        assert f"BaldPI [splash]: {mode} redrawn for output 'HDR10 BT2020', source 'hdr10'" in lines
 
 
 def test_changed_settings_redraw_with_the_new_theme_and_position(kodi):
     use(splash_enabled=True)
-    kodi.theme = {"TinyPPI.SplashStartVideoColor": "FF102030"}
+    kodi.theme = {"BaldPI.SplashStartVideoColor": "FF102030"}
 
     def change_settings():
         use(splash_start_offset_x=100)
-        kodi.theme = {"TinyPPI.SplashStartVideoColor": "FF405060"}
+        kodi.theme = {"BaldPI.SplashStartVideoColor": "FF405060"}
         kodi.addon = xbmcaddon.Addon()              # Kodi hands out a new handle
 
     first = kodi.addon
@@ -810,7 +810,7 @@ def test_nothing_is_drawn_until_the_output_has_settled(kodi, monkeypatch, source
     kodi.run()
 
     assert kodi.added_at == [pytest.approx(settled)]
-    assert (f"TinyPPI [splash]: output settled after {settled:.1f}s at {gamut!r}, "
+    assert (f"BaldPI [splash]: output settled after {settled:.1f}s at {gamut!r}, "
             f"source {source or 'sdr'!r}") in [line for _level, line in xbmc.LOG]
     assert kodi.timeline() == [("add", "start"), ("remove", "start")]
 
@@ -863,7 +863,7 @@ def test_kodi_stopping_leaves_the_controls_hidden_by_their_run_token(kodi, chang
 
 
 def test_kodi_stopping_while_one_mode_fades_in_draws_no_other(kodi):
-    use(splash_show_on_osd=True, splash_show_on_tinyppi=True)
+    use(splash_show_on_osd=True, splash_show_on_baldpi=True)
     kodi.abort_on = TICK
     kodi.run()
 

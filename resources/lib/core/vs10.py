@@ -6,7 +6,7 @@
 ``set_mode`` applies a mode, through Kodi's native VS10 actions where they
 exist and work, else through the driver's sysfs nodes.  No window is
 involved: the dialog (ui.mode_select), the dashboard (web.vs10) and
-``RunScript(script.tinyppi,run_mode,<mode>)`` all switch through here.
+``RunScript(script.bald.processinfo,run_mode,<mode>)`` all switch through here.
 """
 
 import threading
@@ -514,7 +514,7 @@ def _switch_through_sdr(name: str) -> None:
     worker = threading.Thread(
         target=_staged_switch,
         args=(name,),
-        name="TinyPPI-vs10-stage",
+        name="BaldPI-vs10-stage",
         daemon=True,
     )
     worker.start()
@@ -549,20 +549,20 @@ def _apply_mode(name: str) -> bool:
                 return False
             log(
                 f"VS10 Action({action}) had no effect on the DV "
-                "driver -> falling back to built-in TinyPPI VS10 (sysfs)",
+                "driver -> falling back to built-in BaldPI VS10 (sysfs)",
                 xbmc.LOGWARNING,
             )
         else:
             log(
                 f"no video playing -> VS10 Action({action}) cannot "
-                f"apply; using built-in TinyPPI VS10 (sysfs) for '{name}'",
+                f"apply; using built-in BaldPI VS10 (sysfs) for '{name}'",
                 xbmc.LOGINFO,
             )
     elif vs10_actions_available():
         # No native action for this mode (e.g. 'sdr8'); sysfs keeps SDR8.
         log(
             f"'{name}' has no native VS10 action -> using built-in "
-            "TinyPPI VS10 (sysfs) to keep the exact output",
+            "BaldPI VS10 (sysfs) to keep the exact output",
             xbmc.LOGINFO,
         )
 
@@ -572,13 +572,13 @@ def _apply_mode(name: str) -> bool:
     if failed:
         # Never log "set" for a sequence that did not reach the driver.
         log(
-            f"mode '{name}' NOT set via built-in TinyPPI VS10 (sysfs): "
+            f"mode '{name}' NOT set via built-in BaldPI VS10 (sysfs): "
             f"{failed} write(s) failed, see the lines above",
             xbmc.LOGERROR,
         )
     else:
         log(
-            f"mode '{name}' set via built-in TinyPPI VS10 (sysfs)",
+            f"mode '{name}' set via built-in BaldPI VS10 (sysfs)",
             xbmc.LOGINFO,
         )
     return True

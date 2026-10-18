@@ -326,8 +326,8 @@ def get_sidedata(mapping: bool = False) -> Block | None:
 # default).  theme.apply_theme publishes the ARGB value; tags are coloured
 # when read, so a colour change applies immediately.
 _EL_COLOUR_PROPERTIES = {
-    "FEL": "TinyPPI.FelColor",
-    "MEL": "TinyPPI.MelColor",
+    "FEL": "BaldPI.FelColor",
+    "MEL": "BaldPI.MelColor",
 }
 _EL_COLOUR_DEFAULTS = {
     "FEL": "FF81C784",  # palette Forest

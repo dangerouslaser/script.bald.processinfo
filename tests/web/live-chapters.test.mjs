@@ -38,7 +38,7 @@ function chapters(t, { width = 206, stored, routes = {} } = {}) {
   const view = page({ scripts: [], routes: { "/api/command": [200, {}], ...routes } });
   const { window } = view;
   t.after(() => window.close());
-  if (stored !== undefined) window.localStorage.setItem("tinyppi.chapters", stored);
+  if (stored !== undefined) window.localStorage.setItem("baldpi.chapters", stored);
   for (const name of SCRIPTS) load(view.dom, name);
   const $ = (id) => window.document.getElementById(id);
   const box = { left: 100, width };
@@ -70,7 +70,7 @@ function chapters(t, { width = 206, stored, routes = {} } = {}) {
     for (const type of ["pointerdown", "pointerup", "click"]) pointer(type, clientX);
   };
   return { ...view, $, box, timers, runTimers, commands, dots, xOf, along, mouse, pointer, tap,
-           P: window.TinyPPI.panels };
+           P: window.BaldPI.panels };
 }
 
 function load(dom, name) {
@@ -208,8 +208,8 @@ test("a title without chapters shows neither dots nor a label", (t) => {
 test("the label takes the words of the box's language", (t) => {
   const { $, P, window } = chapters(t);
   P.update(snap());
-  window.TinyPPI.T.chapter_of = "Kapitel %s von %s";
-  P.strings({ ...window.TinyPPI.T });
+  window.BaldPI.T.chapter_of = "Kapitel %s von %s";
+  P.strings({ ...window.BaldPI.T });
   assert.equal($("chapterNow").textContent, "Kapitel 2 von 4 · Arrival");
 });
 
@@ -410,7 +410,7 @@ test("the switch on the settings tab takes the dots off the bar and is remembere
 
   toggle.checked = false;
   toggle.dispatchEvent(new window.Event("change"));
-  assert.equal(window.localStorage.getItem("tinyppi.chapters"), "0");
+  assert.equal(window.localStorage.getItem("baldpi.chapters"), "0");
   assert.ok($("chapterDots").classList.contains("hidden"));
   assert.ok($("chapterNow").classList.contains("hidden"));
   assert.ok($("chapterTip").classList.contains("hidden"));
@@ -422,7 +422,7 @@ test("the switch on the settings tab takes the dots off the bar and is remembere
 
   toggle.checked = true;
   toggle.dispatchEvent(new window.Event("change"));
-  assert.equal(window.localStorage.getItem("tinyppi.chapters"), "1");
+  assert.equal(window.localStorage.getItem("baldpi.chapters"), "1");
   assert.equal(dots().length, 2);
   assert.equal($("chapterNow").classList.contains("hidden"), false);
 });
@@ -455,7 +455,7 @@ test("a page without the switch, and a browser that blocks storage", () => {
   const node = (tag) => document.body.appendChild(document.createElement(tag));
   const el = { track: node("div"), dots: node("span"), now: node("div"), tip: node("span") };
   el.track.getBoundingClientRect = () => ({ left: 0, width: 106 });
-  const marks = window.TinyPPIChapters.create(el);
+  const marks = window.BaldPIChapters.create(el);
   marks.render({ chapters: CHAPTERS, chapter: 2 }, 30);
   assert.equal(el.dots.children.length, 2, "shown when storage cannot say otherwise");
   assert.deepEqual(JSON.parse(JSON.stringify(marks.hit(3 + 50.5))), { index: 3, at: 50.5 });
@@ -470,7 +470,7 @@ test("a page without the switch, and a browser that blocks storage", () => {
   const toggle = node("input");
   toggle.type = "checkbox";
   const second = { track: node("div"), dots: node("span"), now: node("div"), tip: node("span"), toggle };
-  const switched = window.TinyPPIChapters.create(second);
+  const switched = window.BaldPIChapters.create(second);
   assert.equal(toggle.checked, true);
   toggle.checked = false;
   toggle.dispatchEvent(new window.Event("change"));   // not remembered, but switched

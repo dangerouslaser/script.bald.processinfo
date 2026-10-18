@@ -9,10 +9,10 @@
 
    Nothing here touches the page, so it is tested on its own
    (tests/web/readings.test.mjs); js/live-panels.js draws the results.
-   Loaded after core.js, whose strings (TinyPPI.T) it reads.
+   Loaded after core.js, whose strings (BaldPI.T) it reads.
 =========================================================================== */
 
-window.TinyPPIReadings = (function () {
+window.BaldPIReadings = (function () {
 
   /* --- Format badges ----------------------------------------------------
      The same badges, read the same way, as the mobile app's now-playing card
@@ -149,7 +149,7 @@ window.TinyPPIReadings = (function () {
     const row = audio.rows.find((entry) => entry.id === AUDIO_CODEC_ROW) || audio.rows[0];
     /* A codec Kodi could not name is no badge. */
     const value = (row.value || "").trim();
-    const words = value && value !== TinyPPI.T.na ? value.split(/\s+/) : [];
+    const words = value && value !== BaldPI.T.na ? value.split(/\s+/) : [];
     const last = words[words.length - 1];
     const layout = last && CHANNEL_LAYOUT.test(last) ? last : null;
     const codec = (layout ? words.slice(0, -1) : words).join(" ");
@@ -190,7 +190,7 @@ window.TinyPPIReadings = (function () {
   function eventLabel(kind) {
     const label = EVENT_LABEL[kind];
     if (!label) return kind || "Event";
-    return TinyPPI.T[label[0]] || label[1];
+    return BaldPI.T[label[0]] || label[1];
   }
 
   /* A transition names two whole VS10 output states -- "SDR BT.709" to
@@ -202,8 +202,8 @@ window.TinyPPIReadings = (function () {
 
   function eventText(entry) {
     const stateText = (value) => {
-      if (value === "__off__") return TinyPPI.T.off;
-      if (value === null || value === undefined) return TinyPPI.T.na;
+      if (value === "__off__") return BaldPI.T.off;
+      if (value === null || value === undefined) return BaldPI.T.na;
       let text = String(value);
       if (entry.kind === "audio" || entry.kind === "subtitle") {
         /* Index and ISO language are useful for identifying a track inside
@@ -213,7 +213,7 @@ window.TinyPPIReadings = (function () {
           .replace(/^#\d+\s*(?:·\s*)?/, "")
           .replace(/^[A-Z]{2,3}\s*·\s*/i, "");
       }
-      return text || TinyPPI.T.na;
+      return text || BaldPI.T.na;
     };
     if (isTransition(entry)) return stateText(entry.to);
     if (entry.kind === "temperature") return Math.round(entry.value) + " °C";
@@ -221,7 +221,7 @@ window.TinyPPIReadings = (function () {
       return Math.round(entry.value) + "%";
     }
     return entry.value === null || entry.value === undefined
-      ? TinyPPI.T.na : String(entry.value);
+      ? BaldPI.T.na : String(entry.value);
   }
 
   /* Which way a transition went, for the arrow beside its value: 1 up, -1

@@ -12,7 +12,7 @@
    (tests/web/colour.test.mjs).
 =========================================================================== */
 
-window.TinyPPIColour = (function () {
+window.BaldPIColour = (function () {
 
   function srgbToLinear(channel) {
     const c = channel / 255;

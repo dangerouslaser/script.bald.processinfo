@@ -33,7 +33,7 @@ def hex_value(rgb):
 def legacy_file(tmp_path, monkeypatch):
     """Where the pre-picker HEX colours were kept (not written yet)."""
     monkeypatch.setattr(xbmcvfs, "HOME", str(tmp_path))
-    path = tmp_path / "profile" / "addon_data" / "script.tinyppi" / "custom_colors.json"
+    path = tmp_path / "profile" / "addon_data" / "script.bald.processinfo" / "custom_colors.json"
     path.parent.mkdir(parents=True)
     return path
 
@@ -81,15 +81,15 @@ def test_the_unit_label_follows_the_setting(stored, label):
     if stored is not None:
         use(unit_type=stored)
     theme.apply_theme(home())
-    assert home().getProperty("TinyPPI.UnitLabel") == label
+    assert home().getProperty("BaldPI.UnitLabel") == label
 
 
 @pytest.mark.parametrize(("setting_id", "prop", "opacity", "alpha"), [
-    ("background_color", "TinyPPI.BackgroundColor", "abc", "FA"),   # its own default, 98 %
-    ("line_color", "TinyPPI.LineColor", "", "26"),                  # 15 %
-    ("title_color", "TinyPPI.TitleColor", "half", "FF"),            # 100 %
-    ("title_color", "TinyPPI.TitleColor", "150", "FF"),             # clamped
-    ("title_color", "TinyPPI.TitleColor", "-5", "00"),
+    ("background_color", "BaldPI.BackgroundColor", "abc", "FA"),   # its own default, 98 %
+    ("line_color", "BaldPI.LineColor", "", "26"),                  # 15 %
+    ("title_color", "BaldPI.TitleColor", "half", "FF"),            # 100 %
+    ("title_color", "BaldPI.TitleColor", "150", "FF"),             # clamped
+    ("title_color", "BaldPI.TitleColor", "-5", "00"),
 ])
 def test_an_unreadable_opacity_falls_back_to_the_elements_default(setting_id, prop, opacity, alpha):
     use(**{theme._opacity_setting(setting_id): opacity})
@@ -102,7 +102,7 @@ def test_unsaved_values_win_over_the_stored_ones():
     use(title_color=hex_value("111111"), title_opacity="100")
     theme.apply_theme(home(), xbmcaddon.Addon(),
                       overrides={"title_color": hex_value("ABCDEF"), "title_opacity": 50})
-    assert home().getProperty("TinyPPI.TitleColor") == "80ABCDEF"
+    assert home().getProperty("BaldPI.TitleColor") == "80ABCDEF"
 
 
 @pytest.mark.parametrize("stored", [
@@ -116,7 +116,7 @@ def test_unsaved_values_win_over_the_stored_ones():
 def test_an_unreadable_colour_gives_the_settings_default(legacy_file, stored):
     use(convert_yes_color=stored)
     theme.apply_theme(home())
-    assert home().getProperty("TinyPPI.ConvertYesColor") == FOREST
+    assert home().getProperty("BaldPI.ConvertYesColor") == FOREST
 
 
 @pytest.mark.parametrize(("content", "colour"), [
@@ -131,14 +131,14 @@ def test_the_old_hex_marker_reads_the_custom_colours_file(legacy_file, content, 
     legacy_file.write_text(content if isinstance(content, str) else json.dumps(content))
     use(convert_yes_color="999")
     theme.apply_theme(home())
-    assert home().getProperty("TinyPPI.ConvertYesColor") == colour
+    assert home().getProperty("BaldPI.ConvertYesColor") == colour
 
 
 def test_the_custom_colours_file_is_not_read_without_the_old_marker(legacy_file, monkeypatch):
     monkeypatch.setattr(theme, "_load_legacy_custom", pytest.fail)
     use(convert_yes_color=hex_value("123456"))
     theme.apply_theme(home())
-    assert home().getProperty("TinyPPI.ConvertYesColor") == "FF123456"
+    assert home().getProperty("BaldPI.ConvertYesColor") == "FF123456"
 
 
 # --- Migrating the old forms ---------------------------------------------------------
@@ -179,7 +179,7 @@ def test_cancelling_or_an_unknown_tile_changes_nothing(picker, answer):
     theme.pick_color("title_color", "32040")
     assert picker.shown[0]["heading"] == "#32040"
     assert "title_color" not in xbmcaddon.SETTINGS
-    assert home().getProperty("TinyPPI.TitleColor") == ""
+    assert home().getProperty("BaldPI.TitleColor") == ""
 
 
 def test_a_hex_colour_shows_on_the_first_tile_and_is_selected(picker):
@@ -209,8 +209,8 @@ def test_the_hex_tile_asks_for_a_code_and_stores_it(picker, stored, prefill):
     theme.pick_color("title_color", "32040")
     assert picker.keyboards == [(prefill, "#32205")]
     assert xbmcaddon.SETTINGS["title_color"] == hex_value("A1B2C3")
-    assert notifications() == [("TinyPPI", "#32207", xbmcgui.NOTIFICATION_INFO, 3000)]
-    assert home().getProperty("TinyPPI.TitleColor") == "FFA1B2C3"
+    assert notifications() == [("BaldPI", "#32207", xbmcgui.NOTIFICATION_INFO, 3000)]
+    assert home().getProperty("BaldPI.TitleColor") == "FFA1B2C3"
 
 
 def test_a_cancelled_hex_prompt_keeps_the_colour(picker):
@@ -228,8 +228,8 @@ def test_an_invalid_hex_code_gives_the_default_with_a_warning(picker, typed):
     theme.pick_color("convert_yes_color")
     spec = theme._COLOR_SETTINGS["convert_yes_color"]
     assert xbmcaddon.SETTINGS["convert_yes_color"] == theme._encode(spec, spec.default)
-    assert notifications() == [("TinyPPI", "#32206", xbmcgui.NOTIFICATION_ERROR, 4000)]
-    assert home().getProperty("TinyPPI.ConvertYesColor") == FOREST
+    assert notifications() == [("BaldPI", "#32206", xbmcgui.NOTIFICATION_ERROR, 4000)]
+    assert home().getProperty("BaldPI.ConvertYesColor") == FOREST
 
 
 def test_a_failed_republish_does_not_undo_the_choice(picker, monkeypatch):

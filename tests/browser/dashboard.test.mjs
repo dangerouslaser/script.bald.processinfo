@@ -35,7 +35,7 @@ before(async () => {
   browser = await chromium.launch();
   context = await browser.newContext({ viewport: { width: 1280, height: 900 },
                                              reducedMotion: "reduce" });
-  await context.addInitScript((token) => localStorage.setItem("tinyppi.token", token), TOKEN);
+  await context.addInitScript((token) => localStorage.setItem("baldpi.token", token), TOKEN);
   page = await context.newPage();
   page.on("pageerror", (error) => problems.push("page error: " + error.message));
   page.on("console", (message) => {
@@ -116,7 +116,7 @@ test("a finger drags the bar, and the box hears once, where it let go", async ()
   // A phone of its own: touch, and a narrow screen.
   const phone = await browser.newContext({ viewport: { width: 390, height: 844 },
                                            hasTouch: true, isMobile: true });
-  await phone.addInitScript((token) => localStorage.setItem("tinyppi.token", token), TOKEN);
+  await phone.addInitScript((token) => localStorage.setItem("baldpi.token", token), TOKEN);
   const handset = await phone.newPage();
   const errors = [];
   handset.on("pageerror", (error) => errors.push(error.message));
@@ -236,7 +236,7 @@ test("metadata and settings tabs open", async () => {
 test("the token travels in headers only; the stream reads with an HttpOnly session", async () => {
   assert.ok(addresses.some((address) => address.endsWith("/api/stream")));
   assert.deepEqual(addresses.filter((address) => /token=/i.test(address)), []);
-  const [session] = (await context.cookies(base + "api/state")).filter((cookie) => cookie.name === "tinyppi_session");
+  const [session] = (await context.cookies(base + "api/state")).filter((cookie) => cookie.name === "baldpi_session");
   assert.ok(session, "the session cookie is set");
   assert.equal(session.httpOnly, true);
   assert.equal(session.sameSite, "Strict");

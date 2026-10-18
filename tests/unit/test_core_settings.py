@@ -17,7 +17,7 @@ def values_file(monkeypatch, tmp_path):
     """The stored values file under a private special:// folder, not yet written."""
     monkeypatch.setattr(xbmcvfs, "HOME", str(tmp_path))
     monkeypatch.setattr(settings, "_current", settings._Handle())
-    path = tmp_path / "profile" / "addon_data" / "script.tinyppi" / "settings.xml"
+    path = tmp_path / "profile" / "addon_data" / "script.bald.processinfo" / "settings.xml"
     path.parent.mkdir(parents=True)
     return path
 
@@ -62,7 +62,7 @@ def test_a_values_file_outside_the_profile_is_ignored(values_file):
 
 def test_a_failing_addon_lookup_is_raised(values_file, monkeypatch):
     def unregistered():
-        raise RuntimeError("Unknown addon id 'script.tinyppi'.")
+        raise RuntimeError("Unknown addon id 'script.bald.processinfo'.")
     monkeypatch.setattr(xbmcaddon, "Addon", unregistered)
     with pytest.raises(RuntimeError, match="Unknown addon id"):
         settings.addon()

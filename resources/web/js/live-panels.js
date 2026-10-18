@@ -17,7 +17,7 @@
 
    A page opts in by putting <div id="live"></div> where the panels belong;
    the markup and the drawing are here, the styling is in live-panels.css.  It
-   then hands the snapshot on through TinyPPI.panels.update() and the localized
+   then hands the snapshot on through BaldPI.panels.update() and the localized
    strings through .strings().
 =========================================================================== */
 
@@ -131,16 +131,16 @@
 
   /* Made before the remote, which asks it whether a tap was on a dot.  The
      switch is the settings tab's, where the page has one. */
-  const chapters = TinyPPIChapters.create({
+  const chapters = BaldPIChapters.create({
     track: $("track"), dots: $("chapterDots"), now: $("chapterNow"),
     tip: $("chapterTip"), toggle: $("chapterMarks")
   });
-  const remote = TinyPPIRemote.create({
+  const remote = BaldPIRemote.create({
     nowCard: $("nowCard"), drawer: $("controlDrawer"), transport: $("transport"),
     tracks: $("tracks"), track: $("track"), bar: $("bar"), elapsed: $("tElapsed"),
     chapters
   }, pageState);
-  const uiIcon = TinyPPIRemote.icon;
+  const uiIcon = BaldPIRemote.icon;
 
   const el = {
     nowCard: $("nowCard"), badges: $("badges"), title: $("title"),
@@ -170,12 +170,12 @@
   let idleFetched = false;  /* the ended title's events, asked for once      */
   let idleReset = false;    /* the panels have been put away once already    */
 
-  TinyPPI.bindDisclosure(el.tiles, pageState + ".metrics", false);
+  BaldPI.bindDisclosure(el.tiles, pageState + ".metrics", false);
   /* The chart and the events arrive open: each is what a tab of its own is
      for now (the metadata tab and the history tab), and a tab that opens on a
      folded heading is a tab that has to be pressed twice. */
-  TinyPPI.bindDisclosure(el.chartCard, "metadata.l1", true);
-  TinyPPI.bindDisclosure(el.eventsCard, pageState + ".events", true);
+  BaldPI.bindDisclosure(el.chartCard, "metadata.l1", true);
+  BaldPI.bindDisclosure(el.eventsCard, pageState + ".events", true);
 
   /* --- what is playing -------------------------------------------------- */
 
@@ -266,7 +266,7 @@
   }
 
   function tint(url) {
-    if (window.TinyPPICover) TinyPPICover.show(el.nowCard, url, el.poster);
+    if (window.BaldPICover) BaldPICover.show(el.nowCard, url, el.poster);
   }
 
   /* A film with no poster is not an error; the frame just goes away, and the
@@ -293,7 +293,7 @@
 
   /* What the badges and the events say is worked out in js/readings.js. */
   const { pictureBadges, soundBadges, historySwitches, eventLabel, isTransition,
-          eventText, eventTrend } = TinyPPIReadings;
+          eventText, eventTrend } = BaldPIReadings;
 
   /* Rebuilt only when they say something else: they hold still for a whole
      film, and tearing a row down five times a second to put the same words
@@ -343,7 +343,7 @@
     el.vWarnings.textContent = String(totals.warnings || 0);
     const cacheKnown = metrics.cache !== null && metrics.cache !== undefined;
     el.vPlayerCache.textContent = cacheKnown
-      ? String(Math.round(metrics.cache)) : TinyPPI.T.na;
+      ? String(Math.round(metrics.cache)) : BaldPI.T.na;
     /* "N/A %" would read as a percentage of nothing: the unit goes with the
        figure. */
     el.vPlayerCache.nextElementSibling.textContent = cacheKnown ? "%" : "";
@@ -358,7 +358,7 @@
           : null);
     const known = fps !== null && Number.isFinite(fps);
     el.vFps.textContent = known
-      ? fps.toFixed(3).replace(/0+$/, "").replace(/[.]$/, "") : TinyPPI.T.na;
+      ? fps.toFixed(3).replace(/0+$/, "").replace(/[.]$/, "") : BaldPI.T.na;
     /* The arrow stays as it was until the rate moves again, so a glance at the
        tile says which way the last change went rather than only what the rate
        is now.  A reading that has gone away takes it with it: there is no
@@ -391,7 +391,7 @@
   function renderEvents(events) {
     if (!events || !events.length) {
       el.events.className = "events empty";
-      el.events.textContent = TinyPPI.T.events_empty;
+      el.events.textContent = BaldPI.T.events_empty;
       markMore();
       return;
     }
@@ -469,7 +469,7 @@
       button.className = "range";
       button.dataset.range = String(seconds);
       button.dataset.key = key;
-      button.textContent = TinyPPI.T[key] || key;
+      button.textContent = BaldPI.T[key] || key;
       button.addEventListener("click", () => {
         range = seconds;
         markRange();
@@ -503,7 +503,7 @@
     if (!force && now - pastAt < HISTORY_REFRESH) return;
     lastTry = now;
     fetching = true;
-    TinyPPI.getJSON("/api/history").then((data) => {
+    BaldPI.getJSON("/api/history").then((data) => {
       past = data;
       pastAt = Date.now();
       pastSeq = data.seq;
@@ -698,7 +698,7 @@
   /* The charts' colours come from the card they are drawn in, which the
      adaptive theme repaints from the poster.  A canvas cannot notice that on
      its own, so js/cover-tint.js says when it has happened. */
-  document.addEventListener("tinyppi-tint", () => drawCharts());
+  document.addEventListener("baldpi-tint", () => drawCharts());
 
   let resizeTimer = 0;
   window.addEventListener("resize", () => {
@@ -840,6 +840,6 @@
     chapters.relayout();
   }
 
-  window.TinyPPI.panels = { strings, update, events, peak, draw };
+  window.BaldPI.panels = { strings, update, events, peak, draw };
 
 })();

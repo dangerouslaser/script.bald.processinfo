@@ -39,7 +39,7 @@ def _has_no_modes(key: str, hdr10plus: bool = False) -> bool:
     """Return whether the source has no VS10 modes.
 
     HDR10+ and HLG are no VS10 inputs; *hdr10plus* covers DV + HDR10+
-    hybrids (from ``TinyPPI.Hdr10PlusPresent``), which read as DV.
+    hybrids (from ``BaldPI.Hdr10PlusPresent``), which read as DV.
     """
     return hdr10plus or _is_hdr10_plus(key) or "hlg" in key
 
@@ -110,7 +110,7 @@ class _ModeSwitcher:
                 return
             self._running = True
         try:
-            threading.Thread(target=self._work, name="TinyPPI-vs10",
+            threading.Thread(target=self._work, name="BaldPI-vs10",
                              daemon=True).start()
         except RuntimeError as exc:
             with self._lock:

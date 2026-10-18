@@ -63,7 +63,7 @@ async function loadSeries() {
      while it is out still stands afterwards. */
   seriesRead = true;
   try {
-    const answer = await TinyPPI.getJSON("/api/series");
+    const answer = await BaldPI.getJSON("/api/series");
     /* Nor built under an episode pressed while the box was answering: a
        shelf without the open show would close it under the press. */
     if (startingEpisode) {
@@ -244,7 +244,7 @@ async function openShowView(show) {
   if (episodesBusy || startingEpisode) return;
   episodesBusy = true;
   try {
-    const answer = await TinyPPI.getJSON(
+    const answer = await BaldPI.getJSON(
       "/api/episodes?tvshowid=" + encodeURIComponent(show.id));
     openShow = show;
     buildEpisodes(Array.isArray(answer.episodes) ? answer.episodes : []);
@@ -262,7 +262,7 @@ async function openShowView(show) {
        this was open -- reads the same as a box that cannot answer, and the
        shelf is read again either way. */
     seriesRead = false;
-    TinyPPI.toast(T.series_failed, true);
+    BaldPI.toast(T.series_failed, true);
   } finally {
     episodesBusy = false;
   }
@@ -298,7 +298,7 @@ async function refreshEpisodes() {
   }
   episodesBusy = true;
   try {
-    const answer = await TinyPPI.getJSON(
+    const answer = await BaldPI.getJSON(
       "/api/episodes?tvshowid=" + encodeURIComponent(show.id));
     /* Somebody may have left the show -- or opened another one -- while the
        box was answering, and what came back is then about a card that is no
@@ -516,23 +516,23 @@ async function startEpisode(episode, row, fromStart) {
   for (const node of el.episodeList.querySelectorAll(".episode")) {
     node.disabled = true;
   }
-  TinyPPI.toast(T.films_starting);
+  BaldPI.toast(T.films_starting);
 
   let failed = false;
   try {
     const response = await fetch("/api/play", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "X-TinyPPI-Token": TinyPPI.token },
+      headers: { "Content-Type": "application/json", "X-BaldPI-Token": BaldPI.token },
       body: JSON.stringify(fromStart ? { episodeid: episode.id, resume: false }
                                      : { episodeid: episode.id })
     });
     if (response.status === 401) {
       failed = true;
-      TinyPPI.toast(T.token_bad, true);
-      TinyPPI.askToken();
+      BaldPI.toast(T.token_bad, true);
+      BaldPI.askToken();
     } else if (!response.ok) {
       failed = true;
-      TinyPPI.toast(T.films_failed, true);
+      BaldPI.toast(T.films_failed, true);
     } else {
       /* What has been watched is about to move, on this episode and on the
          count its show's tile wears: the shelf is read again. */
@@ -541,7 +541,7 @@ async function startEpisode(episode, row, fromStart) {
     }
   } catch (_) {
     failed = true;
-    TinyPPI.toast(T.films_failed, true);
+    BaldPI.toast(T.films_failed, true);
   }
 
   if (failed) {

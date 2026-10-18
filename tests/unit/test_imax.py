@@ -206,4 +206,4 @@ def test_the_lists_are_the_bundled_one_and_the_users_copy():
     assert os.path.isfile(bundled)
     assert bundled.endswith(os.path.join("resources", "data", imax._TITLE_FILE))
     assert personal == os.path.join(
-        xbmcvfs.translatePath("special://profile/addon_data/script.tinyppi/"), imax._TITLE_FILE)
+        xbmcvfs.translatePath("special://profile/addon_data/script.bald.processinfo/"), imax._TITLE_FILE)

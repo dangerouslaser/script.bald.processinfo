@@ -81,8 +81,8 @@ def test_the_selected_layout_and_unknown_values():
     assert layout.dialog_mode() == int(xbmcaddon.DEFAULTS["dialog_mode"])
     xbmcaddon.SETTINGS["dialog_mode"] = str(layout.MODE_BAR)
     assert layout.dialog_mode() == layout.MODE_BAR
-    assert layout.xml_file() == "script-tinyppi-dialog-bar.xml"
-    assert layout.xml_file(layout.MODE_DIALOG) == "script-tinyppi-dialog.xml"
+    assert layout.xml_file() == "script-baldpi-dialog-bar.xml"
+    assert layout.xml_file(layout.MODE_DIALOG) == "script-baldpi-dialog.xml"
     xbmcaddon.SETTINGS["dialog_mode"] = "7"            # from a newer version
     assert layout.dialog_mode() == layout.MODE_SINGLE
     xbmcaddon.SETTINGS["dialog_mode"] = "x"

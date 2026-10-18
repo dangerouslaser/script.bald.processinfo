@@ -1,5 +1,5 @@
 {
-  "name": "script.tinyppi-dev",
+  "name": "script.bald.processinfo-dev",
   "private": true,
   "description": "Development tooling only (lint and tests for the dashboard's scripts); not part of the add-on.",
   "license": "AGPL-3.0-or-later",

@@ -57,7 +57,7 @@ async function loadContinue() {
      while it is out still stands afterwards. */
   continueRead = true;
   try {
-    const answer = await TinyPPI.getJSON("/api/continue");
+    const answer = await BaldPI.getJSON("/api/continue");
     /* Nor built under a tile pressed while the box was answering. */
     if (resuming) {
       continueRead = false;
@@ -190,7 +190,7 @@ async function startContinue(item, tile, fromStart) {
   resuming = item.id;
   tile.classList.add("busy");
   for (const node of continueTiles()) node.disabled = true;
-  TinyPPI.toast(T.films_starting);
+  BaldPI.toast(T.films_starting);
 
   const body = item.kind === "episode"
     ? { episodeid: item.id } : { movieid: item.id };
@@ -199,16 +199,16 @@ async function startContinue(item, tile, fromStart) {
   try {
     const response = await fetch("/api/play", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "X-TinyPPI-Token": TinyPPI.token },
+      headers: { "Content-Type": "application/json", "X-BaldPI-Token": BaldPI.token },
       body: JSON.stringify(body)
     });
     if (response.status === 401) {
       failed = true;
-      TinyPPI.toast(T.token_bad, true);
-      TinyPPI.askToken();
+      BaldPI.toast(T.token_bad, true);
+      BaldPI.askToken();
     } else if (!response.ok) {
       failed = true;
-      TinyPPI.toast(T.films_failed, true);
+      BaldPI.toast(T.films_failed, true);
     } else {
       /* What was last played has just changed, on the row and on the shelf
          the title came off. */
@@ -218,7 +218,7 @@ async function startContinue(item, tile, fromStart) {
     }
   } catch (_) {
     failed = true;
-    TinyPPI.toast(T.films_failed, true);
+    BaldPI.toast(T.films_failed, true);
   }
 
   if (failed) {

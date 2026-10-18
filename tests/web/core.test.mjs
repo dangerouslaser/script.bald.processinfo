@@ -80,7 +80,7 @@ const plain = (value) => JSON.parse(JSON.stringify(value));
 async function booted(options = {}) {
   const states = [];
   const view = page({ routes: { "/api/hello": [200, { strings: {} }] }, ...options });
-  await view.window.TinyPPI.boot({ onState: (state) => states.push(state) });
+  await view.window.BaldPI.boot({ onState: (state) => states.push(state) });
   return { ...view, states, stream: view.streams.at(-1) };
 }
 
@@ -149,7 +149,7 @@ test("deltas build on each other", async () => {
 test("a delta before any snapshot asks for a whole one", async () => {
   const states = [];
   const view = page({ routes: { "/api/hello": [200, {}], "/api/state": [200, BASE] } });
-  await view.window.TinyPPI.boot({ onState: (state) => states.push(state) });
+  await view.window.BaldPI.boot({ onState: (state) => states.push(state) });
   view.streams.at(-1).emit("delta", { seq: 5, set: { time: "x" } });
   await settle();
   assert.deepEqual(plain(states), [BASE]);
@@ -159,7 +159,7 @@ test("a delta before any snapshot asks for a whole one", async () => {
 test("a bad frame is skipped and a throwing page does not end the stream", async () => {
   const view = page({ routes: { "/api/hello": [200, {}] } });
   let calls = 0;
-  await view.window.TinyPPI.boot({ onState: () => { calls += 1; throw new Error("page bug"); } });
+  await view.window.BaldPI.boot({ onState: () => { calls += 1; throw new Error("page bug"); } });
   const stream = view.streams.at(-1);
   stream.emit("state", "{not json");
   stream.emit("state", BASE);
@@ -172,16 +172,16 @@ test("the token buys a session before the stream and never travels in an address
   const { stream, requests, window } = await booted({ token: "AB CD" });
   const [session] = requests.filter((request) => request.url === "/api/session");
   assert.equal(session.init.method, "POST");
-  assert.equal(session.init.headers["X-TinyPPI-Token"], "AB CD");
+  assert.equal(session.init.headers["X-BaldPI-Token"], "AB CD");
   assert.equal(requests.indexOf(session), 0, "bought before anything else is asked");
   assert.equal(stream.url, "/api/stream");
-  assert.equal(window.TinyPPI.withToken, undefined);
+  assert.equal(window.BaldPI.withToken, undefined);
   assert.equal(requests.some((request) => request.url.includes("token=")), false);
 });
 
 test("without a token the stream opens at once, and no session is bought", async () => {
   const view = page({ routes: { "/api/hello": [200, {}] } });
-  const booting = view.window.TinyPPI.boot({});
+  const booting = view.window.BaldPI.boot({});
   assert.equal(view.streams.length, 1);
   await booting;
   assert.equal(view.requests.some((request) => request.url === "/api/session"), false);
@@ -195,7 +195,7 @@ test("a session the add-on refuses, or a network that fails it, still opens the 
       view.window.fetch = (url, init) =>
         url === "/api/session" ? Promise.reject(new Error("offline")) : fetch(url, init);
     }
-    await view.window.TinyPPI.boot({});
+    await view.window.BaldPI.boot({});
     await settle();
     assert.equal(view.streams.length, 1, answer);
   }
@@ -209,7 +209,7 @@ test("a connect overtaken while its session is bought opens no stream", async ()
   window.fetch = (url, init) => url === "/api/session"
     ? new Promise((resolve) => { release = () => resolve(fetch(url, init)); })
     : fetch(url, init);
-  window.TinyPPI.boot({});
+  window.BaldPI.boot({});
   setHidden(window, true);
   window.document.dispatchEvent(new window.Event("visibilitychange"));
   release();
@@ -220,7 +220,7 @@ test("a connect overtaken while its session is bought opens no stream", async ()
 
 test("a closed stream that wants a token opens the token dialog", async () => {
   const view = page({ routes: { "/api/hello": [200, {}], "/api/state": [401, {}] } });
-  await view.window.TinyPPI.boot({});
+  await view.window.BaldPI.boot({});
   await closeStream(view);
   assert.equal(view.window.document.getElementById("status").dataset.state, "down");
   assert.equal(view.window.document.getElementById("tokenDialog").open, true);
@@ -228,7 +228,7 @@ test("a closed stream that wants a token opens the token dialog", async () => {
 
 test("bye closes the stream, stays away as long as asked, then backs off afresh", async () => {
   const view = page({ routes: { "/api/hello": [200, {}], "/api/state": [502, {}] } });
-  await view.window.TinyPPI.boot({});
+  await view.window.BaldPI.boot({});
   const timers = fakeTimers(view.window);
   // Two missed attempts first, so the next wait would have grown to 4 s.
   for (let attempt = 0; attempt < 2; attempt++) { await closeStream(view); timers.run(); }
@@ -258,24 +258,24 @@ test("bye closes the stream, stays away as long as asked, then backs off afresh"
 test("hello's strings and auth_read reach the page", async () => {
   const view = page({ routes: { "/api/hello": [200, { strings: { connected: "Verbunden" }, auth_read: true }] } });
   const seen = [];
-  await view.window.TinyPPI.boot({ onStrings: (T, hello) => seen.push([T.connected, !!hello]) });
+  await view.window.BaldPI.boot({ onStrings: (T, hello) => seen.push([T.connected, !!hello]) });
   assert.deepEqual(seen, [["Connected", false], ["Verbunden", true]]);
   assert.equal(view.window.document.getElementById("tokenDialog").open, true);
 });
 
 test("commands carry the token in a header and report the outcome", async () => {
   const view = page({ routes: { "/api/command": [200, {}] }, token: "T0K3N" });
-  assert.equal(await view.window.TinyPPI.command("pause"), true);
+  assert.equal(await view.window.BaldPI.command("pause"), true);
   const { init } = view.requests.at(-1);
-  assert.equal(init.headers["X-TinyPPI-Token"], "T0K3N");
+  assert.equal(init.headers["X-BaldPI-Token"], "T0K3N");
   assert.deepEqual(JSON.parse(init.body), { action: "pause" });
   const refused = page({ routes: { "/api/command": [401, {}] } });
-  assert.equal(await refused.window.TinyPPI.command("stop"), false);
+  assert.equal(await refused.window.BaldPI.command("stop"), false);
 });
 
 test("fmtNits keeps the reading's precision sensible", () => {
   const { window } = page();
-  const { fmtNits } = window.TinyPPI;
+  const { fmtNits } = window.BaldPI;
   assert.equal(fmtNits(null), "N/A");
   assert.equal(fmtNits(4000), (4000).toLocaleString());
   assert.equal(fmtNits(203.4), "203");
@@ -287,7 +287,7 @@ test("fmtNits keeps the reading's precision sensible", () => {
 
 test("presence markers become words in reports and images on screen", () => {
   const { window } = page();
-  const { plainValue, renderValue, reportLine } = window.TinyPPI;
+  const { plainValue, renderValue, reportLine } = window.BaldPI;
   assert.equal(plainValue("✔ | ✘"), "Yes | No");
   assert.equal(plainValue(null), "");
   const node = window.document.createElement("span");
@@ -301,12 +301,12 @@ test("presence markers become words in reports and images on screen", () => {
 
 test("folded cards are remembered, but not the default", () => {
   const { window } = page();
-  const { bindDisclosure, disclosureState } = window.TinyPPI;
+  const { bindDisclosure, disclosureState } = window.BaldPI;
   const card = window.document.createElement("details");
   bindDisclosure(card, "video", true);
   assert.equal(card.open, true);
   card.dispatchEvent(new window.Event("toggle"));       // the restoring toggle
-  assert.equal(window.localStorage.getItem("tinyppi.disclosure.video"), null);
+  assert.equal(window.localStorage.getItem("baldpi.disclosure.video"), null);
   card.open = false;
   card.dispatchEvent(new window.Event("toggle"));
   assert.equal(disclosureState("video", true), false);
@@ -314,24 +314,24 @@ test("folded cards are remembered, but not the default", () => {
 
 test("an open card is written as 1, and a retired key is forgotten", () => {
   const { window } = page();
-  const { setDisclosureState, disclosureState, forgetDisclosure } = window.TinyPPI;
+  const { setDisclosureState, disclosureState, forgetDisclosure } = window.BaldPI;
   setDisclosureState("audio", true);
-  assert.equal(window.localStorage.getItem("tinyppi.disclosure.audio"), "1");
+  assert.equal(window.localStorage.getItem("baldpi.disclosure.audio"), "1");
   assert.equal(disclosureState("audio", false), true);
   forgetDisclosure("audio");
-  assert.equal(window.localStorage.getItem("tinyppi.disclosure.audio"), null);
+  assert.equal(window.localStorage.getItem("baldpi.disclosure.audio"), null);
   assert.equal(disclosureState("audio", false), false);
 });
 
 test("a fold flashes the card's own heading, every time it is moved", async () => {
   const { window } = page();
   const { document } = window;
-  window.localStorage.setItem("tinyppi.disclosure.video", "1");
+  window.localStorage.setItem("baldpi.disclosure.video", "1");
   const card = document.createElement("details");
   card.innerHTML = '<summary class="panel-toggle">Video</summary>' +
                    '<div><span class="panel-toggle"></span></div>';
   document.body.append(card);
-  window.TinyPPI.bindDisclosure(card, "video", false);
+  window.BaldPI.bindDisclosure(card, "video", false);
   assert.equal(card.open, true);                       // restored from storage
   await settle();                                      // jsdom's own restoring toggle
   const heading = card.querySelector(":scope > .panel-toggle");
@@ -339,7 +339,7 @@ test("a fold flashes the card's own heading, every time it is moved", async () =
 
   card.open = false;
   await settle();
-  assert.equal(window.localStorage.getItem("tinyppi.disclosure.video"), "0");
+  assert.equal(window.localStorage.getItem("baldpi.disclosure.video"), "0");
   assert.equal(heading.classList.contains("flash"), true);
   assert.equal(heading.dataset.flashbound, "1");
   heading.dispatchEvent(new window.Event("animationend"));
@@ -347,7 +347,7 @@ test("a fold flashes the card's own heading, every time it is moved", async () =
 
   card.open = true;
   await settle();
-  assert.equal(window.localStorage.getItem("tinyppi.disclosure.video"), "1");
+  assert.equal(window.localStorage.getItem("baldpi.disclosure.video"), "1");
   assert.equal(heading.classList.contains("flash"), true);
   // Only the card's own heading wears the mark.
   assert.equal(card.querySelector("div > .panel-toggle").classList.contains("flash"), false);
@@ -360,7 +360,7 @@ test("blocked storage: defaults stand in and the token lasts as long as the tab"
     configurable: true, get() { throw new window.DOMException("blocked", "SecurityError"); }
   });
   load(view.dom, "core.js");
-  const T = window.TinyPPI;
+  const T = window.BaldPI;
   assert.equal(T.token, "");
   assert.equal(T.disclosureState("video", true), true);
   assert.equal(T.disclosureState("video", false), false);
@@ -372,7 +372,7 @@ test("blocked storage: defaults stand in and the token lasts as long as the tab"
   answer(window, "ok");
   assert.equal(T.token, "ABC123");
   await settle();
-  assert.equal(view.requests.at(-1).init.headers["X-TinyPPI-Token"], "ABC123");
+  assert.equal(view.requests.at(-1).init.headers["X-BaldPI-Token"], "ABC123");
   assert.equal(view.streams.at(-1).url, "/api/stream");
 });
 
@@ -380,14 +380,14 @@ test("the token dialog's answer becomes the token and reconnects with it", async
   const view = page({ routes: { "/api/hello": [200, {
     strings: { token_title: "Zugangsschlüssel", save: "Speichern", cancel: "Abbrechen" } }] } });
   const { window, streams } = view;
-  await window.TinyPPI.boot({});
+  await window.BaldPI.boot({});
   const { document } = window;
   assert.equal(document.getElementById("dlgTitle").textContent, "Zugangsschlüssel");
   assert.equal(document.getElementById("dlgOk").textContent, "Speichern");
   assert.equal(document.getElementById("dlgCancel").textContent, "Abbrechen");
 
   const announced = [];
-  document.addEventListener("tinyppi-token", () => announced.push(window.TinyPPI.token));
+  document.addEventListener("baldpi-token", () => announced.push(window.BaldPI.token));
   const first = streams.at(-1);
   document.getElementById("tokenBtn").click();          // the key on the settings tab
   const input = document.getElementById("tokenInput");
@@ -396,18 +396,18 @@ test("the token dialog's answer becomes the token and reconnects with it", async
   input.value = "  ab12cd ";
   answer(window, "ok");
 
-  assert.equal(window.TinyPPI.token, "AB12CD");
-  assert.equal(window.localStorage.getItem("tinyppi.token"), "AB12CD");
+  assert.equal(window.BaldPI.token, "AB12CD");
+  assert.equal(window.localStorage.getItem("baldpi.token"), "AB12CD");
   assert.deepEqual(announced, ["AB12CD"]);
   assert.equal(first.closed, true);
   await settle();
   const session = view.requests.filter((request) => request.url === "/api/session").at(-1);
-  assert.equal(session.init.headers["X-TinyPPI-Token"], "AB12CD");
+  assert.equal(session.init.headers["X-BaldPI-Token"], "AB12CD");
   assert.equal(streams.at(-1).url, "/api/stream");
   assert.notEqual(streams.at(-1), first);
 
   // Asked again, it opens on the token the device holds.
-  window.TinyPPI.askToken();
+  window.BaldPI.askToken();
   assert.equal(input.value, "AB12CD");
 });
 
@@ -426,10 +426,10 @@ test("a dismissed dialog tries again later, but only with nothing connected", as
 
 test("before boot there is no light, toast or dialog to touch", () => {
   const { window } = page();
-  const { TinyPPI } = window;
-  TinyPPI.setStatus("live", "Connected");
-  TinyPPI.toast("Hello");
-  TinyPPI.askToken();
+  const { BaldPI } = window;
+  BaldPI.setStatus("live", "Connected");
+  BaldPI.toast("Hello");
+  BaldPI.askToken();
   assert.deepEqual(statusOf(window), ["wait", "…"]);
   assert.equal(window.document.getElementById("toast"), null);
   assert.equal(window.document.getElementById("tokenDialog"), null);
@@ -439,10 +439,10 @@ test("a toast shows, says when it is bad, and leaves after a while", async () =>
   const { window } = await booted();
   const timers = fakeTimers(window);
   const toast = window.document.getElementById("toast");
-  window.TinyPPI.toast("Saved");
+  window.BaldPI.toast("Saved");
   assert.equal(toast.textContent, "Saved");
   assert.deepEqual([toast.classList.contains("show"), toast.classList.contains("bad")], [true, false]);
-  window.TinyPPI.toast("Refused", true);
+  window.BaldPI.toast("Refused", true);
   assert.equal(toast.textContent, "Refused");
   assert.equal(toast.classList.contains("bad"), true);
   assert.deepEqual(timers.delays(), [2600]);             // the first one's timer is dropped
@@ -453,12 +453,12 @@ test("a toast shows, says when it is bad, and leaves after a while", async () =>
 test("the status light is only rewritten when it has moved", async () => {
   const { window } = await booted();
   const status = window.document.getElementById("status");
-  window.TinyPPI.setStatus("live", "Connected");
+  window.BaldPI.setStatus("live", "Connected");
   const watcher = new window.MutationObserver(() => {});
   watcher.observe(status, { attributes: true, childList: true, subtree: true, characterData: true });
-  window.TinyPPI.setStatus("live", "Connected");
+  window.BaldPI.setStatus("live", "Connected");
   assert.equal(watcher.takeRecords().length, 0);
-  window.TinyPPI.setStatus("live", "Verbunden");
+  window.BaldPI.setStatus("live", "Verbunden");
   assert.ok(watcher.takeRecords().length > 0);
   assert.equal(status.title, "Verbunden");
   watcher.disconnect();
@@ -466,7 +466,7 @@ test("the status light is only rewritten when it has moved", async () => {
 
 test("a cross is an image too, and the words fall back to English", () => {
   const { window } = page();
-  const { T, renderValue, plainValue } = window.TinyPPI;
+  const { T, renderValue, plainValue } = window.BaldPI;
   const node = window.document.createElement("span");
   renderValue(node, "Dolby Vision ✘");
   const image = node.querySelector("img");
@@ -502,7 +502,7 @@ test("a page out of sight lets its stream go and takes it up again when seen", a
 test("a page booted out of sight opens nothing until it is seen", async () => {
   const { window, streams } = page({ routes: { "/api/hello": [200, {}] } });
   setHidden(window, true);
-  await window.TinyPPI.boot();                           // no options at all
+  await window.BaldPI.boot();                           // no options at all
   assert.equal(streams.length, 0);
   window.dispatchEvent(new window.Event("pageshow"));
   assert.equal(streams.length, 0);
@@ -524,7 +524,7 @@ test("leaving the page closes the stream, coming back from the cache reopens it 
 
 test("a page that takes no snapshots still shows the connection live", async () => {
   const view = page({ routes: { "/api/hello": [200, {}] } });
-  await view.window.TinyPPI.boot({});
+  await view.window.BaldPI.boot({});
   const stream = view.streams.at(-1);
   stream.emit("delta", "{not json");
   assert.equal(view.requests.some((request) => request.url.startsWith("/api/state")), false);
@@ -555,7 +555,7 @@ test("row patches leave cards without rows alone, and empty patches change nothi
 test("a whole snapshot that cannot be had after a stray delta is left to the stream", async () => {
   const states = [];
   const view = page({ routes: { "/api/hello": [200, {}], "/api/state": [500, {}] } });
-  await view.window.TinyPPI.boot({ onState: (state) => states.push(state) });
+  await view.window.BaldPI.boot({ onState: (state) => states.push(state) });
   view.streams.at(-1).emit("delta", { seq: 5, set: { time: "x" } });
   await settle();
   assert.deepEqual(states, []);
@@ -573,11 +573,11 @@ test("an error on a stream that is only reconnecting asks the add-on nothing", a
 
 test("a token the add-on turns down is said so, and asked for again", async () => {
   const view = page({ routes: { "/api/hello": [200, {}], "/api/state": [401, {}] }, token: "OLD1" });
-  await view.window.TinyPPI.boot({});
+  await view.window.BaldPI.boot({});
   await closeStream(view);
   const { document } = view.window;
   assert.equal(view.requests.at(-1).url, "/api/state");
-  assert.equal(view.requests.at(-1).init.headers["X-TinyPPI-Token"], "OLD1");
+  assert.equal(view.requests.at(-1).init.headers["X-BaldPI-Token"], "OLD1");
   assert.deepEqual(statusOf(view.window), ["down", "Wrong or missing token"]);
   assert.equal(document.getElementById("toast").textContent, "Wrong or missing token");
   assert.equal(document.getElementById("toast").classList.contains("bad"), true);
@@ -588,7 +588,7 @@ test("a token the add-on turns down is said so, and asked for again", async () =
 test("after too many wrong tokens the page waits as long as it is told", async () => {
   for (const [body, delay] of [[{ retry_ms: 90000 }, 90000], [{ retry_ms: 10 }, 5000], [null, 5000]]) {
     const view = page({ routes: { "/api/hello": [200, {}], "/api/state": [429, body] } });
-    await view.window.TinyPPI.boot({});
+    await view.window.BaldPI.boot({});
     const timers = fakeTimers(view.window);
     await closeStream(view);
     assert.deepEqual(statusOf(view.window), ["down", "Wrong or missing token"]);
@@ -600,7 +600,7 @@ test("after too many wrong tokens the page waits as long as it is told", async (
 
 test("a refusal whose answer cannot be read waits a whole minute", async () => {
   const view = page({ routes: { "/api/hello": [200, {}] } });
-  await view.window.TinyPPI.boot({});
+  await view.window.BaldPI.boot({});
   const timers = fakeTimers(view.window);
   view.window.fetch = async () => ({ status: 429, ok: false, json: async () => { throw new SyntaxError("cut off"); } });
   await closeStream(view);
@@ -609,7 +609,7 @@ test("a refusal whose answer cannot be read waits a whole minute", async () => {
 
 test("a full house of streams is waited out for a moment", async () => {
   const view = page({ routes: { "/api/hello": [200, {}], "/api/state": [503, { streams_full: true }] } });
-  await view.window.TinyPPI.boot({});
+  await view.window.BaldPI.boot({});
   const timers = fakeTimers(view.window);
   await closeStream(view);
   assert.deepEqual(statusOf(view.window), ["wait", "Too many connections"]);
@@ -618,7 +618,7 @@ test("a full house of streams is waited out for a moment", async () => {
 
 test("an add-on that is not there is retried ever more slowly, and afresh once it answers", async () => {
   const view = page({ routes: { "/api/hello": [200, {}], "/api/state": [502, {}] } });
-  await view.window.TinyPPI.boot({});
+  await view.window.BaldPI.boot({});
   const timers = fakeTimers(view.window);
   const waits = [];
   for (let attempt = 0; attempt < 6; attempt++) {
@@ -642,13 +642,13 @@ test("an add-on that is not there is retried ever more slowly, and afresh once i
 test("copying a report: nothing to copy, the clipboard, or a named file", async () => {
   const { window } = await booted();
   const { document } = window;
-  assert.equal(window.TinyPPI.copyReport("", "Film", "live"), undefined);
+  assert.equal(window.BaldPI.copyReport("", "Film", "live"), undefined);
 
   const written = [];
   Object.defineProperty(window.navigator, "clipboard", {
     configurable: true, value: { writeText: async (text) => { written.push(text); } }
   });
-  await window.TinyPPI.copyReport("Report", "Film", "live");
+  await window.BaldPI.copyReport("Report", "Film", "live");
   assert.deepEqual(written, ["Report"]);
   assert.equal(document.getElementById("toast").textContent, "Copied");
 
@@ -665,13 +665,13 @@ test("copying a report: nothing to copy, the clipboard, or a named file", async 
     event.preventDefault();
   });
   const timers = fakeTimers(window);
-  await window.TinyPPI.copyReport("Line one\n", 'The "Film": Part 2?', "live");
-  await window.TinyPPI.copyReport("x", "", "metadata");
-  await window.TinyPPI.copyReport("x", " ..A  /  B.. ");
+  await window.BaldPI.copyReport("Line one\n", 'The "Film": Part 2?', "live");
+  await window.BaldPI.copyReport("x", "", "metadata");
+  await window.BaldPI.copyReport("x", " ..A  /  B.. ");
   assert.deepEqual(clicks, [
-    { name: "TinyPPI_The_Film_Part_2_live.txt", href: "blob:report-1", attached: true, hidden: "none" },
-    { name: "TinyPPI_metadata.txt", href: "blob:report-2", attached: true, hidden: "none" },
-    { name: "TinyPPI_A_B.txt", href: "blob:report-3", attached: true, hidden: "none" }]);
+    { name: "BaldPI_The_Film_Part_2_live.txt", href: "blob:report-1", attached: true, hidden: "none" },
+    { name: "BaldPI_metadata.txt", href: "blob:report-2", attached: true, hidden: "none" },
+    { name: "BaldPI_A_B.txt", href: "blob:report-3", attached: true, hidden: "none" }]);
   assert.equal(blobs[0].type, "text/plain");
   assert.equal(await blobs[0].text(), "Line one\n");
   assert.equal(document.querySelectorAll("a[download]").length, 3);
@@ -684,7 +684,7 @@ test("copying a report: nothing to copy, the clipboard, or a named file", async 
 test("an unreadable hello leaves the page on its English", async () => {
   const view = page({ routes: { "/api/hello": [200, null] } });
   const seen = [];
-  await view.window.TinyPPI.boot({ onStrings: (T, hello) => seen.push([T.connected, hello]) });
+  await view.window.BaldPI.boot({ onStrings: (T, hello) => seen.push([T.connected, hello]) });
   assert.deepEqual(seen, [["Connected", undefined]]);
   assert.equal(view.streams.length, 1);
 });
@@ -694,7 +694,7 @@ test("every word the add-on sends has an English stand-in until it does", () => 
   const sent = [...table.match(/_UI_STRINGS = \{([^}]*)\}/)[1].matchAll(/"(\w+)":/g)]
     .map((found) => found[1]);
   assert.ok(sent.length > 90);
-  const { T } = page().window.TinyPPI;
+  const { T } = page().window.BaldPI;
   /* Bar the end time's label, which the live panels leave off until Kodi's
      own word for it arrives rather than put an English one in front of a
      clock already in the box's regional format. */
@@ -705,36 +705,36 @@ test("an error answer from hello is no hello, whatever its body says", async () 
   const view = page({ routes: { "/api/hello": [500, {
     error: "boom", strings: { connected: "Verbunden" }, auth_read: true }] } });
   const seen = [];
-  await view.window.TinyPPI.boot({ onStrings: (T, hello) => seen.push([T.connected, hello]) });
+  await view.window.BaldPI.boot({ onStrings: (T, hello) => seen.push([T.connected, hello]) });
   assert.deepEqual(seen, [["Connected", undefined]]);
-  assert.equal(view.window.TinyPPI.T.connected, "Connected");
+  assert.equal(view.window.BaldPI.T.connected, "Connected");
   assert.equal(view.window.document.getElementById("tokenDialog").open, false);
 });
 
 test("a page that already holds a token is not asked for one", async () => {
   const view = page({ routes: { "/api/hello": [200, { auth_read: true }] }, token: "HELD" });
-  await view.window.TinyPPI.boot({});
-  assert.equal(view.window.TinyPPI.token, "HELD");
+  await view.window.BaldPI.boot({});
+  assert.equal(view.window.BaldPI.token, "HELD");
   assert.equal(view.window.document.getElementById("tokenDialog").open, false);
 });
 
 test("a command that cannot reach the add-on fails, a refused one asks for the token", async () => {
   const view = page({ routes: { "/api/hello": [200, {}], "/api/command": [401, {}] } });
-  await view.window.TinyPPI.boot({});
-  assert.equal(await view.window.TinyPPI.command("volume", 40), false);
+  await view.window.BaldPI.boot({});
+  assert.equal(await view.window.BaldPI.command("volume", 40), false);
   assert.deepEqual(JSON.parse(view.requests.at(-1).init.body), { action: "volume", value: 40 });
   assert.equal(view.requests.at(-1).init.method, "POST");
   assert.equal(view.window.document.getElementById("tokenDialog").open, true);
   assert.equal(view.window.document.getElementById("toast").textContent, "Wrong or missing token");
   view.window.fetch = async () => { throw new TypeError("offline"); };
-  assert.equal(await view.window.TinyPPI.command("stop"), false);
+  assert.equal(await view.window.BaldPI.command("stop"), false);
 });
 
 test("getJSON carries the token and turns a failed answer into an error", async () => {
   const view = page({ routes: { "/api/library/films": [200, { films: [] }], "/api/library/series": [503, {}] },
                       token: "K3Y" });
-  assert.deepEqual(plain(await view.window.TinyPPI.getJSON("/api/library/films")), { films: [] });
+  assert.deepEqual(plain(await view.window.BaldPI.getJSON("/api/library/films")), { films: [] });
   assert.equal(view.requests.at(-1).url, "/api/library/films");
-  assert.equal(view.requests.at(-1).init.headers["X-TinyPPI-Token"], "K3Y");
-  await assert.rejects(view.window.TinyPPI.getJSON("/api/library/series"), /503/);
+  assert.equal(view.requests.at(-1).init.headers["X-BaldPI-Token"], "K3Y");
+  await assert.rejects(view.window.BaldPI.getJSON("/api/library/series"), /503/);
 });

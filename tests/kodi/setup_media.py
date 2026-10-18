@@ -39,7 +39,7 @@ def clips():
     os.makedirs(SRC, exist_ok=True)
     subs = os.path.join(SRC, "subs.srt")
     with open(subs, "w", encoding="utf-8") as handle:
-        handle.write("1\n00:00:01,000 --> 00:00:05,000\nTinyPPI subtitle test\n\n"
+        handle.write("1\n00:00:01,000 --> 00:00:05,000\nBaldPI subtitle test\n\n"
                      "2\n00:00:10,000 --> 00:00:20,000\nSecond subtitle line\n")
     chapters = os.path.join(SRC, "chapters.txt")
     with open(chapters, "w", encoding="utf-8") as handle:

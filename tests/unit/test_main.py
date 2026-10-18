@@ -36,7 +36,7 @@ def main(monkeypatch):
 def opened(monkeypatch):
     """Record every view and command launcher.main() can start, instead of starting it."""
     seen = []
-    monkeypatch.setattr(overlay, "open_tinyppi", lambda: seen.append("overlay"))
+    monkeypatch.setattr(overlay, "open_baldpi", lambda: seen.append("overlay"))
     monkeypatch.setattr(overlay, "open_dialog_mode", lambda: seen.append("dialog"))
     monkeypatch.setattr(splash, "open_splash", lambda: seen.append("splash"))
     monkeypatch.setattr(vs10, "set_mode", lambda mode: seen.append(("run_mode", mode)))
@@ -99,7 +99,7 @@ def test_a_running_service_that_acknowledges_takes_the_view(service, view, messa
     service.after = 3
     assert launcher._hand_to_service(view) is True
     [builtin] = xbmc.BUILTINS
-    assert builtin == f"NotifyAll(script.tinyppi,{message})"
+    assert builtin == f"NotifyAll(script.bald.processinfo,{message})"
     request = home().getProperty(PROP_OPEN_REQUEST)
     assert request.startswith(f"{view}:{os.getpid()}:")
     assert home().getProperty(PROP_OPEN_ACK) == request
@@ -113,7 +113,7 @@ def test_an_earlier_acknowledgement_is_cleared_before_the_service_is_asked(servi
         (command, home().getProperty(PROP_OPEN_ACK), home().getProperty(PROP_OPEN_REQUEST))))
     assert launcher._hand_to_service("overlay") is True
     [(command, ack, request)] = asked
-    assert command == "NotifyAll(script.tinyppi,open_overlay)"
+    assert command == "NotifyAll(script.bald.processinfo,open_overlay)"
     assert ack == "" and request.startswith("overlay:")
 
 
@@ -122,7 +122,7 @@ def test_a_silent_service_has_the_request_withdrawn(service):
     assert launcher._hand_to_service("overlay") is False
     assert sum(service.naps) == launcher._ACK_TIMEOUT_MS
     assert home().getProperty(PROP_OPEN_REQUEST) == OPEN_WITHDRAWN
-    assert (xbmc.LOGWARNING, "TinyPPI: the service did not answer – opening in this script instead") in xbmc.LOG
+    assert (xbmc.LOGWARNING, "BaldPI: the service did not answer – opening in this script instead") in xbmc.LOG
 
 
 @pytest.mark.parametrize(("running", "view"), [("", "overlay"), ("0", "dialog"), ("1", "splash")])

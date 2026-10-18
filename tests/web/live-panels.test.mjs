@@ -80,7 +80,7 @@ function panels(t, { routes = {}, token = "" } = {}) {
     .map((request) => JSON.parse(request.init.body));
   const fetched = (path) => view.requests
     .filter((request) => request.url.replace(/\?.*$/, "") === path);
-  return { ...view, $, clock, commands, fetched, P: window.TinyPPI.panels };
+  return { ...view, $, clock, commands, fetched, P: window.BaldPI.panels };
 }
 
 /* jsdom lays nothing out and has no canvas: the chart's box is given a size
@@ -140,7 +140,7 @@ const texts = (nodes) => [...nodes].map((node) => node.textContent);
 
 test("a page without a live mount point gets no panels", () => {
   const window = bare(...SCRIPTS);
-  assert.equal(window.TinyPPI.panels, undefined);
+  assert.equal(window.BaldPI.panels, undefined);
   window.close();
 });
 
@@ -200,7 +200,7 @@ test("the finish clock shows as it arrived and takes its label from the strings"
   assert.equal($("tFinishLabel").textContent, "");
   assert.equal($("tFinishTime").textContent, "23:40");
 
-  P.strings({ ...window.TinyPPI.T, ends_at: "Ends at" });
+  P.strings({ ...window.BaldPI.T, ends_at: "Ends at" });
   assert.equal($("tFinishLabel").textContent, "Ends at ");
   assert.equal($("tFinishTime").textContent, "23:40");
 
@@ -209,7 +209,7 @@ test("the finish clock shows as it arrived and takes its label from the strings"
   assert.equal($("tFinishLabel").textContent, "");
 
   P.update(snap({ finish: "23:45" }));
-  P.strings({ ...window.TinyPPI.T });          // a table without the label
+  P.strings({ ...window.BaldPI.T });          // a table without the label
   assert.equal($("tFinishLabel").textContent, "");
   assert.equal($("tFinishTime").textContent, "23:45");
 });
@@ -222,7 +222,7 @@ test("the poster is fetched once per tag and handed to the cover tint", (t) => {
   assert.equal($("artBox").classList.contains("hidden"), false);
 
   const shown = [];
-  window.TinyPPICover = { show: (card, url, image) => shown.push([card.id, url, image && image.id]) };
+  window.BaldPICover = { show: (card, url, image) => shown.push([card.id, url, image && image.id]) };
   P.update(snap({ art: { poster: "p2" } }));
   P.update(snap({ art: { poster: "p2" } }));
   assert.deepEqual(shown, [["nowCard", "/api/art?kind=poster&v=p2", "poster"]]);
@@ -280,7 +280,7 @@ test("the remote is built once and every key sends its command with the token", 
   assert.deepEqual(commands().map((command) => command.value), [-600, -60, -10, 10, 60, 600]);
   assert.ok(commands().every((command) => command.action === "seek"));
   assert.equal(requests.at(-1).init.method, "POST");
-  assert.equal(requests.at(-1).init.headers["X-TinyPPI-Token"], "AB");
+  assert.equal(requests.at(-1).init.headers["X-BaldPI-Token"], "AB");
 
   const rest = [...$("transport").querySelectorAll(".tvol .tbtn")];
   assert.deepEqual(rest.map((node) => node.dataset.label),
@@ -328,7 +328,7 @@ test("the play and mute keys follow the player, the chapter keys need chapters",
 
 test("the controls drawer opens on its toggle and is remembered", (t) => {
   const { $, P, window } = panels(t);
-  const stored = () => window.localStorage.getItem("tinyppi.disclosure.dashboard.controls");
+  const stored = () => window.localStorage.getItem("baldpi.disclosure.dashboard.controls");
   P.update(snap({ control: true }));
   $("controlToggle").click();
   assert.ok($("controlDrawer").classList.contains("open"));
@@ -432,8 +432,8 @@ test("track pickers: audio when there is a choice, subtitles with an off switch"
   assert.equal($("pick-audio").value, "1");
 
   // New words are carried into the pickers on the next snapshot.
-  Object.assign(window.TinyPPI.T, { audio_track: "Tonspur", off: "Aus" });
-  P.strings(window.TinyPPI.T);
+  Object.assign(window.BaldPI.T, { audio_track: "Tonspur", off: "Aus" });
+  P.strings(window.BaldPI.T);
   const kept = $("pick-audio");
   P.update(snap({ control: true, controls: { audio, audio_current: 1, subtitle } }));
   assert.notEqual($("pick-audio"), kept);
@@ -584,16 +584,16 @@ test("a falling frame rate is marked down, on the page and in the report", async
 
 test("the strings name every panel, range and key", async (t) => {
   const { $, P, window } = panels(t);
-  delete window.TinyPPI.T.mute;
+  delete window.BaldPI.T.mute;
   P.update(snap({ control: true, session: { seq: 3 } }));
   await settle();
   const mute = $("transport").querySelector(".mute");
   assert.equal(mute.hasAttribute("aria-label"), false, "a key with no name is left unnamed");
 
-  window.TinyPPI.T.stop = "Stopp";
-  window.TinyPPI.T.temperature = "Temperatur";
+  window.BaldPI.T.stop = "Stopp";
+  window.BaldPI.T.temperature = "Temperatur";
   P.strings({
-    ...window.TinyPPI.T,
+    ...window.BaldPI.T,
     metrics: "Messwerte", controls: "Steuerung", switches: "Wechsel", warnings: "Warnungen",
     player_cache: "Puffer", fps: "BPS", chart: "Helligkeit", peak: "Spitze", average: "Mittel",
     events: "Ereignisse", range_1m: "1 Min.", range_10m: undefined, range_all: "Alles",
@@ -618,7 +618,7 @@ test("the strings name every panel, range and key", async (t) => {
 
 test("the chart card shows with luminance to draw and its ranges switch", (t) => {
   const { $, P, window, fetched } = panels(t);
-  delete window.TinyPPI.T.range_all;
+  delete window.BaldPI.T.range_all;
   P.update(snap({ metrics: metrics({ l1: {} }) }));
   assert.ok($("chartCard").classList.contains("hidden"));
   assert.equal($("ranges").children.length, 0);
@@ -783,7 +783,7 @@ test("the chart is drawn again on a new tint, a resize and when its tab asks", (
   P.update(snap());
   const drawn = chart.frames.length;
 
-  window.document.dispatchEvent(new window.CustomEvent("tinyppi-tint"));
+  window.document.dispatchEvent(new window.CustomEvent("baldpi-tint"));
   assert.equal(chart.frames.length, drawn + 1);
 
   window.dispatchEvent(new window.Event("resize"));
@@ -823,7 +823,7 @@ test("the event list is shaded while there is more of it below", (t) => {
 test("when playback ends the panels are put away once and the ended title's events stay", async (t) => {
   const { $, P, window, clock, fetched } = panels(t);
   const shown = [];
-  window.TinyPPICover = { show: (card, url) => shown.push(url) };
+  window.BaldPICover = { show: (card, url) => shown.push(url) };
   const playing = snap({ control: true, finish: "23:40", art: { poster: "p1" },
                          controls: { audio: [{ index: 0, label: "A" }, { index: 1, label: "B" }] },
                          metrics: metrics({ fps_out: 24 }) });
@@ -839,7 +839,7 @@ test("when playback ends the panels are put away once and the ended title's even
   assert.ok($("tFinish").classList.contains("hidden"));
   assert.deepEqual([$("tFps").textContent, $("tFps").className], ["", "trend"]);
   assert.equal($("controlDrawer").classList.contains("open"), false);
-  assert.equal(window.localStorage.getItem("tinyppi.disclosure.dashboard.controls"), "1");
+  assert.equal(window.localStorage.getItem("baldpi.disclosure.dashboard.controls"), "1");
   assert.equal(fetched("/api/history").length, 1, "the ended title's events are asked for");
   await settle();
   assert.equal($("eventsCard").classList.contains("hidden"), false);

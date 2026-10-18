@@ -3,7 +3,7 @@
 
 """The VS10 mode-selection dialog.
 
-Open via ``RunScript(script.tinyppi,dialog)`` or ``open_dialog()``; the
+Open via ``RunScript(script.bald.processinfo,dialog)`` or ``open_dialog()``; the
 chosen mode is applied by ``core.vs10.set_mode``.
 """
 
@@ -36,7 +36,7 @@ _ACTIONS = {
 
 
 class SettingsDialog(xbmcgui.WindowXMLDialog):
-    """Menu dialog to pick a VS10 output mode or launch the TinyPPI overlay."""
+    """Menu dialog to pick a VS10 output mode or launch the BaldPI overlay."""
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
@@ -50,7 +50,7 @@ class SettingsDialog(xbmcgui.WindowXMLDialog):
         self._monitor: xbmc.Monitor | None = None
 
     def onInit(self) -> None:
-        # Refresh TinyPPI.HdrType before placing the panel: the branch
+        # Refresh BaldPI.HdrType before placing the panel: the branch
         # decides which button gets focus.
         self._running = True
         self._pending_mode = None
@@ -78,7 +78,7 @@ class SettingsDialog(xbmcgui.WindowXMLDialog):
     def _branch(self) -> dialog_layout.Branch:
         home = home_window()
         return dialog_layout.branch_for(
-            home.getProperty("TinyPPI.HdrType"),
+            home.getProperty("BaldPI.HdrType"),
             home.getProperty(PROP_HDR10PLUS_PRESENT),
         )
 
@@ -162,8 +162,8 @@ class SettingsDialog(xbmcgui.WindowXMLDialog):
         if control_id in dialog_layout.PPI_BUTTONS:
             self.close()
             clear_overlay_state(home_window())
-            from ui.overlay import open_tinyppi
-            open_tinyppi()
+            from ui.overlay import open_baldpi
+            open_baldpi()
             return
 
         mode = _ACTIONS.get(control_id)

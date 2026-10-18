@@ -47,7 +47,7 @@ def post(srv, path, body, token=TOKEN):
 def raw_post(srv, path, body, length=None):
     """Send a POST with exactly these bytes (and Content-Length)."""
     port = srv.server_address[1]
-    head = (f"POST {path} HTTP/1.1\r\nHost: 127.0.0.1\r\nX-TinyPPI-Token: {TOKEN}\r\n"
+    head = (f"POST {path} HTTP/1.1\r\nHost: 127.0.0.1\r\nX-BaldPI-Token: {TOKEN}\r\n"
             f"Content-Type: application/json\r\n"
             f"Content-Length: {len(body) if length is None else length}\r\nConnection: close\r\n\r\n")
     with socket.create_connection(("127.0.0.1", port), timeout=5) as sock:
@@ -266,7 +266,7 @@ class HistoryProducer(IdleProducer):
 def test_hello_offers_the_shelves_only_with_control(dashboard):
     hello = json.loads(request(dashboard, "/api/hello")[2])
     assert (hello["control"], hello["library"], hello["series"]) == (True, True, True)
-    assert hello["name"] == "TinyPPI" and hello["interval_ms"] > 0 and hello["strings"]
+    assert hello["name"] == "BaldPI" and hello["interval_ms"] > 0 and hello["strings"]
     dashboard.allow_control = False
     hello = json.loads(request(dashboard, "/api/hello")[2])
     assert (hello["control"], hello["library"], hello["series"]) == (False, False, False)
@@ -294,7 +294,7 @@ def test_the_token_is_masked_in_the_access_log(dashboard):
 def test_bursty_commands_are_logged_at_debug(dashboard, monkeypatch, action, level):
     monkeypatch.setattr(routes, "apply_command", lambda action, value=None: True)
     assert post(dashboard, "/api/command", {"action": action})[0] == 200
-    assert (level, f"TinyPPI [web]: '{action}' requested from 127.0.0.1") in xbmc.LOG
+    assert (level, f"BaldPI [web]: '{action}' requested from 127.0.0.1") in xbmc.LOG
 
 
 def test_unknown_read_routes_are_404(dashboard):
@@ -323,7 +323,7 @@ def test_the_token_buys_a_read_session_cookie(dashboard):
     status, cookie, raw = session_cookie(dashboard)
     assert status == 200 and json.loads(raw) == {"ok": True}
     value, *attributes = [part.strip() for part in cookie.split(";")]
-    assert value == f"tinyppi_session={dashboard.session}"
+    assert value == f"baldpi_session={dashboard.session}"
     assert attributes == ["Path=/api/", "HttpOnly", "SameSite=Strict"]
 
 
@@ -340,7 +340,7 @@ def test_a_session_needs_no_control(dashboard):
 
 def test_the_session_reads_where_reading_needs_the_token(dashboard):
     dashboard.auth_read = True
-    held = f"kodi=1; other=\"x; tinyppi_session={dashboard.session}"
+    held = f"kodi=1; other=\"x; baldpi_session={dashboard.session}"
     # Other services' cookies on the same host, one of them malformed.
     assert request(dashboard, "/api/state", cookie=held)[0] == 200
 
@@ -349,13 +349,13 @@ def test_a_session_reads_even_from_a_locked_out_address(dashboard, monkeypatch):
     # It cannot be guessed, so it is no guess to lock out.
     dashboard.auth_read = True
     monkeypatch.setattr(dashboard.guesses, "locked_for", lambda address: 2.5)
-    assert request(dashboard, "/api/state", cookie=f"tinyppi_session={dashboard.session}")[0] == 200
+    assert request(dashboard, "/api/state", cookie=f"baldpi_session={dashboard.session}")[0] == 200
     assert request(dashboard, "/api/state", token=TOKEN)[0] == 429
 
 
 @pytest.mark.parametrize("cookie", [
-    "tinyppi_session=forged", "tinyppi_session=", "tinyppi_session", "other=1",
-    "tinyppi_session=\u00e9\u00e9",
+    "baldpi_session=forged", "baldpi_session=", "baldpi_session", "other=1",
+    "baldpi_session=\u00e9\u00e9",
 ])
 def test_a_foreign_session_reads_nothing_and_is_no_guess(dashboard, cookie):
     dashboard.auth_read = True
@@ -365,7 +365,7 @@ def test_a_foreign_session_reads_nothing_and_is_no_guess(dashboard, cookie):
 
 def test_a_session_does_not_write(dashboard, calls):
     status, _headers, _raw = request(dashboard, "/api/command", "POST", {"action": "pause"},
-                                     cookie=f"tinyppi_session={dashboard.session}")
+                                     cookie=f"baldpi_session={dashboard.session}")
     assert status == 401 and calls == []
 
 

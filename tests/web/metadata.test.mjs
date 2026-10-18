@@ -38,7 +38,7 @@ function metadataTab(t) {
   const view = page({ scripts: SCRIPTS });
   t.after(() => view.window.close());
   const $ = (id) => view.window.document.getElementById(id);
-  return { ...view, $, M: view.window.TinyPPI.metadata };
+  return { ...view, $, M: view.window.BaldPI.metadata };
 }
 
 /* setTimeout in the page, held until the test runs it. */
@@ -68,7 +68,7 @@ test("the luminance chart moves in under the active-picture card", (t) => {
 test("with nothing to list the idle card says which nothing it is", (t) => {
   const { $, M, window } = metadataTab(t);
   // The English fallbacks leave both texts empty; give them words to tell apart.
-  Object.assign(window.TinyPPI.T, { idle_text: "Start a film.",
+  Object.assign(window.BaldPI.T, { idle_text: "Start a film.",
                                     no_metadata_text: "This title carries no RPU." });
   M.render({ playing: false });
   assert.ok($("listCard").classList.contains("hidden"));
@@ -343,7 +343,7 @@ test("the report copies the list as plain text", async (t) => {
   M.copy();
   await settle();
   assert.deepEqual(written, [[
-    "TinyPPI — Dolby Vision metadata view",
+    "BaldPI — Dolby Vision metadata view",
     "Film",
     "/films/Film.mkv",
     "",
@@ -364,7 +364,7 @@ test("the report copies the list as plain text", async (t) => {
   M.render({ playing: true, metadata: [{ kind: "section", name: "L6", value: "✘" }] });
   M.copy();
   await settle();
-  assert.equal(written[1], "TinyPPI — Dolby Vision metadata view\n\n[L6 - No]");
+  assert.equal(written[1], "BaldPI — Dolby Vision metadata view\n\n[L6 - No]");
 });
 
 test("without the clipboard the report is saved under the film's name, tailed metadata", async (t) => {
@@ -384,11 +384,11 @@ test("without the clipboard the report is saved under the film's name, tailed me
   M.copy();
   await settle();
   assert.equal(saved.length, 1);
-  assert.equal(saved[0].name, "TinyPPI_Film_Part_2_metadata.txt");
+  assert.equal(saved[0].name, "BaldPI_Film_Part_2_metadata.txt");
   assert.equal(saved[0].href, "blob:metadata");
   assert.equal(blobs[0].type, "text/plain");
   const text = await blobs[0].text();
-  assert.ok(text.startsWith("TinyPPI — Dolby Vision metadata view\nFilm: Part 2\n\n[L1]\n"), text);
+  assert.ok(text.startsWith("BaldPI — Dolby Vision metadata view\nFilm: Part 2\n\n[L1]\n"), text);
   assert.ok(text.endsWith("2100  2000  1990"), text);
 });
 
@@ -414,7 +414,7 @@ test("nothing listed is nothing to copy", async (t) => {
 
 test("the strings title the cards and write the idle card again", (t) => {
   const { $, M, window } = metadataTab(t);
-  const T = window.TinyPPI.T;
+  const T = window.BaldPI.T;
   M.strings({ ...T, active_area: "Aktives Bild", metadata_section: "Metadaten" });
   assert.equal($("frameTitle").textContent, "Aktives Bild");
   assert.equal($("metadataTitle").textContent, "Metadaten");

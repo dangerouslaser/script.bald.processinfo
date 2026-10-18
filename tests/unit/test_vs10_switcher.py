@@ -77,7 +77,7 @@ def test_the_last_tap_wins(driver):
     finish(driver)
     assert driver.applied == [first, third]
     assert len(driver.threads) == 1      # one worker applied both
-    assert (xbmc.LOGDEBUG, f"TinyPPI [web]: VS10 mode '{second}' replaced by '{third}' "
+    assert (xbmc.LOGDEBUG, f"BaldPI [web]: VS10 mode '{second}' replaced by '{third}' "
             "before it started") in xbmc.LOG
 
 
@@ -89,7 +89,7 @@ def test_a_failed_switch_does_not_stop_the_next(driver, monkeypatch):
     assert vs10.apply_mode(mode)
     finish(driver)
     assert driver.applied == ["boom", mode]
-    assert (xbmc.LOGERROR, "TinyPPI [web]: VS10 mode 'boom' failed: driver said no") in xbmc.LOG
+    assert (xbmc.LOGERROR, "BaldPI [web]: VS10 mode 'boom' failed: driver said no") in xbmc.LOG
 
 
 def test_a_new_request_after_the_worker_ended_starts_a_new_one(driver):

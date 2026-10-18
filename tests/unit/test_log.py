@@ -12,8 +12,8 @@ from core import log
 def test_lines_are_tagged_with_the_addon():
     log.log("mode 'dv' set")
     log.log("driver refused", xbmc.LOGERROR)
-    assert xbmc.LOG == [(xbmc.LOGDEBUG, "TinyPPI: mode 'dv' set"),
-                        (xbmc.LOGERROR, "TinyPPI: driver refused")]
+    assert xbmc.LOG == [(xbmc.LOGDEBUG, "BaldPI: mode 'dv' set"),
+                        (xbmc.LOGERROR, "BaldPI: driver refused")]
 
 
 def test_a_channel_tags_its_area_and_uses_its_default_level():
@@ -21,9 +21,9 @@ def test_a_channel_tags_its_area_and_uses_its_default_level():
     web("dashboard listening")
     web("port in use", xbmc.LOGWARNING)
     log.channel("images")("scaled")
-    assert xbmc.LOG == [(xbmc.LOGINFO, "TinyPPI [web]: dashboard listening"),
-                        (xbmc.LOGWARNING, "TinyPPI [web]: port in use"),
-                        (xbmc.LOGDEBUG, "TinyPPI [images]: scaled")]
+    assert xbmc.LOG == [(xbmc.LOGINFO, "BaldPI [web]: dashboard listening"),
+                        (xbmc.LOGWARNING, "BaldPI [web]: port in use"),
+                        (xbmc.LOGDEBUG, "BaldPI [images]: scaled")]
 
 
 @pytest.mark.parametrize(("level", "written"), [
@@ -36,7 +36,7 @@ def test_forced_debug_raises_only_debug_lines_to_info(monkeypatch, level, writte
     log.channel("web")("line", level)
     levels = [entry[0] for entry in xbmc.LOG]
     assert levels == [written, written]
-    assert [entry[1] for entry in xbmc.LOG] == ["TinyPPI: line", "TinyPPI [web]: line"]
+    assert [entry[1] for entry in xbmc.LOG] == ["BaldPI: line", "BaldPI [web]: line"]
 
 
 @pytest.mark.parametrize(("path", "logged"), [

@@ -68,8 +68,8 @@ function applyStrings(strings, hello) {
   el.seriesEmpty.textContent = strings.series_empty;
   el.seriesSearch.placeholder = strings.series_search;
   el.seriesSearch.setAttribute("aria-label", strings.series_search);
-  TinyPPI.panels.strings(strings);
-  TinyPPI.metadata.strings(strings);
+  BaldPI.panels.strings(strings);
+  BaldPI.metadata.strings(strings);
   $("vs10Title").textContent = strings.vs10;
   $("vs10OutLabel").textContent = strings.output;
   if (hello) {
@@ -81,4 +81,4 @@ function applyStrings(strings, hello) {
 /* The tab to open on: the one the address names, else the one this device
    was last left on, else what is playing. */
 selectTab(tabFromAddress() || storedTab() || "live");
-TinyPPI.boot({ onState: render, onStrings: applyStrings });
+BaldPI.boot({ onState: render, onStrings: applyStrings });

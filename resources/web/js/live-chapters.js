@@ -25,9 +25,9 @@
    on the settings tab, remembered in the browser like the folds are.
 =========================================================================== */
 
-window.TinyPPIChapters = (function () {
+window.BaldPIChapters = (function () {
 
-  const SHOW_KEY = "tinyppi.chapters";
+  const SHOW_KEY = "baldpi.chapters";
 
   /* Dots nearer each other than this, in pixels, would read as one smudge on
      a phone; the later one is left out and the earlier answers for both. */
@@ -146,7 +146,7 @@ window.TinyPPIChapters = (function () {
       const chapter = shown ? playing : null;
       const total = chapters.length ? chapters[chapters.length - 1].index : 0;
       const counted = chapter
-        ? TinyPPI.T.chapter_of.replace("%s", chapter.index).replace("%s", total) : "";
+        ? BaldPI.T.chapter_of.replace("%s", chapter.index).replace("%s", total) : "";
       const name = (chapter && chapter.name) || "";
       const key = counted + "\n" + name;
       if (key === labelKey) return;
@@ -196,7 +196,7 @@ window.TinyPPIChapters = (function () {
     }
 
     function tipText(chapter) {
-      return [TinyPPI.T.chapter.replace("%s", chapter.index), chapter.name, chapter.time]
+      return [BaldPI.T.chapter.replace("%s", chapter.index), chapter.name, chapter.time]
         .filter(Boolean).join(" · ");
     }
 

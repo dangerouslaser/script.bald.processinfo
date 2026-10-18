@@ -384,7 +384,7 @@ def test_prune_ignores_other_media_and_logs_what_it_cannot_remove(tmp_path, cach
     os.utime(stuck, (0, 0))
     assert images.prune_cache(str(media)) == 1
     assert os.listdir(cache) == ["old.tmp"]
-    assert any(line.startswith("TinyPPI [images]: could not prune old.tmp: ")
+    assert any(line.startswith("BaldPI [images]: could not prune old.tmp: ")
                for _level, line in xbmc.LOG)
 
 

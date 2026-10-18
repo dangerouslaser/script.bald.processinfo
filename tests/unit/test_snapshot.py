@@ -95,7 +95,7 @@ def test_the_last_title_is_kept_after_it_ends():
 
 def test_metadata_needs_dolby_vision_and_the_setting():
     play()
-    xbmcgui.Window(10000).setProperty("TinyPPI.HdrType", "hdr10")
+    xbmcgui.Window(10000).setProperty("BaldPI.HdrType", "hdr10")
     assert SnapshotBuilder().build(metadata=True)["metadata"] == []
 
 

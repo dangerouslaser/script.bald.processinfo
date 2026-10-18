@@ -584,7 +584,7 @@ test("playing an episode sends it with the token, and the list waits on it", asy
   await press(view, row(view, "That Would Be Me"));
   const sent = view.requests.find((request) => request.url === "/api/play");
   assert.equal(sent.init.method, "POST");
-  assert.equal(sent.init.headers["X-TinyPPI-Token"], "T0K3N");
+  assert.equal(sent.init.headers["X-BaldPI-Token"], "T0K3N");
   assert.equal(sent.init.headers["Content-Type"], "application/json");
   assert.deepEqual(plays(view), [{ episodeid: 102 }]);
   assert.equal(view.$("toast").textContent, "Starting…");

@@ -94,7 +94,7 @@ types allowed, no dependency check against Kodi's repository).
 
 ## Kodi 22 suite
 
-`tests/kodi` runs TinyPPI in Kodi 22 under Xvfb and checks it from outside:
+`tests/kodi` runs BaldPI in Kodi 22 under Xvfb and checks it from outside:
 over JSON-RPC, over the dashboard's HTTP API, through a small helper add-on
 inside Kodi (settings, Home-window properties), and on screenshots.
 

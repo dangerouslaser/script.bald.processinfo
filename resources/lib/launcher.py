@@ -85,8 +85,8 @@ def _open_view(view: str) -> None:
         from ui.overlay import open_dialog_mode
         open_dialog_mode()
     else:
-        from ui.overlay import open_tinyppi
-        open_tinyppi()
+        from ui.overlay import open_baldpi
+        open_baldpi()
 
 
 def _splash(args: list[str]) -> None:

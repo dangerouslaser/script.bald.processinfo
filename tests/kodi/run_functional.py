@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # Copyright (c) 2026 U3knOwn
 
-"""TinyPPI end to end on Kodi 22: service, dashboard, playback, overlay,
+"""BaldPI end to end on Kodi 22: service, dashboard, playback, overlay,
 VS10 dialog, codec logos, remote, library actions, limits, dialogs, the page
 in a browser and the shutdown.
 
@@ -26,7 +26,7 @@ from stream import Page
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TOKEN = config.TOKEN
-AUTH = {"X-TinyPPI-Token": TOKEN}
+AUTH = {"X-BaldPI-Token": TOKEN}
 REPORT = Report("functional")
 check = REPORT.check
 section = REPORT.section
@@ -53,7 +53,7 @@ def jget(path, **kw):
 
 
 def post(path, body, token=TOKEN, **kw):
-    headers = {"X-TinyPPI-Token": token} if token is not None else {}
+    headers = {"X-BaldPI-Token": token} if token is not None else {}
     status, _, raw = kodi.http(path, method="POST", body=body, headers=headers, **kw)
     try:
         return status, json.loads(raw)
@@ -84,11 +84,11 @@ def run():
     check("Kodi 22 answers JSON-RPC", kodi.rpc("JSONRPC.Ping")["result"] == "pong")
     ver = kodi.rpc("Application.GetProperties", {"properties": ["version", "name"]})["result"]
     check("Kodi version is 22", ver["version"]["major"] == 22, ver)
-    details = kodi.rpc("Addons.GetAddonDetails", {"addonid": "script.tinyppi",
+    details = kodi.rpc("Addons.GetAddonDetails", {"addonid": "script.bald.processinfo",
                                                   "properties": ["version", "enabled", "dependencies"]})["result"]["addon"]
-    check("TinyPPI installed and enabled", details["enabled"], details["version"])
+    check("BaldPI installed and enabled", details["enabled"], details["version"])
     check("service started", KODI.wait_log("KodiMonitor started", 0, 30))
-    check("service handover property set", prop("TinyPPI.Service")["TinyPPI.Service"] == "1")
+    check("service handover property set", prop("BaldPI.Service")["BaldPI.Service"] == "1")
     check("dashboard listening", KODI.wait_log("dashboard listening on", 0, 30))
 
     section("dashboard: static files and headers")
@@ -203,32 +203,32 @@ def run():
     check("history while playing", status == 200, list(hist)[:6] if hist else hist)
 
     section("overlay")
-    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.tinyppi"})
-    opened = wait(lambda: prop("TinyPPI.Running")["TinyPPI.Running"] == "true", 10)
+    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.bald.processinfo"})
+    opened = wait(lambda: prop("BaldPI.Running")["BaldPI.Running"] == "true", 10)
     check("RunAddon opens the overlay", opened)
     check("the launch was handed to the service", "opening in this script instead" not in KODI.log(offset))
     time.sleep(2.5)
     kodi.shot("02-overlay")
-    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.tinyppi"})
-    closed = wait(lambda: prop("TinyPPI.Running")["TinyPPI.Running"] != "true", 10)
+    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.bald.processinfo"})
+    closed = wait(lambda: prop("BaldPI.Running")["BaldPI.Running"] != "true", 10)
     check("RunAddon again closes it (toggle)", closed)
     time.sleep(1)
-    kodi.rpc("JSONRPC.NotifyAll", {"sender": "script.tinyppi", "message": "open_overlay"})
-    opened = wait(lambda: prop("TinyPPI.Running")["TinyPPI.Running"] == "true", 10)
-    check("NotifyAll(script.tinyppi,open_overlay) opens it", opened)
+    kodi.rpc("JSONRPC.NotifyAll", {"sender": "script.bald.processinfo", "message": "open_overlay"})
+    opened = wait(lambda: prop("BaldPI.Running")["BaldPI.Running"] == "true", 10)
+    check("NotifyAll(script.bald.processinfo,open_overlay) opens it", opened)
     time.sleep(1.5)
     kodi.rpc("Input.Select")      # OK: DV metadata view only for DV sources
     time.sleep(1.5)
     kodi.shot("03-overlay-after-ok")
-    check("OK on a non-DV source keeps the overlay", prop("TinyPPI.Running")["TinyPPI.Running"] == "true")
+    check("OK on a non-DV source keeps the overlay", prop("BaldPI.Running")["BaldPI.Running"] == "true")
     kodi.rpc("Input.Back")
-    closed = wait(lambda: prop("TinyPPI.Running")["TinyPPI.Running"] != "true", 10)
+    closed = wait(lambda: prop("BaldPI.Running")["BaldPI.Running"] != "true", 10)
     check("Back closes the overlay", closed)
 
     section("VS10 dialog")
     time.sleep(1)
     before = kodi.rpc("GUI.GetProperties", {"properties": ["currentwindow"]})["result"]["currentwindow"]
-    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.tinyppi", "params": ["dialog"]})
+    kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.bald.processinfo", "params": ["dialog"]})
     time.sleep(3)
     win = kodi.rpc("GUI.GetProperties", {"properties": ["currentwindow"]})["result"]["currentwindow"]
     kodi.shot("04-vs10-dialog")
@@ -238,9 +238,9 @@ def run():
 
     section("splash (codec logos)")
     kodi.helper("set", "splash_enabled=true")
-    shown = wait(lambda: prop("TinyPPI.SplashVisible")["TinyPPI.SplashVisible"] == "true", 10, 0.5)
+    shown = wait(lambda: prop("BaldPI.SplashVisible")["BaldPI.SplashVisible"] == "true", 10, 0.5)
     kodi.shot("05-splash")
-    check("codec-logo splash shows during playback once enabled", shown, prop("TinyPPI.SplashActive", "TinyPPI.SplashVisible"))
+    check("codec-logo splash shows during playback once enabled", shown, prop("BaldPI.SplashActive", "BaldPI.SplashVisible"))
     kodi.helper("set", "splash_enabled=false")
 
     section("transport commands")
@@ -273,7 +273,7 @@ def run():
     check("switch audio track", status == 200 and wait(lambda: player_props("currentaudiostream")["currentaudiostream"]["index"] == 1, 5),
           player_props("currentaudiostream").get("currentaudiostream"))
     # Back to the E-AC3 track: in this container (no audio device) Kodi's
-    # clock stalls on the AC3 track, which has nothing to do with TinyPPI.
+    # clock stalls on the AC3 track, which has nothing to do with BaldPI.
     status, payload = post("/api/command", {"action": "audio", "value": 0})
     check("switch audio track back", status == 200 and wait(lambda: player_props("currentaudiostream")["currentaudiostream"]["index"] == 0, 5))
     time.sleep(2)
@@ -371,14 +371,14 @@ def run():
 
     section("dialogs from the settings")
     for params, name in ((["web_info"], "06-web-info"), (["pick_color", "splash_start_bg_color"], "07-color-picker")):
-        kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.tinyppi", "params": params})
+        kodi.rpc("Addons.ExecuteAddon", {"addonid": "script.bald.processinfo", "params": params})
         time.sleep(3)
         win = kodi.rpc("GUI.GetProperties", {"properties": ["currentwindow"]})["result"]["currentwindow"]
         kodi.shot(name)
         check(f"{params[0]} opens a dialog", "dialog" in win["label"].lower() or win["id"] >= 10100, win)
         kodi.rpc("Input.Back")
         time.sleep(1.5)
-    kodi.helper("builtin", "Addon.OpenSettings(script.tinyppi)")
+    kodi.helper("builtin", "Addon.OpenSettings(script.bald.processinfo)")
     time.sleep(4)
     win = kodi.rpc("GUI.GetProperties", {"properties": ["currentwindow"]})["result"]["currentwindow"]
     kodi.shot("08-addon-settings")
@@ -419,7 +419,7 @@ def _post_lan(body, token):
     """POST from the LAN address, so a lockout does not hit 127.0.0.1."""
     import http.client
     conn = http.client.HTTPConnection(lan_address(), config.DASHBOARD_PORT, timeout=5)
-    conn.request("POST", "/api/command", json.dumps(body), {"Content-Type": "application/json", "X-TinyPPI-Token": token})
+    conn.request("POST", "/api/command", json.dumps(body), {"Content-Type": "application/json", "X-BaldPI-Token": token})
     resp = conn.getresponse()
     resp.read()
     conn.close()
@@ -439,12 +439,12 @@ def shutdown():
     for bad in ("did not stop", "still running", "snapshot producer did not stop"):
         check(f"no '{bad}' at shutdown", bad not in log)
     lines = [line for line in log.splitlines()
-             if "TinyPPI" in line and (" error " in line.lower() or "Traceback" in line or "EXCEPTION" in line)]
+             if "BaldPI" in line and (" error " in line.lower() or "Traceback" in line or "EXCEPTION" in line)]
     # Writing the Amlogic sysfs nodes fails off CoreELEC hardware by nature.
-    amlogic = [line for line in lines if "FAILED /sys/" in line or "via built-in TinyPPI VS10 (sysfs)" in line]
+    amlogic = [line for line in lines if "FAILED /sys/" in line or "via built-in BaldPI VS10 (sysfs)" in line]
     errors = [line for line in lines if line not in amlogic]
     check("VS10 sysfs writes fail cleanly off Amlogic hardware (expected)", True, f"{len(amlogic)} lines")
-    check("no TinyPPI errors in the log", not errors, errors[:12])
+    check("no BaldPI errors in the log", not errors, errors[:12])
     check("no Python tracebacks in the log", log.count("Traceback (most recent call last)") == 0)
 
 
@@ -454,8 +454,8 @@ def main():
     KODI = kodi.Kodi(kodi.make_home("functional"))
     print(f"Kodi answered after {KODI.start():.1f} s", flush=True)
     try:
-        if not kodi.start_tinyppi(KODI):
-            raise RuntimeError("TinyPPI did not start")
+        if not kodi.start_baldpi(KODI):
+            raise RuntimeError("BaldPI did not start")
         kodi.scan_library()
         run()
     except Exception:

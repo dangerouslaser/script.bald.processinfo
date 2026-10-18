@@ -46,12 +46,12 @@ def kodi(monkeypatch):
 
 
 def logged():
-    return [line for _level, line in xbmc.LOG if line.startswith("TinyPPI [library]: ")]
+    return [line for _level, line in xbmc.LOG if line.startswith("BaldPI [library]: ")]
 
 
 def info_lines():
     return [line for level, line in xbmc.LOG
-            if level == xbmc.LOGINFO and line.startswith("TinyPPI [library]: ")]
+            if level == xbmc.LOGINFO and line.startswith("BaldPI [library]: ")]
 
 
 def film(kodi, **fields):

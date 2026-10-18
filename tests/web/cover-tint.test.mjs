@@ -126,16 +126,16 @@ function tinted({ scripts = ["theme.js", "colour.js", "cover-tint.js"] } = {}) {
   card.className = "nowcard";
   document.getElementById("live").append(card);
   const tints = [];
-  document.addEventListener("tinyppi-tint", () => tints.push(document.documentElement.dataset.theme));
+  document.addEventListener("baldpi-tint", () => tints.push(document.documentElement.dataset.theme));
   return {
     ...view, canvas, card, tints,
     main: document.querySelector("main"),
     chrome: [document.querySelector(".topbar"), document.querySelector(".tabbar")],
-    C: window.TinyPPIColour,
+    C: window.BaldPIColour,
     /* The <img> carries the address it is shown with, as the page's does. */
     async show(url, image, element = card) {
       if (image) image.src = url;
-      window.TinyPPICover.show(element, url, image);
+      window.BaldPICover.show(element, url, image);
       await settle();
     },
     async set(name, value) {
@@ -385,7 +385,7 @@ test("no poster, or nothing playing, takes every painted colour off again", asyn
   for (const host of [view.card, view.main, ...view.chrome]) assert.deepEqual(painted(host), {});
 
   await view.show("/blue", view.canvas.poster(96, 144, BLUE));
-  view.window.TinyPPICover.show();                       // nothing at all
+  view.window.BaldPICover.show();                       // nothing at all
   await settle();
   for (const host of [view.main, ...view.chrome]) assert.deepEqual(painted(host), {});
   // The card that was let go is not touched again.
@@ -575,12 +575,12 @@ test("without a MutationObserver a theme change is seen at the next poster", asy
   const card = view.window.document.createElement("div");
   const image = canvas.poster(96, 144, BLUE);
   image.src = "/blue";
-  view.window.TinyPPICover.show(card, "/blue", image);
+  view.window.BaldPICover.show(card, "/blue", image);
   await settle();
   view.window.document.documentElement.setAttribute("data-theme", "midnight");
   await settle();
   assert.notEqual(card.style.getPropertyValue("--muted"), "");
-  view.window.TinyPPICover.show(card, "/blue", image);
+  view.window.BaldPICover.show(card, "/blue", image);
   assert.equal(card.style.getPropertyValue("--muted"), "");
 });
 
@@ -590,8 +590,8 @@ test("a page with neither a card nor a main area has nothing to paint", async ()
   window.document.documentElement.setAttribute("data-theme", "dark-adaptive");
   const canvas = fakeCanvas(window);
   const tints = [];
-  window.document.addEventListener("tinyppi-tint", () => tints.push(1));
-  window.TinyPPICover.show(null, "/blue", canvas.poster(96, 144, BLUE));
+  window.document.addEventListener("baldpi-tint", () => tints.push(1));
+  window.BaldPICover.show(null, "/blue", canvas.poster(96, 144, BLUE));
   await settle();
   assert.deepEqual(tints, []);
   assert.equal(canvas.log.contexts, 0);
@@ -599,7 +599,7 @@ test("a page with neither a card nor a main area has nothing to paint", async ()
   const card = window.document.createElement("div");
   const image = canvas.poster(96, 144, BLUE);
   image.src = "/blue";
-  window.TinyPPICover.show(card, "/blue", image);
+  window.BaldPICover.show(card, "/blue", image);
   await settle();
   assert.deepEqual(Object.keys(painted(card)), PAINTED);
   assert.equal(tints.length, 2);

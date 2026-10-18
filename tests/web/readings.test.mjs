@@ -10,7 +10,7 @@ import { bare } from "./harness.mjs";
 
 const window = bare("core.js", "readings.js");
 after(() => window.close());
-const R = window.TinyPPIReadings;
+const R = window.BaldPIReadings;
 const plain = (value) => JSON.parse(JSON.stringify(value));
 
 const audio = (value, detail = "") => ({
@@ -77,12 +77,12 @@ test("events: names, values and trends", () => {
   assert.equal(R.eventLabel("mode"), "Display mode");
   assert.equal(R.eventLabel("cache_low"), "cache_low");
   assert.equal(R.eventLabel(undefined), "Event");
-  const saved = window.TinyPPI.T.ev_mode;
-  window.TinyPPI.T.ev_mode = "Anzeigemodus";
+  const saved = window.BaldPI.T.ev_mode;
+  window.BaldPI.T.ev_mode = "Anzeigemodus";
   try {
     assert.equal(R.eventLabel("mode"), "Anzeigemodus");
   } finally {
-    window.TinyPPI.T.ev_mode = saved;
+    window.BaldPI.T.ev_mode = saved;
   }
 
   assert.equal(R.eventText({ kind: "audio", from: "#1 · ENG · English", to: "#2 · GER · Deutsch" }), "Deutsch");
@@ -160,14 +160,14 @@ test("sound badges take the codec row, or the first row where it is missing", ()
 });
 
 test("event names fall back to English until the strings arrive", () => {
-  const saved = window.TinyPPI.T.fps;
-  window.TinyPPI.T.fps = "";
+  const saved = window.BaldPI.T.fps;
+  window.BaldPI.T.fps = "";
   try {
     assert.equal(R.eventLabel("fps"), "FPS");
   } finally {
-    window.TinyPPI.T.fps = saved;
+    window.BaldPI.T.fps = saved;
   }
-  assert.equal(R.eventLabel("vs10"), window.TinyPPI.T.vs10);
+  assert.equal(R.eventLabel("vs10"), window.BaldPI.T.vs10);
   assert.equal(R.eventLabel("subtitle"), "Subtitles");
 });
 

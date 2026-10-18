@@ -274,7 +274,7 @@ test("resuming sends the title with the token, and both rows wait on it", async 
   await press(view, "Film 03");
   const sent = view.requests.find((request) => request.url === "/api/play");
   assert.equal(sent.init.method, "POST");
-  assert.equal(sent.init.headers["X-TinyPPI-Token"], "T0K3N");
+  assert.equal(sent.init.headers["X-BaldPI-Token"], "T0K3N");
   assert.equal(sent.init.headers["Content-Type"], "application/json");
   assert.deepEqual(plays(view), [{ movieid: 3 }]);
   assert.equal(view.$("toast").textContent, "Starting…");

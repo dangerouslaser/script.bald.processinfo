@@ -4,11 +4,11 @@
 """Codec-logo splash for playback start, the video OSD and the overlay.
 
 The service runs this on its own thread on ``Player.OnAVStart`` (or via
-``RunScript(script.tinyppi,splash)``).  It stacks the video and audio format
+``RunScript(script.bald.processinfo,splash)``).  It stacks the video and audio format
 logos in a panel; per mode, ``splash_<mode>_order`` swaps them and
 ``splash_<mode>_show_video`` / ``_show_audio`` hide either.  Modes:
 ``splash_enabled`` (first ``splash_duration`` seconds), ``splash_show_on_osd``
-and ``splash_show_on_tinyppi``.
+and ``splash_show_on_baldpi``.
 
 The logos are ``ControlImage`` controls added to the fullscreen video window
 (12005), shown and hidden by visibility conditions (see ``_fade_in`` /
@@ -48,7 +48,7 @@ WINDOW_FULLSCREEN_VIDEO = 12005
 
 # Re-entry guard against stacked controllers; a Home property because a
 # RunScript call runs in another interpreter than the service's thread.
-PROP_SPLASH_ACTIVE = "TinyPPI.SplashActive"
+PROP_SPLASH_ACTIVE = "BaldPI.SplashActive"
 
 # Fallback colours until theme.apply_theme has published the themed ones.
 _BG_COLOR          = "FA15181A"  # Charcoal panel (matches the overlay background)
@@ -57,11 +57,11 @@ _DIVIDER_COLOR     = "59FFFFFF"
 _CONVERT_DOT_COLOR = "FF81C784"  # palette Forest (the conversion badge)
 
 # Home properties of the splash colours (from theme.apply_theme), separate
-# per context (start / osd / tinyppi).
+# per context (start / osd / baldpi).
 _MODE_PROP_PREFIX = {
-    "start":   "TinyPPI.SplashStart",
-    "osd":     "TinyPPI.SplashOsd",
-    "tinyppi": "TinyPPI.SplashTinyppi",
+    "start":   "BaldPI.SplashStart",
+    "osd":     "BaldPI.SplashOsd",
+    "baldpi": "BaldPI.Splashbaldpi",
 }
 _COLOR_PROP_SUFFIX = {
     "bg":          "BgColor",
@@ -109,17 +109,17 @@ class _ModeState(NamedTuple):
 # visibility condition changes (not on setVisible()), so the controls watch a
 # global and a per-mode Home property.  OSD and overlay conditions can then
 # start the fades at once.
-PROP_SPLASH_VISIBLE = "TinyPPI.SplashVisible"
+PROP_SPLASH_VISIBLE = "BaldPI.SplashVisible"
 _VISIBLE_CONDITION  = (
     f"String.IsEqual(Window({HOME_WINDOW_ID}).Property({PROP_SPLASH_VISIBLE}),true)"
 )
 # Token of the current controller run, part of every control's condition, so
 # controls a run had to leave behind stay hidden (see open_splash's cleanup).
-PROP_SPLASH_RUN = "TinyPPI.SplashRun"
+PROP_SPLASH_RUN = "BaldPI.SplashRun"
 _MODE_VISIBLE_PROPS = {
-    "start":   "TinyPPI.SplashStartVisible",
-    "osd":     "TinyPPI.SplashOsdVisible",
-    "tinyppi": "TinyPPI.SplashTinyPPIVisible",
+    "start":   "BaldPI.SplashStartVisible",
+    "osd":     "BaldPI.SplashOsdVisible",
+    "baldpi": "BaldPI.SplashBaldPIVisible",
 }
 _FADE_IN_MS       = 350
 _FADE_OUT_MS      = 150
@@ -130,14 +130,14 @@ _ANIM_IN  = ("Visible",
 _ANIM_OUT = ("Hidden",
              f"effect=fade start=100 end=0 time={_FADE_OUT_MS}")
 
-# The overlay's window.  The tinyppi logos wait for it to be visible, not
+# The overlay's window.  The baldpi logos wait for it to be visible, not
 # just for PROP_ACTIVE (set before the dialog is built and filled), so both
 # fade in together.
-_OVERLAY_WINDOW = "script-tinyppi-main.xml"
+_OVERLAY_WINDOW = "script-baldpi-main.xml"
 
 # "true" while a conversion is active (see is_converting); part of the
 # badge's condition, so it toggles without a rebuild.
-PROP_CONVERTING = "TinyPPI.SplashConverting"
+PROP_CONVERTING = "BaldPI.SplashConverting"
 
 
 # Fallback DV pill colours per layer (FEL forest, MEL tangerine, other white).
@@ -225,7 +225,7 @@ def _visible_condition(mode: str, suppress_start_for_osd: bool = False,
             _home_prop_condition(PROP_RUNNING, False),
             _home_prop_condition(PROP_DIALOG_MODE, False),
         ))
-    elif mode == "tinyppi":
+    elif mode == "baldpi":
         parts.extend((
             _home_prop_condition(PROP_ACTIVE),
             _home_prop_condition(PROP_DIALOG_MODE, False),
@@ -316,8 +316,8 @@ def _active_modes(config: Settings, in_start_window: bool = True) -> list[str]:
         modes.append("start")
     if config.show_on_osd:
         modes.append("osd")
-    if config.show_on_tinyppi:
-        modes.append("tinyppi")
+    if config.show_on_baldpi:
+        modes.append("baldpi")
     return modes
 
 
@@ -418,7 +418,7 @@ class _Controller:
     def _finished(self, in_start_window: bool) -> bool:
         """Return whether nothing is left to show: no mode, no logos."""
         config = self.config
-        return (not config.show_on_osd and not config.show_on_tinyppi
+        return (not config.show_on_osd and not config.show_on_baldpi
                 and not in_start_window and not self.states)
 
     def _refresh_settings(self) -> bool:

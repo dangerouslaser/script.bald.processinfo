@@ -183,12 +183,12 @@ test("the frame is rearranged at load: VS10 under the playing card, figures and 
 
 test("the shelves arrive open, a shelf somebody folded stays folded, and retired marks are dropped", (t) => {
   const { window, $ } = open(t, { before: (w) => {
-    w.localStorage.setItem("tinyppi.disclosure.dashboard.films", "1");
-    w.localStorage.setItem("tinyppi.disclosure.dashboard.continue", "0");
-    w.localStorage.setItem("tinyppi.disclosure.dashboard.filmshelf", "0");
+    w.localStorage.setItem("baldpi.disclosure.dashboard.films", "1");
+    w.localStorage.setItem("baldpi.disclosure.dashboard.continue", "0");
+    w.localStorage.setItem("baldpi.disclosure.dashboard.filmshelf", "0");
   } });
-  assert.equal(window.localStorage.getItem("tinyppi.disclosure.dashboard.films"), null);
-  assert.equal(window.localStorage.getItem("tinyppi.disclosure.dashboard.continue"), null);
+  assert.equal(window.localStorage.getItem("baldpi.disclosure.dashboard.films"), null);
+  assert.equal(window.localStorage.getItem("baldpi.disclosure.dashboard.continue"), null);
   assert.equal($("filmsCard").open, false);
   for (const id of ["seriesCard", "unseenFilmsCard", "unseenSeriesCard", "continueFilmsCard",
                     "continueSeriesCard", "recentFilmsCard", "recentSeriesCard"]) {
@@ -203,7 +203,7 @@ test("a press on a tab key brings its panel forward, writes it into the address 
   const view = open(t);
   const { window, $, clock } = view;
   let draws = 0;
-  window.TinyPPI.panels.draw = () => { draws += 1; };
+  window.BaldPI.panels.draw = () => { draws += 1; };
   clock.tick(16);
   draws = 0;
   $("tabbtn-history").querySelector(".ui-icon").click();
@@ -214,7 +214,7 @@ test("a press on a tab key brings its panel forward, writes it into the address 
     assert.equal(button.tabIndex, on ? 0 : -1);
   }
   assert.equal(window.location.hash, "#history");
-  assert.equal(window.localStorage.getItem("tinyppi.tab"), "history");
+  assert.equal(window.localStorage.getItem("baldpi.tab"), "history");
   // The chart and the event list are measured again once the tab is laid out.
   assert.equal(draws, 0);
   clock.tick(16);
@@ -688,7 +688,7 @@ test("a mode switch posts the mode with the token and keeps the buttons locked w
   const sent = view.requests.filter((request) => request.url === "/api/mode");
   assert.equal(sent.length, 1);
   assert.equal(sent[0].init.method, "POST");
-  assert.equal(sent[0].init.headers["X-TinyPPI-Token"], "T0K3N");
+  assert.equal(sent[0].init.headers["X-BaldPI-Token"], "T0K3N");
   assert.equal(sent[0].init.headers["Content-Type"], "application/json");
   assert.deepEqual(JSON.parse(sent[0].init.body), { mode: "sdr" });
   assert.equal($("toast").textContent, "Switched");
@@ -749,7 +749,7 @@ test("a refused or failed mode switch says so", async (t) => {
 test("the report of a playing title lists its groups in order, the summary and the events", async (t) => {
   const view = open(t, { routes: { "/api/history": [200, HISTORY] } });
   const { window, $, copied } = view;
-  const line = window.TinyPPI.reportLine;
+  const line = window.BaldPI.reportLine;
   await view.state({
     ...PLAYING, title: "Film: The Cut", session: { seq: 3, switches: 1, warnings: 2 },
     groups: [
@@ -765,7 +765,7 @@ test("the report of a playing title lists its groups in order, the summary and t
   await settle();
   assert.equal(copied.length, 1);
   assert.equal(copied[0], [
-    "TinyPPI", "Film: The Cut", "/media/Film.mkv", "",
+    "BaldPI", "Film: The Cut", "/media/Film.mkv", "",
     "[Video]",
     line("Resolution", "3840x2160p"),
     line("HDR10 / HLG", "Yes | No | MEL"),
@@ -791,18 +791,18 @@ test("the report of a playing title lists its groups in order, the summary and t
 
 test("a bare playing snapshot gives a bare report", async (t) => {
   const view = open(t);
-  const line = view.window.TinyPPI.reportLine;
+  const line = view.window.BaldPI.reportLine;
   await view.state({ seq: 1, playing: true, control: true });
   view.$("copyBtn").click();
   await settle();
-  assert.deepEqual(view.copied, [["TinyPPI", "", "[Summary]", line("Switches", "0"),
+  assert.deepEqual(view.copied, [["BaldPI", "", "[Summary]", line("Switches", "0"),
                                   line("Warnings", "0"), ""].join("\n")]);
 });
 
 test("after the credits the report is of the title that was, with its own peak or the samples'", async (t) => {
   const view = open(t, { routes: { "/api/history": [200, HISTORY] } });
   const { $, copied } = view;
-  const line = view.window.TinyPPI.reportLine;
+  const line = view.window.BaldPI.reportLine;
   const events = ["[Events]", line("00:00:10  FPS", "60 ▲"), line("Audio track", "Deutsch"),
                   line("00:00:13  Temperature", "77 °C"), ""];
   const last = { title: "Film", switches: 3, warnings: 0, events: 3 };
@@ -810,7 +810,7 @@ test("after the credits the report is of the title that was, with its own peak o
   await view.state({ ...IDLE, last: { ...last, peak: 640.2 } });
   $("copyBtn").click();
   await settle();
-  assert.equal(copied.at(-1), ["TinyPPI", "Film", "", "[Summary]", line("Peak", "640 nits"),
+  assert.equal(copied.at(-1), ["BaldPI", "Film", "", "[Summary]", line("Peak", "640 nits"),
                                line("Switches", "3"), line("Warnings", "0"), "",
                                ...events].join("\n"));
 
@@ -858,7 +858,7 @@ test("where the clipboard is refused the report is saved under the title's name"
   await view.state({ ...IDLE, last: { title: "Other Film" } });
   $("copyBtn").click();
   await settle();
-  assert.deepEqual(saved, ["TinyPPI_Film_The_Cut.txt", "TinyPPI_Other_Film.txt"]);
+  assert.deepEqual(saved, ["BaldPI_Film_The_Cut.txt", "BaldPI_Other_Film.txt"]);
   clock.tick(2000);
   assert.deepEqual(revoked, ["blob:report", "blob:report"]);
 });
@@ -869,6 +869,6 @@ test("the metadata key copies the Dolby Vision list", async (t) => {
   view.$("copyMetaBtn").click();
   await settle();
   const report = view.copied.at(-1).split("\n");
-  assert.equal(report[0], "TinyPPI — Dolby Vision metadata view");
-  assert.ok(report.includes(view.window.TinyPPI.reportLine("L1 max", "1000")));
+  assert.equal(report[0], "BaldPI — Dolby Vision metadata view");
+  assert.ok(report.includes(view.window.BaldPI.reportLine("L1 max", "1000")));
 });

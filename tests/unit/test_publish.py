@@ -60,8 +60,8 @@ def frame(monkeypatch):
 
 
 def units(label="", color=""):
-    xbmc.INFO["Window(10000).Property(TinyPPI.UnitLabel)"] = label
-    xbmc.INFO["Window(10000).Property(TinyPPI.UnitColor)"] = color
+    xbmc.INFO["Window(10000).Property(BaldPI.UnitLabel)"] = label
+    xbmc.INFO["Window(10000).Property(BaldPI.UnitColor)"] = color
 
 
 # --- Scene readings -----------------------------------------------------------
@@ -105,8 +105,8 @@ def test_scene_readings_of_a_dv_frame(frame):
 
 def test_the_hdr10_panel_borrows_l6_while_it_replaces_the_dv_one(frame):
     home = xbmcgui.Window(10000)
-    home.setProperty("TinyPPI.HdrType", "dolbyvision")
-    home.setProperty("TinyPPI.EffectiveHdrType", "hdr10")
+    home.setProperty("BaldPI.HdrType", "dolbyvision")
+    home.setProperty("BaldPI.EffectiveHdrType", "hdr10")
     sink = Sink()
     publish.publish_scene_properties(sink)
     assert sink.values["Hdr10MdlVar"] == "1000 l 0.005"
@@ -139,9 +139,9 @@ def test_hdr10_plus_is_published_without_the_plus(frame, monkeypatch):
     monkeypatch.setattr(publish, "get_ModeVar", lambda: "")
     publish.publish_hdr_type()
     home = xbmcgui.Window(10000)
-    assert home.getProperty("TinyPPI.HdrType") == "hdr10plus"
-    assert home.getProperty("TinyPPI.EffectiveHdrType") == "hdr10plus"
-    assert home.getProperty("TinyPPI.Hdr10PlusPresent") == "1"
+    assert home.getProperty("BaldPI.HdrType") == "hdr10plus"
+    assert home.getProperty("BaldPI.EffectiveHdrType") == "hdr10plus"
+    assert home.getProperty("BaldPI.Hdr10PlusPresent") == "1"
 
 
 @pytest.mark.parametrize("source, mode, keep, effective", [
@@ -157,9 +157,9 @@ def test_the_layout_type_follows_a_vs10_conversion(frame, source, mode, keep, ef
     xbmcaddon.SETTINGS.update({"keep_area_on_sdr": keep, "keep_dv_area_on_hdr10": keep})
     home, published = Sink(), {}
     publish.publish_hdr_type(home, published)
-    assert home.values["TinyPPI.HdrType"] == source
-    assert home.values["TinyPPI.EffectiveHdrType"] == effective
-    assert published["TinyPPI.EffectiveHdrType"] == effective
+    assert home.values["BaldPI.HdrType"] == source
+    assert home.values["BaldPI.EffectiveHdrType"] == effective
+    assert published["BaldPI.EffectiveHdrType"] == effective
 
 
 @pytest.mark.parametrize("hdr_type, setting", [
@@ -168,14 +168,14 @@ def test_the_layout_type_follows_a_vs10_conversion(frame, source, mode, keep, ef
 def test_channel_graphics_follow_their_output_setting(hdr_type, setting):
     xbmcaddon.SETTINGS[setting] = "true"
     home, published = Sink(), {}
-    home.setProperty("TinyPPI.EffectiveHdrType", hdr_type)
+    home.setProperty("BaldPI.EffectiveHdrType", hdr_type)
     publish.publish_channel_visibility(home, published)
     publish.publish_channel_visibility(home, published)
-    assert home.values["TinyPPI.ShowChannelIcon"] == "1"
-    assert home.writes.count("TinyPPI.ShowChannelIcon") == 1
+    assert home.values["BaldPI.ShowChannelIcon"] == "1"
+    assert home.writes.count("BaldPI.ShowChannelIcon") == 1
     xbmcaddon.SETTINGS[setting] = "false"
     publish.publish_channel_visibility()             # the Home window, no record
-    assert xbmcgui.Window(10000).getProperty("TinyPPI.ShowChannelIcon") == "0"
+    assert xbmcgui.Window(10000).getProperty("BaldPI.ShowChannelIcon") == "0"
 
 
 # --- Static readings ----------------------------------------------------------
@@ -186,7 +186,7 @@ def test_the_output_mode_comes_from_the_side_data(frame):
     assert sink.values["DoviProfileVar"] == "Dolby Vision Profile 8.1"
     assert sink.values["DoviRpuPresentVar"] == "true"
     assert sink.values["DoviElPresentVar"] == "false"
-    assert xbmcgui.Window(10000).getProperty("TinyPPI.HdrType") == "dolbyvision"
+    assert xbmcgui.Window(10000).getProperty("BaldPI.HdrType") == "dolbyvision"
 
 
 def test_without_side_data_the_output_mode_is_kodis(frame):

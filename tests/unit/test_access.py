@@ -188,7 +188,7 @@ def test_the_lockout_is_logged_and_ends_after_ten_minutes(clock):
     guesses = access.Guesses()
     for i in range(access._GUESS_LIMIT):
         guesses.wrong("10.0.0.5", f"GUESS{i}")
-    assert xbmc.LOG == [(xbmc.LOGWARNING, "TinyPPI [web]: 10.0.0.5 presented 10 wrong tokens; "
+    assert xbmc.LOG == [(xbmc.LOGWARNING, "BaldPI [web]: 10.0.0.5 presented 10 wrong tokens; "
                                           "turning it away for 10 minutes")]
     assert guesses.locked_for("10.0.0.5") == 600
     clock.now += 450

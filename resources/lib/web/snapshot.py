@@ -7,7 +7,7 @@
 collector instead of an ``xbmcgui.Window`` yields exactly the overlay's
 values (formatting, units, N/A labels) without duplicating the logic.
 
-The row layout (web/rows.py) mirrors ``script-tinyppi-main.xml`` and reuses
+The row layout (web/rows.py) mirrors ``script-baldpi-main.xml`` and reuses
 its string ids, so translations and label changes apply to both.
 
 The player's tracks and commands live in web/player.py, the VS10 modes in
@@ -65,7 +65,7 @@ from web.values import clean_value, numbers
 from web.vs10 import vs10_state
 
 # Home property with the source HDR type (from publish_hdr_type).
-_PROP_HDR_TYPE = "TinyPPI.HdrType"
+_PROP_HDR_TYPE = "BaldPI.HdrType"
 
 
 class PropertySink:
@@ -163,7 +163,7 @@ def _metadata_row(kind: str, name: str, value: object) -> MetadataRow:
 def _output_hdr_type(mode: str, source: str) -> str:
     """Return the output as a source-style token, to detect conversions.
 
-    Unlike ``TinyPPI.EffectiveHdrType`` (a layout choice) this is the real
+    Unlike ``BaldPI.EffectiveHdrType`` (a layout choice) this is the real
     output.  An unreadable mode returns *source*, so passthrough is never
     reported as a conversion.
     """

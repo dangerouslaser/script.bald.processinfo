@@ -70,7 +70,7 @@ def vs10_actions_available() -> bool:
     else:
         log(
             "native VS10 Actions not available -> using the "
-            "built-in TinyPPI VS10 (sysfs) path",
+            "built-in BaldPI VS10 (sysfs) path",
             xbmc.LOGINFO,
         )
     return available
@@ -104,5 +104,5 @@ def hybrid_dv_hdr10plus() -> bool:
     home = home_window()
     return (
         home.getProperty(PROP_HDR10PLUS_PRESENT) == "1"
-        and "dolby" in home.getProperty("TinyPPI.HdrType").lower()
+        and "dolby" in home.getProperty("BaldPI.HdrType").lower()
     )

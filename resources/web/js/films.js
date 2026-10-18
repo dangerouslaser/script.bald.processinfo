@@ -76,7 +76,7 @@ async function loadFilms() {
      announced while it is out (see filmsStale) still stands afterwards. */
   filmsRead = true;
   try {
-    const answer = await TinyPPI.getJSON("/api/library");
+    const answer = await BaldPI.getJSON("/api/library");
     /* A tile pressed while the box was answering: not built under it (see
        requestFilms), and read again once the press is over. */
     if (starting) {
@@ -313,23 +313,23 @@ async function startFilm(film, tile, fromStart) {
   starting = film.id;
   tile.classList.add("busy");
   for (const node of filmTiles()) node.disabled = true;
-  TinyPPI.toast(T.films_starting);
+  BaldPI.toast(T.films_starting);
 
   let failed = false;
   try {
     const response = await fetch("/api/play", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "X-TinyPPI-Token": TinyPPI.token },
+      headers: { "Content-Type": "application/json", "X-BaldPI-Token": BaldPI.token },
       body: JSON.stringify(fromStart ? { movieid: film.id, resume: false }
                                      : { movieid: film.id })
     });
     if (response.status === 401) {
       failed = true;
-      TinyPPI.toast(T.token_bad, true);
-      TinyPPI.askToken();
+      BaldPI.toast(T.token_bad, true);
+      BaldPI.askToken();
     } else if (!response.ok) {
       failed = true;
-      TinyPPI.toast(T.films_failed, true);
+      BaldPI.toast(T.films_failed, true);
     } else {
       /* Where the box got to in this film has just changed, and so has what
          it last played: the wall is read again rather than left standing on
@@ -339,7 +339,7 @@ async function startFilm(film, tile, fromStart) {
     }
   } catch (_) {
     failed = true;
-    TinyPPI.toast(T.films_failed, true);
+    BaldPI.toast(T.films_failed, true);
   }
 
   if (failed) {

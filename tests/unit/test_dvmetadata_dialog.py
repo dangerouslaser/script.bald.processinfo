@@ -17,8 +17,8 @@ from ui import dvmetadata as view
 
 LIST = 6000
 FALLBACK = "FF82B1FF"
-COLOR_PROPERTY = "TinyPPI.MetadataChangedColor"
-SECTION_VIEW = "TinyPPI.MetadataSectionView"
+COLOR_PROPERTY = "BaldPI.MetadataChangedColor"
+SECTION_VIEW = "BaldPI.MetadataSectionView"
 FULLSCREEN = "Window.IsActive(fullscreenvideo)"
 
 
@@ -363,7 +363,7 @@ def test_without_a_published_color_the_default_is_used_and_logged_once():
         dialog._fill(changed)
     assert values(dialog)[1] == f"[COLOR={FALLBACK}]3000[/COLOR]"
     assert len(warnings()) == 1
-    assert "TinyPPI.MetadataChangedColor is not published" in warnings()[0]
+    assert "BaldPI.MetadataChangedColor is not published" in warnings()[0]
     assert FALLBACK in warnings()[0]
 
 
@@ -449,7 +449,7 @@ def test_a_window_without_its_panel_stays_at_full_height_and_says_so_once(monkey
 
 def test_the_controls_the_view_drives_are_in_its_skin_file():
     path = os.path.join(xbmcaddon.ROOT, "resources", "skins", "Default", "1080i",
-                        "script-tinyppi-dv-metadata.xml")
+                        "script-baldpi-dv-metadata.xml")
     ids = {int(control.get("id")) for control in ET.parse(path).iter("control")
            if control.get("id")}
     assert {LIST, *view._PANEL, view._RULE, *view._HINTS} <= ids
@@ -677,7 +677,7 @@ def test_a_failed_first_fill_is_logged_and_the_view_still_opens(monkeypatch):
     dialog.join_update_loop()
     assert ("setFocusId", (LIST,)) in dialog.calls
     assert warnings() == [
-        "TinyPPI: DV metadata refresh failed, continuing with the last values: no side data"]
+        "BaldPI: DV metadata refresh failed, continuing with the last values: no side data"]
 
 
 def watching(dialog, monkeypatch, player, monitor):
@@ -756,7 +756,7 @@ def test_a_failing_refresh_is_logged_once_and_the_loop_goes_on(monkeypatch):
     dialog._update_loop()
     assert len(monitor.waits) == 3
     assert warnings() == [
-        "TinyPPI: DV metadata refresh failed, continuing with the last values: parser crashed"]
+        "BaldPI: DV metadata refresh failed, continuing with the last values: parser crashed"]
     assert dialog.calls == [("close", ())]
 
 
@@ -825,7 +825,7 @@ def test_the_windows_are_built_from_the_metadata_skin_file():
             self.args = args
 
     assert view._dialog(Recorder).args == (
-        "script-tinyppi-dv-metadata.xml", xbmcaddon.ROOT, "Default", "1080i")
+        "script-baldpi-dv-metadata.xml", xbmcaddon.ROOT, "Default", "1080i")
     assert isinstance(view._dialog(view.DVSectionDialog), view.DVSectionDialog)
 
 

@@ -98,7 +98,7 @@ test("with nothing asked for, the page opens on the live tab and connects", asyn
   const view = open(t);
   assert.equal(front(view), "live");
   assert.equal(view.window.location.hash, "#live");
-  assert.equal(view.window.localStorage.getItem("tinyppi.tab"), "live");
+  assert.equal(view.window.localStorage.getItem("baldpi.tab"), "live");
   assert.deepEqual(view.streams.map((stream) => stream.url), ["/api/stream"]);
   assert.deepEqual(view.requests.map((request) => request.url), ["/api/hello"]);
   // The stream feeds the page: a snapshot is drawn the moment it arrives.
@@ -117,7 +117,7 @@ test("the address picks the first tab, the old metadata window's address too", a
 });
 
 test("otherwise the page opens on the tab this device was last left on", (t) => {
-  const stored = (name) => (w) => { w.localStorage.setItem("tinyppi.tab", name); };
+  const stored = (name) => (w) => { w.localStorage.setItem("baldpi.tab", name); };
   assert.equal(front(open(t, { before: stored("settings") })), "settings");
   assert.equal(front(open(t, { before: stored("no-such-tab") })), "live");
   // The address wins over the device.

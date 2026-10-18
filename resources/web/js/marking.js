@@ -66,21 +66,21 @@ async function post(route, body) {
   try {
     const response = await fetch(route, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "X-TinyPPI-Token": TinyPPI.token },
+      headers: { "Content-Type": "application/json", "X-BaldPI-Token": BaldPI.token },
       body: JSON.stringify(body)
     });
     if (response.status === 401) {
-      TinyPPI.toast(T.token_bad, true);
-      TinyPPI.askToken();
+      BaldPI.toast(T.token_bad, true);
+      BaldPI.askToken();
       return false;
     }
     if (!response.ok) {
-      TinyPPI.toast(T.mark_failed, true);
+      BaldPI.toast(T.mark_failed, true);
       return false;
     }
     return true;
   } catch (_) {
-    TinyPPI.toast(T.mark_failed, true);
+    BaldPI.toast(T.mark_failed, true);
     return false;
   }
 }

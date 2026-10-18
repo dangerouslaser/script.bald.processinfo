@@ -3,7 +3,7 @@
 
 """The splash's settings, read in one go per settings change.
 
-Three modes (``start``, ``osd`` and ``tinyppi``) each have their own logo
+Three modes (``start``, ``osd`` and ``baldpi``) each have their own logo
 choice and order, position, size and DV pill edge (see ``ui.splash``).
 """
 
@@ -33,7 +33,7 @@ class Settings(NamedTuple):
 
     show_on_start: bool
     show_on_osd: bool
-    show_on_tinyppi: bool
+    show_on_baldpi: bool
     duration: int
     modes: dict[str, ModeSettings]
 
@@ -42,31 +42,31 @@ class Settings(NamedTuple):
 _OFFSET_SETTINGS = {
     "start":   ("splash_start_offset_x",   "splash_start_offset_y"),
     "osd":     ("splash_osd_offset_x",     "splash_osd_offset_y"),
-    "tinyppi": ("splash_tinyppi_offset_x", "splash_tinyppi_offset_y"),
+    "baldpi": ("splash_baldpi_offset_x", "splash_baldpi_offset_y"),
 }
 
 # Per-mode size setting (80-130 %, default 100 %), times the panel's base scale.
 _SCALE_SETTINGS = {
     "start":   "splash_start_scale",
     "osd":     "splash_osd_scale",
-    "tinyppi": "splash_tinyppi_scale",
+    "baldpi": "splash_baldpi_scale",
 }
 
 # Per-mode logo selection and order (default: both, video on top).
 _SHOW_VIDEO_SETTINGS = {
     "start":   "splash_start_show_video",
     "osd":     "splash_osd_show_video",
-    "tinyppi": "splash_tinyppi_show_video",
+    "baldpi": "splash_baldpi_show_video",
 }
 _SHOW_AUDIO_SETTINGS = {
     "start":   "splash_start_show_audio",
     "osd":     "splash_osd_show_audio",
-    "tinyppi": "splash_tinyppi_show_audio",
+    "baldpi": "splash_baldpi_show_audio",
 }
 _ORDER_SETTINGS = {
     "start":   "splash_start_order",
     "osd":     "splash_osd_order",
-    "tinyppi": "splash_tinyppi_order",
+    "baldpi": "splash_baldpi_order",
 }
 # splash_<mode>_order: 0 keeps video on top, 1 puts audio on top.
 _ORDER_AUDIO_FIRST = 1
@@ -75,7 +75,7 @@ _ORDER_AUDIO_FIRST = 1
 _PILL_POSITION_SETTINGS = {
     "start":   "splash_start_pill_position",
     "osd":     "splash_osd_pill_position",
-    "tinyppi": "splash_tinyppi_pill_position",
+    "baldpi": "splash_baldpi_pill_position",
 }
 # splash_<mode>_pill_position: 0 bottom edge, 1 top edge.
 _PILL_TOP = 1
@@ -101,7 +101,7 @@ def read_settings(addon: xbmcaddon.Addon) -> Settings:
     return Settings(
         show_on_start=addon.getSettingBool("splash_enabled"),
         show_on_osd=addon.getSettingBool("splash_show_on_osd"),
-        show_on_tinyppi=addon.getSettingBool("splash_show_on_tinyppi"),
+        show_on_baldpi=addon.getSettingBool("splash_show_on_baldpi"),
         duration=addon.getSettingInt("splash_duration"),
         modes=modes,
     )
